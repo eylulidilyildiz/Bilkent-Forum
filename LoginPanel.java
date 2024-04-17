@@ -18,13 +18,18 @@ public class LoginPanel extends JPanel{
         createComponents();
     }
 
+    /*
+     * A method which creates the components of the login page
+     * of the "Bilkent Forum"
+     */
     private void createComponents()
     {
-        forumLabel =  new JLabel("BILKENT FORUM");
-        forumLabel.setFont(new Font("Arial", Font.BOLD, 64));
-        emailField = new JTextField("Email Address");
-        passwordField = new JTextField("Password");
+        forumLabel =  new JLabel ("BILKENT FORUM");
+        forumLabel.setFont (new Font ("Arial", Font.BOLD, 64));
+        emailField = new JTextField ("Email Address");
+        passwordField = new JTextField ("Password");
 
+      
                 
         this.add(forumLabel);
         this.add(emailField);
