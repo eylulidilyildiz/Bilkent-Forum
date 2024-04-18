@@ -13,7 +13,7 @@ public class LoginPanel extends JPanel{
     public LoginPanel()
     {
         setLayout(new GridLayout(0,1));
-        setSize(500,500);
+        setPreferredSize(new Dimension(500,500));
         setBackground(Color.PINK);   
         createComponents();
     }

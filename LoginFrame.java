@@ -15,9 +15,7 @@ public class LoginFrame extends JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH); 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Login to the Bilkent Forum");
-
-        JLabel label = new JLabel("UMUT OVUNC SENOL");
-        add(label, BorderLayout.WEST);
+        
         loginPanel = new LoginPanel();
         createProfilePanel = new CreateProfilePanel();
 
