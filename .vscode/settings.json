@@ -1,6 +1,14 @@
 {
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
-        "c:\\Users\\berka\\OneDrive\\Masaüstü\\mysql-connector-j-8.3.0\\mysql-connector-j-8.3.0.jar"
+        "c:\\Users\\berka\\OneDrive\\Masaüstü\\mysql-connector-j-8.3.0\\mysql-connector-j-8.3.0.jar",
+        "/Users/aycat/Downloads/JavaFX/javafx-sdk-22/lib/javafx-swt.jar",
+        "/Users/aycat/Downloads/JavaFX/javafx-sdk-22/lib/javafx.base.jar",
+        "/Users/aycat/Downloads/JavaFX/javafx-sdk-22/lib/javafx.controls.jar",
+        "/Users/aycat/Downloads/JavaFX/javafx-sdk-22/lib/javafx.fxml.jar",
+        "/Users/aycat/Downloads/JavaFX/javafx-sdk-22/lib/javafx.graphics.jar",
+        "/Users/aycat/Downloads/JavaFX/javafx-sdk-22/lib/javafx.media.jar",
+        "/Users/aycat/Downloads/JavaFX/javafx-sdk-22/lib/javafx.swing.jar",
+        "/Users/aycat/Downloads/JavaFX/javafx-sdk-22/lib/javafx.web.jar"
     ]
 }
