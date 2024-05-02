@@ -52,10 +52,10 @@ public class Login extends Application{
         passwordField.setVisible(true);*/
         root.add(passwordField, 1, 2);
 
-        HBox btn = new HBox();
-        btn.setAlignment(Pos.BOTTOM_RIGHT);
-        btn.getChildren().add(loginButton);
-        root.add(btn, 1, 3);
+        HBox buttonBox = new HBox();
+        buttonBox.setAlignment(Pos.BOTTOM_RIGHT);
+        buttonBox.getChildren().add(buttonBox);
+        root.add(buttonBox, 1, 3);
 
         Scene loginScene = new Scene(root, 300, 300);
 
