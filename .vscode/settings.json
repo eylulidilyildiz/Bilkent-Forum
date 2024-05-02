@@ -1,0 +1,13 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "/Users/umutovuncsenol/Downloads/javafx-sdk-22.0.1/lib/javafx.web.jar",
+        "/Users/umutovuncsenol/Downloads/javafx-sdk-22.0.1/lib/javafx.base.jar",
+        "/Users/umutovuncsenol/Downloads/javafx-sdk-22.0.1/lib/javafx.controls.jar",
+        "/Users/umutovuncsenol/Downloads/javafx-sdk-22.0.1/lib/javafx.swing.jar",
+        "/Users/umutovuncsenol/Downloads/javafx-sdk-22.0.1/lib/javafx.graphics.jar",
+        "/Users/umutovuncsenol/Downloads/javafx-sdk-22.0.1/lib/javafx.media.jar",
+        "/Users/umutovuncsenol/Downloads/javafx-sdk-22.0.1/lib/javafx-swt.jar",
+        "/Users/umutovuncsenol/Downloads/javafx-sdk-22.0.1/lib/javafx.fxml.jar"
+    ]
+}
