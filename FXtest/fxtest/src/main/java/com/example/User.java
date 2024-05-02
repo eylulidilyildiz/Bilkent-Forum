@@ -17,8 +17,8 @@ public class User
 
     protected void addPost (boolean isSalePost)
     {
-        Post post = new Post ();
-
+        
+        
         
     }
     

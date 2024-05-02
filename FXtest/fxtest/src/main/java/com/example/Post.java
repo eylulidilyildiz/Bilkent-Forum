@@ -4,12 +4,16 @@ public class Post
 {
     protected String description;
     protected String date;
-    protected long postID;
-    protected int numberOfUpvotes;
-    protected int numberOfDownvotes; 
 
-    public void setDescription(String str)
+    protected long postID;
+    protected long ownerID;
+
+    protected int numberOfUpvotes;
+    protected int numberOfDownvotes;
+     
+    protected boolean isSalesPost; 
+
+    public Post(String description, boolean isSalesPost)
     {
-        description = str;
     }
 }
