@@ -11,7 +11,9 @@ public class ManagePost
     private int usageIndex;
     private int edition;
     private String date;
-    
+    private int numberOfUpvotes;
+    private int numberOfDownvotes;
+
     public void setTitle(String title) 
     {
         this.title = title;
@@ -55,6 +57,27 @@ public class ManagePost
     public void setDate(String date) 
     {
         this.date = date;
+    }
+
+    public void setNumberOfUpvotes(int numberOfUpvotes) 
+    {
+        this.numberOfUpvotes = numberOfUpvotes;
+    }
+
+    public void setNumberOfDownvotes(int numberOfDownvotes) 
+    {
+        this.numberOfDownvotes = numberOfDownvotes;
+    }
+
+    // Getter methods
+    public int getNumberOfUpvotes() 
+    {
+        return numberOfUpvotes;
+    }
+
+    public int getNumberOfDownvotes() 
+    {
+        return numberOfDownvotes;
     }
 
     public String getTitle() 
