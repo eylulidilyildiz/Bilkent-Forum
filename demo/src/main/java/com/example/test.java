@@ -1,3 +1,4 @@
+package com.example;
 import javafx.application.*;
 import javafx.stage.Stage;
 public class test extends Application

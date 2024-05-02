@@ -1,3 +1,4 @@
+package com.example;
 
 import javafx.stage.Stage;
 
