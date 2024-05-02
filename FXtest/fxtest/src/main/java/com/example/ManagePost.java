@@ -2,6 +2,16 @@ package com.example;
 
 public class ManagePost 
 {
+    private String title;
+    private String authorName;
+    private String publisher;
+    private String courseCode;
+    private double price;
+    private boolean isSalesPost;
+    private int usageIndex;
+    private int edition;
+    private String date;
+    
     public void setTitle(String title) 
     {
         this.title = title;
