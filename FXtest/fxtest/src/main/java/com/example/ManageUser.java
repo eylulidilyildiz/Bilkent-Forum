@@ -1,5 +1,6 @@
 package com.example;
 
-public class ManageUser {
+public class ManageUser 
+{
     
 }
