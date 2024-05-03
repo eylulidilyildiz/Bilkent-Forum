@@ -54,7 +54,7 @@ public class Login extends Application{
 
         HBox buttonBox = new HBox();
         buttonBox.setAlignment(Pos.BOTTOM_RIGHT);
-        buttonBox.getChildren().add(buttonBox);
+        buttonBox.getChildren().add(loginButton);
         root.add(buttonBox, 1, 3);
 
         Scene loginScene = new Scene(root, 300, 300);

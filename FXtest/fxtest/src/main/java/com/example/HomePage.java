@@ -69,9 +69,9 @@ public class HomePage extends Application
         VBox libraryBox = new VBox();
         libraryBox.getChildren().addAll(libraryLabel, upvotedPostsLabel, bookmarksLabel);
 
-        menuPane.add(forumLabel, 1, 0);
-        menuPane.add(discoverBox, 1, 1);
-        menuPane.add(libraryBox, 1, 2);
+        menuPane.add(forumLabel, 1, 1);
+        menuPane.add(discoverBox, 1, 2);
+        menuPane.add(libraryBox, 1, 3);
         menuPane.add(logoutButton, 1, 5);
 
         root.setAlignment(menuPane, Pos.CENTER_LEFT);
