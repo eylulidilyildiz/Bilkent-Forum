@@ -35,6 +35,18 @@ public class User
 	}
 
 	public void setCommentIDs(String newIDs){
-		this.postIDs = newIDs;
+		this.commentIDs = newIDs;
+	}
+
+	public void setEmail(String newMail){
+		this.email = newMail;
+	}
+
+	public void setPassword(String newPassword){
+		this.password = newPassword;
+	}
+
+	public void setUsername(String newUsername){
+		this.username = newUsername;
 	}
 }
