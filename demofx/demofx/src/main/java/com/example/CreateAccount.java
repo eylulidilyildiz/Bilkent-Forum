@@ -71,19 +71,25 @@ public class CreateAccount extends Application
         TextField semesterTextField = new TextField();
         fieldsBox.add (semesterTextField, 1, 3);
 
+        //username
+        Label usernameLabel = new Label ("Username:");
+        fieldsBox.add (usernameLabel, 0, 4);
+
+        TextField usernameTextField = new TextField ();
+        fieldsBox.add (usernameTextField, 1, 4);
         // email
         Label emailLabel = new Label ("Email:");
-        fieldsBox.add (emailLabel, 0, 4);
+        fieldsBox.add (emailLabel, 0, 5);
 
         TextField emailTextField = new TextField();
-        fieldsBox.add (emailTextField, 1, 4);
+        fieldsBox.add (emailTextField, 1, 5);
 
         // password
         Label passwordLabel = new Label ("Password:");
-        fieldsBox.add (passwordLabel, 0, 5);
+        fieldsBox.add (passwordLabel, 0, 6);
 
         PasswordField passwordTextField = new PasswordField ();
-        fieldsBox.add (passwordTextField, 1, 5);
+        fieldsBox.add (passwordTextField, 1, 6);
 
 
         // create account button event handling
@@ -99,9 +105,11 @@ public class CreateAccount extends Application
                 String inputEmail = emailTextField.getText();
                 String inputPassword = passwordTextField.getText();
 
-                // TODO: Check if email or password already exists
+                // TODO: Check if email or username already exists
 
                 // TODO: If it does not exist check if all the inputs are valid or not
+
+                    // TODO: Add the user to the Bilkent Forum
             }
             
         } );
