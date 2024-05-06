@@ -11,11 +11,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.geometry.*;
@@ -34,9 +39,11 @@ public class CreateAccount extends Application
     public void start (Stage createAccountStage) throws Exception 
     {
         //Components of the scene
-        Label forumLabel = new Label("BILKENT FORUM");
+        Label forumLabel = new Label(" BILKENT FORUM ");
+        forumLabel.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 20));
+        forumLabel.setBackground(new Background(new BackgroundFill(Color.PINK, new CornerRadii(11), new Insets(1))));
         Button createAccountButton = new Button("CREATE ACCOUNT");
-        createAccountButton.setPrefWidth(212.5);
+        createAccountButton.setPrefWidth(225);
 
         //root 
         VBox root = new VBox();
@@ -49,47 +56,53 @@ public class CreateAccount extends Application
         fieldsBox.setHgap(10);
         fieldsBox.setVgap(10);
 
-        fieldsBox.add (forumLabel, 1, 0);
-        // name / surname
-        Label nameSurnameLabel = new Label ("Name / Surname:");
-        fieldsBox.add (nameSurnameLabel, 0, 1);
+        // name 
+        Label nameLabel = new Label ("Name:");
+        fieldsBox.add (nameLabel, 0, 1);
+        
+        TextField nameTextField = new TextField();
+        fieldsBox.add (nameTextField, 1, 1);
 
-        TextField nameSurnameTextField = new TextField();
-        fieldsBox.add (nameSurnameTextField, 1, 1);
+        //surname
+        Label surnameLabel = new Label ("Surname:");
+        fieldsBox.add (surnameLabel, 0, 2);
+
+        TextField surnameTextField = new TextField();
+        fieldsBox.add (surnameTextField, 1, 2);
 
         // department
         Label departmentLabel = new Label ("Department:");
-        fieldsBox.add (departmentLabel, 0, 2);
+        fieldsBox.add (departmentLabel, 0, 3);
 
         TextField departmentTextField = new TextField();
-        fieldsBox.add (departmentTextField, 1, 2);
+        fieldsBox.add (departmentTextField, 1, 3);
 
         // semester
         Label semesterLabel = new Label ("Semester:");
-        fieldsBox.add (semesterLabel, 0, 3);
+        fieldsBox.add (semesterLabel, 0, 4);
 
         TextField semesterTextField = new TextField();
-        fieldsBox.add (semesterTextField, 1, 3);
+        fieldsBox.add (semesterTextField, 1, 4);
 
         //username
         Label usernameLabel = new Label ("Username:");
-        fieldsBox.add (usernameLabel, 0, 4);
+        fieldsBox.add (usernameLabel, 0, 5);
 
         TextField usernameTextField = new TextField ();
-        fieldsBox.add (usernameTextField, 1, 4);
+        fieldsBox.add (usernameTextField, 1, 5);
         // email
         Label emailLabel = new Label ("Email:");
-        fieldsBox.add (emailLabel, 0, 5);
+        fieldsBox.add (emailLabel, 0, 6);
 
         TextField emailTextField = new TextField();
-        fieldsBox.add (emailTextField, 1, 5);
+        fieldsBox.add (emailTextField, 1, 6);
 
         // password
         Label passwordLabel = new Label ("Password:");
-        fieldsBox.add (passwordLabel, 0, 6);
+        fieldsBox.add (passwordLabel, 0, 7);
 
         PasswordField passwordTextField = new PasswordField ();
-        fieldsBox.add (passwordTextField, 1, 6);
+        fieldsBox.add (passwordTextField, 1, 7);
 
 
         // create account button event handling
@@ -99,9 +112,11 @@ public class CreateAccount extends Application
             public void handle (ActionEvent event) 
             {
                 // Input from the text fields
-                String inputNameSurname = nameSurnameTextField.getText();
+                String inputName = nameTextField.getText();
+                String inputSurname = surnameTextField.getText();
                 String inputDepartment = departmentTextField.getText();
                 String inputSemester = semesterTextField.getText();
+                String username = usernameTextField.getText();
                 String inputEmail = emailTextField.getText();
                 String inputPassword = passwordTextField.getText();
 
@@ -121,7 +136,7 @@ public class CreateAccount extends Application
         buttonBox.getChildren().add (createAccountButton);
 
         // adding components to root and scene
-        root.getChildren().addAll (fieldsBox, buttonBox);
+        root.getChildren().addAll (forumLabel, fieldsBox, buttonBox);
         
         Scene createAccountScene = new Scene (root, 500, 500);
 
@@ -131,8 +146,5 @@ public class CreateAccount extends Application
         createAccountStage.show();
 
 
-    }
-
-
-    
+    } 
 }
