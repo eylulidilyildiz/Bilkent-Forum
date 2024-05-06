@@ -31,8 +31,6 @@ public class User
 
 	@Column(name = "Department") private String department;
 
-
-
 	public int getId() { return id; }
 	public String getUsername() { return username; }
 	public String getPassword() { return password; }
@@ -43,7 +41,6 @@ public class User
 	public String getSurname() { return surname; }
 	public int getSemester() { return semester; }
 	public String getDepartment() { return department; }
-
 
 	public void setPostIDs(String newIDs){
 		this.postIDs = newIDs;
