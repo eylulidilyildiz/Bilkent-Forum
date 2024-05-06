@@ -1,7 +1,11 @@
 package com.example;
 
+import org.hibernate.Session;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -14,6 +18,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.geometry.*;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 
 public class Login extends Application{
 
@@ -30,7 +36,6 @@ public class Login extends Application{
         Label forumLabel = new Label("BILKENT FORUM");
         Button loginButton = new Button("LOGIN");
         loginButton.setPrefWidth(212.5);
-
 
         //root and scene
         VBox root = new VBox();
@@ -54,16 +59,57 @@ public class Login extends Application{
         fieldsBox.add(passwordLabel, 0, 2);
 
         PasswordField passwordField = new PasswordField();
-        /*passwordField.setText("Password");
-        passwordField.setVisible(true);*/
         fieldsBox.add(passwordField, 1, 2);
+
+        loginButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override 
+            public void handle(ActionEvent event) 
+            { 
+                String inputEmail = emailTextField.getText();
+                String inputPassword = passwordField.getText();
+                int mainUserID = checkEmailAndPassword(inputEmail);
+                if(mainUserID == -1)
+                {
+                    Alert emailDoesNotExistAlert = new Alert(AlertType.ERROR);
+                    emailDoesNotExistAlert.setHeaderText("Email not valid!");
+                    emailDoesNotExistAlert.setContentText("There is no account for this email. Please register.");
+                    emailDoesNotExistAlert.showAndWait();
+                }
+                else{
+                    DatabaseConnection.connect(); 
+                    try (Session session = DatabaseConnection.getSessionFactory().openSession()) 
+                    {
+                        User user = session.get(User.class, mainUserID);
+                        if(user.getPassword().equals(inputPassword))
+                        {
+
+                        }
+                        else{
+                            Alert invalidPasswordAlert = new Alert(AlertType.ERROR);
+                            invalidPasswordAlert.setHeaderText("Password is incorrect!");
+                            invalidPasswordAlert.setContentText("Your password is not correct. Please try again.");
+                            invalidPasswordAlert.showAndWait();
+                        }
+
+
+
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    } finally {
+                        DatabaseConnection.disconnect(); 
+                    }
+                }
+            } 
+        });
+
 
         HBox buttonBox = new HBox();
         buttonBox.setAlignment(Pos.CENTER);
         buttonBox.getChildren().add(loginButton);
+    
 
         root.getChildren().addAll(fieldsBox, buttonBox);
-
         Scene loginScene = new Scene(root, 300, 300);
 
         //stage
@@ -71,5 +117,30 @@ public class Login extends Application{
         loginStage.setTitle("Login to Bilkent Forum");
         loginStage.show();
 
+    }
+
+    public int checkEmailAndPassword(String email)
+    {
+        DatabaseConnection.connect(); 
+
+        try (Session session = DatabaseConnection.getSessionFactory().openSession()) 
+        {
+            int i = 1;
+            while(session.get(User.class, i) != null)
+            {
+                User user = session.get(User.class, i);
+                if(user.getEmail().equals(email))
+                {
+                    return user.getId();
+                }
+                i++;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DatabaseConnection.disconnect(); 
+        }
+        return -1;
     }
 }
