@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -51,9 +52,9 @@ public class HomePage extends Application
         
         GridPane menuPane = new GridPane();
         menuPane.setPrefWidth(200);
-        //menuPane.setAlignment(Pos.CENTER);
         menuPane.setHgap(10);
         menuPane.setVgap(100);
+        menuPane.setPadding(new Insets(-10));
 
         ColumnConstraints columnConstraints = new ColumnConstraints();
         columnConstraints.setPercentWidth(300); // Adjust as needed
@@ -78,7 +79,7 @@ public class HomePage extends Application
 
         //stage
         homeStage.setScene(homeScene);
-        //homeStage.setFullScreen(true);
+        homeStage.setFullScreen(true);
         homeStage.setTitle("Login to Bilkent Forum");
         homeStage.show();
 
