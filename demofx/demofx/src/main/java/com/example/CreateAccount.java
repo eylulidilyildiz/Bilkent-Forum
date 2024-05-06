@@ -116,15 +116,63 @@ public class CreateAccount extends Application
                 String inputSurname = surnameTextField.getText();
                 String inputDepartment = departmentTextField.getText();
                 String inputSemester = semesterTextField.getText();
-                String username = usernameTextField.getText();
+                String inputUsername = usernameTextField.getText();
                 String inputEmail = emailTextField.getText();
                 String inputPassword = passwordTextField.getText();
 
-                // TODO: Check if email or username already exists
+
+                //INFORMATION VERIFICATION
+                DatabaseConnection.connect(); 
+
+                try (Session session = DatabaseConnection.getSessionFactory().openSession()) 
+                {
+
+                    //check if an account already exists with the input email or username
+                    int i = 1;
+                    while(session.get(User.class, i) != null)
+                    {
+                        User user = session.get(User.class, i);
+                        if (user.getEmail().equals(inputEmail))
+                        {
+                            Alert emailExistsAlert = new Alert(AlertType.ERROR);
+                            emailExistsAlert.setHeaderText("Email already exists!");
+                            emailExistsAlert.setContentText("An account already exists with this email address.");
+                            emailExistsAlert.showAndWait();
+                        }
+                        else if (user.getUsername().equals(inputUsername))
+                        {
+                            Alert usernameExistsAlert = new Alert(AlertType.ERROR);
+                            usernameExistsAlert.setHeaderText("Username already exists!");
+                            usernameExistsAlert.setContentText("An account already exists with this username. Try another one.");
+                            usernameExistsAlert.showAndWait();
+                        }
+                        i++;
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                DatabaseConnection.disconnect(); 
+                }
 
                 // TODO: If it does not exist check if all the inputs are valid or not
+                if(inputDepartment.equals("") || inputEmail.equals("") || inputName.equals("")l || inputPassword.equals("")
+                   || inputSurname.equals("") ||  inputUsername.equals(""))
+                {
+                    Alert missingInformationAlert = new Alert(AlertType.ERROR);
+                    missingInformationAlert.setHeaderText("Missing Information!");
+                    missingInformationAlert.setContentText("Please fill in all of the fields.");
+                    missingInformationAlert.showAndWait();
+                }
+                if(Integer.parseInt(inputSemester) < 1 || Integer.parseInt(inputSemester) > 4)
+                {
+                    Alert invalidSemesterAlert = new Alert(AlertType.ERROR);
+                    invalidSemesterAlert.setHeaderText("Incorrect Semester Information!");
+                    invalidSemesterAlert.setContentText("Semester needs to be between 1 and 4");
+                    invalidSemesterAlert.showAndWait();
+                }
 
-                    // TODO: Add the user to the Bilkent Forum
+                // TODO: Add the user to the Bilkent Forum
             }
             
         } );
