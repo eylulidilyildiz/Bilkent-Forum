@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -110,10 +111,44 @@ public class Login extends Application{
         HBox buttonBox = new HBox();
         buttonBox.setAlignment(Pos.CENTER);
         buttonBox.getChildren().add(loginButton);
-    
+
+        //create account label
+        Label createAccountLabel = new Label("Create Account");
+        GridPane labelBox = new GridPane();
+        labelBox.setAlignment(Pos.CENTER);
+        labelBox.setHgap(10);
+        labelBox.setVgap(10);
+
+        createAccountLabel.setOnMouseClicked(new EventHandler< MouseEvent>() 
+        {    
+            @Override    
+            public void handle(MouseEvent event) {      
+                createAccountLabel.setText("Mouse Clicked");    
+            }  
+        });
+
+        createAccountLabel.setOnMouseEntered(new EventHandler<MouseEvent>() {    
+            @Override    
+            public void handle(MouseEvent event) 
+            {      
+                createAccountLabel.setUnderline(true);;    
+            }  
+        });  
+        
+        createAccountLabel.setOnMouseExited(new EventHandler<MouseEvent>() {    
+            @Override    
+            public void handle(MouseEvent event) 
+            {      
+                createAccountLabel.setUnderline(false);   
+            }  
+        });
+
+        labelBox.add(createAccountLabel, 12, 0);
+
+
 
         //adding components to the root and scene
-        root.getChildren().addAll(fieldsBox, buttonBox);
+        root.getChildren().addAll(fieldsBox, buttonBox, labelBox);
         Scene loginScene = new Scene(root, 300, 300);
 
         //stage
