@@ -76,8 +76,8 @@ public class HomePage extends Application
         menuPane.setHgap(20);
         menuPane.setVgap(100);
         //menuPane.setPadding(new Insets(-10));
-        menuPane.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE,  null, null)));
-        menuPane.setStyle("-fx-background-color: #CD5C5C;");
+        menuPane.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
+        //menuPane.setStyle("-fx-background-color: #CD5C5C;");
 
         ColumnConstraints columnConstraints = new ColumnConstraints();
         columnConstraints.setFillWidth(true);
@@ -94,14 +94,15 @@ public class HomePage extends Application
         libraryBox.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, null, null)));
         libraryBox.getChildren().addAll(libraryLabel, upvotedPostsLabel, bookmarksLabel);
 
-        menuPane.add(forumLabel, 1, 1);
-        menuPane.add(discoverBox, 1, 2);
-        menuPane.add(libraryBox, 1, 3);
-        menuPane.add(logoutButton, 1, 5);
+        menuPane.add(forumLabel, 0, 1);
+        menuPane.add(discoverBox, 0, 2);
+        menuPane.add(libraryBox, 0, 3);
+        menuPane.add(logoutButton, 0, 5);
 
         //root.setAlignment(menuPane, Pos.CENTER_LEFT);
 
-        root.getChildren().add(menuPane);
+        //root.getChildren().add(menuPane);
+        root.setLeft(menuPane);
 
         Scene homeScene = new Scene(root, 700, 700);
 
