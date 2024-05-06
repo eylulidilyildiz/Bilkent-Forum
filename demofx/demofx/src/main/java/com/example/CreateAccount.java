@@ -49,6 +49,7 @@ public class CreateAccount extends Application
         fieldsBox.setHgap(10);
         fieldsBox.setVgap(10);
 
+        fieldsBox.add (forumLabel, 1, 0);
         // name / surname
         Label nameSurnameLabel = new Label ("Name / Surname:");
         fieldsBox.add (nameSurnameLabel, 0, 1);
