@@ -156,6 +156,7 @@ public class CreateAccount extends Application
 
 
                 //INFORMATION VERIFICATION
+                boolean inputIsValid = true;
                 DatabaseConnection.connect(); 
 
                 try (Session session = DatabaseConnection.getSessionFactory().openSession()) 
@@ -168,6 +169,7 @@ public class CreateAccount extends Application
                         User user = session.get(User.class, i);
                         if (user.getEmail().equals(inputEmail))
                         {
+                            inputIsValid = false;
                             Alert emailExistsAlert = new Alert(AlertType.ERROR);
                             emailExistsAlert.setHeaderText("Email already exists!");
                             emailExistsAlert.setContentText("An account already exists with this email address.");
@@ -175,6 +177,7 @@ public class CreateAccount extends Application
                         }
                         else if (user.getUsername().equals(inputUsername))
                         {
+                            inputIsValid = false;
                             Alert usernameExistsAlert = new Alert(AlertType.ERROR);
                             usernameExistsAlert.setHeaderText("Username already exists!");
                             usernameExistsAlert.setContentText("An account already exists with this username. Try another one.");
@@ -191,12 +194,14 @@ public class CreateAccount extends Application
                 if(inputDepartment.equals("") || inputEmail.equals("") || inputName.equals("") || inputPassword.equals("")
                    || inputSurname.equals("") ||  inputUsername.equals("") || inputSemester == -1)
                 {
+                    inputIsValid = false;
                     Alert missingInformationAlert = new Alert(AlertType.ERROR);
                     missingInformationAlert.setHeaderText("Missing Information!");
                     missingInformationAlert.setContentText("Please enter all of the information.");
                     missingInformationAlert.showAndWait();
                 }
-
+                
+                if(inputIsValid){
                 //ADD USER
                 UserManager UM = new UserManager();
                 UM.createUser(inputUsername, inputPassword, inputEmail, inputName, inputSurname, inputSemester, inputDepartment);
@@ -210,6 +215,8 @@ public class CreateAccount extends Application
                 }
                 catch(Exception e)
                 {
+
+                }
 
                 }
 
