@@ -27,6 +27,10 @@ public class User
 
 	@Column(name = "Surname") private String surname;
 
+	@Column(name = "Semester") private int semester;
+
+	@Column(name = "Department") private String department;
+
 
 
 	public int getId() { return id; }
@@ -37,6 +41,8 @@ public class User
 	public String getCommentIDs() { return commentIDs; }
 	public String getName() { return name; }
 	public String getSurname() { return surname; }
+	public int getSemester() { return semester; }
+	public String getDepartment() { return department; }
 
 
 	public void setPostIDs(String newIDs){
@@ -65,5 +71,13 @@ public class User
 
 	public void setSurname(String newSurname){
 		this.surname = newSurname;
+	}
+
+	public void setSemester(int newSemester){
+		this.semester = newSemester;
+	}
+
+	public void setDepartment(String newDepartment){
+		this.department = newDepartment;
 	}
 }
