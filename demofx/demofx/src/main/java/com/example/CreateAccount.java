@@ -89,7 +89,7 @@ public class CreateAccount extends Application
         createAccountButton.setOnAction (new EventHandler<ActionEvent>() 
         {
             @Override
-            public void handle(ActionEvent arg0) 
+            public void handle (ActionEvent event) 
             {
                 // Input from the text fields
                 String inputNameSurname = nameSurnameTextField.getText();
