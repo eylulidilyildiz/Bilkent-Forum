@@ -185,9 +185,7 @@ public class CreateAccount extends Application
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                } finally {
-                DatabaseConnection.disconnect(); 
-                }
+                } 
 
                 // TODO: If it does not exist check if all the inputs are valid or not
                 if(inputDepartment.equals("") || inputEmail.equals("") || inputName.equals("") || inputPassword.equals("")
@@ -199,7 +197,22 @@ public class CreateAccount extends Application
                     missingInformationAlert.showAndWait();
                 }
 
-                // TODO: Add the user to the Bilkent Forum
+                //ADD USER
+                UserManager UM = new UserManager();
+                UM.createUser(inputUsername, inputPassword, inputEmail, inputName, inputSurname, inputSemester, inputDepartment);
+                DatabaseConnection.disconnect(); 
+
+                try{
+                    createAccountStage.close();
+                    Application login = new Login();
+                    Stage loginStage = new Stage();
+                    login.start(loginStage);
+                }
+                catch(Exception e)
+                {
+
+                }
+
             }
             
         } );
