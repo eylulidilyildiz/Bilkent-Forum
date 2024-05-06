@@ -37,11 +37,12 @@ public class Login extends Application{
         Button loginButton = new Button("LOGIN");
         loginButton.setPrefWidth(212.5);
 
-        //root and scene
+        //root 
         VBox root = new VBox();
         root.setAlignment(Pos.CENTER);
         root.setSpacing(10);
 
+        //email and password fields
         GridPane fieldsBox = new GridPane();
         fieldsBox.setAlignment(Pos.CENTER);
         fieldsBox.setHgap(10);
@@ -61,6 +62,7 @@ public class Login extends Application{
         PasswordField passwordField = new PasswordField();
         fieldsBox.add(passwordField, 1, 2);
 
+        //login button event handling
         loginButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override 
             public void handle(ActionEvent event) 
@@ -104,11 +106,13 @@ public class Login extends Application{
         });
 
 
+        //button box
         HBox buttonBox = new HBox();
         buttonBox.setAlignment(Pos.CENTER);
         buttonBox.getChildren().add(loginButton);
     
 
+        //adding components to the root and scene
         root.getChildren().addAll(fieldsBox, buttonBox);
         Scene loginScene = new Scene(root, 300, 300);
 
