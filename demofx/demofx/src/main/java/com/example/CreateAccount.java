@@ -102,6 +102,8 @@ public class CreateAccount extends Application
                 // TODO: Check if email or password already exists
 
                 // TODO: If it does not exist check if all the inputs are valid or not
+
+                    // TODO: Add the user to the Bilkent Forum
             }
             
         } );
