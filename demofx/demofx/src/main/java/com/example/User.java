@@ -23,12 +23,21 @@ public class User
 
 	@Column(name = "commentIDs") private String commentIDs;
 
+	@Column(name = "Name") private String name;
+
+	@Column(name = "Surname") private String surname;
+
+
+
 	public int getId() { return id; }
 	public String getUsername() { return username; }
 	public String getPassword() { return password; }
 	public String getEmail() { return email; }
 	public String getPostIDs() { return postIDs; }
 	public String getCommentIDs() { return commentIDs; }
+	public String getName() { return name; }
+	public String getSurname() { return surname; }
+
 
 	public void setPostIDs(String newIDs){
 		this.postIDs = newIDs;
@@ -48,5 +57,13 @@ public class User
 
 	public void setUsername(String newUsername){
 		this.username = newUsername;
+	}
+
+	public void setName(String newName){
+		this.name = newName;
+	}
+
+	public void setSurname(String newSurname){
+		this.surname = newSurname;
 	}
 }

@@ -5,12 +5,14 @@ import org.hibernate.Transaction;
 
 public class UserManager 
 {
-    public void createUser(String username, String password, String email) 
+    public void createUser(String username, String password, String email, String name, String surname) 
     {
         User newUser = new User();
         newUser.setUsername(username);
         newUser.setPassword(password);
         newUser.setEmail(email);
+        newUser.setName(name);
+        newUser.setSurname(surname);
 
         Session session = DatabaseConnection.getSessionFactory().openSession();
         Transaction tx = null;
