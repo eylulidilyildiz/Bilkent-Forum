@@ -10,7 +10,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
@@ -77,33 +79,45 @@ public class CreateAccount extends Application
         TextField departmentTextField = new TextField();
         fieldsBox.add (departmentTextField, 1, 3);
 
-        // semester
-        Label semesterLabel = new Label ("Semester:");
-        fieldsBox.add (semesterLabel, 0, 4);
-
-        TextField semesterTextField = new TextField();
-        fieldsBox.add (semesterTextField, 1, 4);
 
         //username
         Label usernameLabel = new Label ("Username:");
-        fieldsBox.add (usernameLabel, 0, 5);
+        fieldsBox.add (usernameLabel, 3, 1);
 
         TextField usernameTextField = new TextField ();
-        fieldsBox.add (usernameTextField, 1, 5);
+        fieldsBox.add (usernameTextField, 4, 1);
         // email
         Label emailLabel = new Label ("Email:");
-        fieldsBox.add (emailLabel, 0, 6);
+        fieldsBox.add (emailLabel, 3, 2);
 
         TextField emailTextField = new TextField();
-        fieldsBox.add (emailTextField, 1, 6);
+        fieldsBox.add (emailTextField, 4, 2);
 
         // password
         Label passwordLabel = new Label ("Password:");
-        fieldsBox.add (passwordLabel, 0, 7);
+        fieldsBox.add (passwordLabel, 3, 3);
 
         PasswordField passwordTextField = new PasswordField ();
-        fieldsBox.add (passwordTextField, 1, 7);
+        fieldsBox.add (passwordTextField, 4, 3);
 
+        // semester
+        HBox semesterBox = new HBox();
+        semesterBox.setAlignment(Pos.CENTER);
+        semesterBox.setSpacing(10);
+        Label semesterLabel = new Label ("Semester:");
+        
+        RadioButton semesterBtn1 = new RadioButton("1");
+        RadioButton semesterBtn2 = new RadioButton("2");
+        RadioButton semesterBtn3 = new RadioButton("3");
+        RadioButton semesterBtn4 = new RadioButton("4");
+        
+        ToggleGroup semesterButtons = new ToggleGroup();
+        semesterBtn1.setToggleGroup(semesterButtons);
+        semesterBtn2.setToggleGroup(semesterButtons); 
+        semesterBtn3.setToggleGroup(semesterButtons);
+        semesterBtn4.setToggleGroup(semesterButtons);
+        semesterBox.getChildren().addAll(semesterLabel, semesterBtn1, semesterBtn2, semesterBtn3, semesterBtn4);
+        
 
         // create account button event handling
         createAccountButton.setOnAction (new EventHandler<ActionEvent>() 
@@ -115,10 +129,30 @@ public class CreateAccount extends Application
                 String inputName = nameTextField.getText();
                 String inputSurname = surnameTextField.getText();
                 String inputDepartment = departmentTextField.getText();
-                String inputSemester = semesterTextField.getText();
                 String inputUsername = usernameTextField.getText();
                 String inputEmail = emailTextField.getText();
                 String inputPassword = passwordTextField.getText();
+                int inputSemester;
+
+                if(semesterBtn1.isSelected())
+                {
+                    inputSemester = 1;
+                }
+                else if(semesterBtn2.isSelected())
+                {
+                    inputSemester = 2;
+                }
+                else if(semesterBtn3.isSelected())
+                {
+                    inputSemester = 3;
+                }
+                else if(semesterBtn4.isSelected())
+                {
+                    inputSemester = 4;
+                }
+                else{
+                    inputSemester = -1; //missing info       
+                }
 
 
                 //INFORMATION VERIFICATION
@@ -156,20 +190,13 @@ public class CreateAccount extends Application
                 }
 
                 // TODO: If it does not exist check if all the inputs are valid or not
-                if(inputDepartment.equals("") || inputEmail.equals("") || inputName.equals("")l || inputPassword.equals("")
-                   || inputSurname.equals("") ||  inputUsername.equals(""))
+                if(inputDepartment.equals("") || inputEmail.equals("") || inputName.equals("") || inputPassword.equals("")
+                   || inputSurname.equals("") ||  inputUsername.equals("") || inputSemester == -1)
                 {
                     Alert missingInformationAlert = new Alert(AlertType.ERROR);
                     missingInformationAlert.setHeaderText("Missing Information!");
-                    missingInformationAlert.setContentText("Please fill in all of the fields.");
+                    missingInformationAlert.setContentText("Please enter all of the information.");
                     missingInformationAlert.showAndWait();
-                }
-                if(Integer.parseInt(inputSemester) < 1 || Integer.parseInt(inputSemester) > 4)
-                {
-                    Alert invalidSemesterAlert = new Alert(AlertType.ERROR);
-                    invalidSemesterAlert.setHeaderText("Incorrect Semester Information!");
-                    invalidSemesterAlert.setContentText("Semester needs to be between 1 and 4");
-                    invalidSemesterAlert.showAndWait();
                 }
 
                 // TODO: Add the user to the Bilkent Forum
@@ -184,9 +211,9 @@ public class CreateAccount extends Application
         buttonBox.getChildren().add (createAccountButton);
 
         // adding components to root and scene
-        root.getChildren().addAll (forumLabel, fieldsBox, buttonBox);
+        root.getChildren().addAll (forumLabel, fieldsBox, semesterBox, buttonBox);
         
-        Scene createAccountScene = new Scene (root, 500, 500);
+        Scene createAccountScene = new Scene (root, 550, 400);
 
         // stage
         createAccountStage.setScene (createAccountScene);
