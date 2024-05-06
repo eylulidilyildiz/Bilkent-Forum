@@ -68,9 +68,11 @@ public class Login extends Application{
             @Override 
             public void handle(ActionEvent event) 
             { 
+                // Input from the text fields
                 String inputEmail = emailTextField.getText();
                 String inputPassword = passwordField.getText();
                 int mainUserID = checkEmailAndPassword(inputEmail);
+
                 if(mainUserID == -1)
                 {
                     Alert emailDoesNotExistAlert = new Alert(AlertType.ERROR);
@@ -122,9 +124,22 @@ public class Login extends Application{
         createAccountLabel.setOnMouseClicked(new EventHandler< MouseEvent>() 
         {    
             @Override    
-            public void handle(MouseEvent event) {     
-                //TODO 
-                createAccountLabel.setText("Mouse Clicked");    
+            public void handle(MouseEvent event) 
+            {     
+                // Closes the login page and opens the create account page
+                loginStage.close();
+                Application createAccount = new CreateAccount();
+                Stage createAccountStage = new Stage();
+                
+                try 
+                {
+                    createAccount.start (createAccountStage);
+                } 
+                catch (Exception e) 
+                {
+                    e.printStackTrace();
+                }
+                //createAccountLabel.setText("Mouse Clicked");    
             }  
         });
 
