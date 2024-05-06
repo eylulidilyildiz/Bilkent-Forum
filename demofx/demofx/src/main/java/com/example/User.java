@@ -1,0 +1,40 @@
+package com.example;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "User")
+
+// POJO class
+public class User 
+{
+	@Id @Column(name = "userID") private int id;
+
+	@Column(name = "username") private String username;
+
+	@Column(name = "password") private String password;
+
+	@Column(name = "email") private String email;
+
+	@Column(name = "postIDs") private String postIDs;
+
+	@Column(name = "commentIDs") private String commentIDs;
+
+	public int getId() { return id; }
+	public String getUsername() { return username; }
+	public String getPassword() { return password; }
+	public String getEmail() { return email; }
+	public String getPostIDs() { return postIDs; }
+	public String getCommentIDs() { return commentIDs; }
+
+	public void setPostIDs(String newIDs){
+		this.postIDs = newIDs;
+	}
+
+	public void setCommentIDs(String newIDs){
+		this.postIDs = newIDs;
+	}
+}
