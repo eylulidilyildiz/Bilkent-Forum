@@ -82,7 +82,10 @@ public class Login extends Application{
                         User user = session.get(User.class, mainUserID);
                         if(user.getPassword().equals(inputPassword))
                         {
-
+                            loginStage.close();
+                            Application home = new HomePage();
+                            Stage homeStage = new Stage();
+                            home.start(homeStage);
                         }
                         else{
                             Alert invalidPasswordAlert = new Alert(AlertType.ERROR);
@@ -90,9 +93,6 @@ public class Login extends Application{
                             invalidPasswordAlert.setContentText("Your password is not correct. Please try again.");
                             invalidPasswordAlert.showAndWait();
                         }
-
-
-
 
                     } catch (Exception e) {
                         e.printStackTrace();

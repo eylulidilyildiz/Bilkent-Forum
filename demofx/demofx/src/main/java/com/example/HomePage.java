@@ -59,10 +59,6 @@ public class HomePage extends Application
         columnConstraints.setPercentWidth(300); // Adjust as needed
         menuPane.getColumnConstraints().addAll(columnConstraints);
 
-
-
-
-
         VBox discoverBox = new VBox();
         discoverBox.getChildren().addAll(discoverLabel, homeLabel, profileLabel, browseLabel);
 
