@@ -11,11 +11,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.geometry.*;
@@ -34,7 +39,9 @@ public class Login extends Application{
     public void start(Stage loginStage) throws Exception {
 
         //Components of the scene
-        Label forumLabel = new Label("BILKENT FORUM");
+        Label forumLabel = new Label(" BILKENT FORUM ");
+        forumLabel.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 20));
+        forumLabel.setBackground(new Background(new BackgroundFill(Color.PINK, new CornerRadii(11), new Insets(1))));
         Button loginButton = new Button("LOGIN");
         loginButton.setPrefWidth(212.5);
 
@@ -49,7 +56,6 @@ public class Login extends Application{
         fieldsBox.setHgap(10);
         fieldsBox.setVgap(10);
 
-        fieldsBox.add(forumLabel, 1, 0);
 
         Label emailLabel = new Label("Email:");
         fieldsBox.add(emailLabel, 0, 1);
@@ -164,7 +170,7 @@ public class Login extends Application{
 
 
         //adding components to the root and scene
-        root.getChildren().addAll(fieldsBox, buttonBox, labelBox);
+        root.getChildren().addAll(forumLabel, fieldsBox, buttonBox, labelBox);
         Scene loginScene = new Scene(root, 300, 300);
 
         //stage
