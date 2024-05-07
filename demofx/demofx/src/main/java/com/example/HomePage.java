@@ -38,60 +38,62 @@ public class HomePage extends Application
 
         //Components of the Menu
         Label forumLabel = new Label(" BILKENT FORUM ");
-        forumLabel.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 20));
+        forumLabel.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 27));
         forumLabel.setBackground(new Background(new BackgroundFill(Color.PINK, null, null)));
 
 
         //labels of the menu
         Label discoverLabel = new Label("Discover");
-        discoverLabel.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 20));
+        discoverLabel.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 24));
 
         Label homeLabel = new Label("Home");
-        homeLabel.setFont(Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 18));
+        homeLabel.setFont(Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 22));
         Label profileLabel = new Label("Profile");
-        profileLabel.setFont(Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 18));
+        profileLabel.setFont(Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 22));
         Label browseLabel = new Label("Browse");
-        browseLabel.setFont(Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 18));
+        browseLabel.setFont(Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 22));
 
         Label libraryLabel = new Label("Library");
-        libraryLabel.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 20));
+        libraryLabel.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 24));
 
         Label upvotedPostsLabel = new Label("Upvoted Posts");
-        upvotedPostsLabel.setFont(Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 18));
+        upvotedPostsLabel.setFont(Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 22));
         Label bookmarksLabel = new Label("Bookmarks");
-        bookmarksLabel.setFont(Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 18));
+        bookmarksLabel.setFont(Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 22));
 
 
         Button logoutButton = new Button("LOGOUT");
-        logoutButton.setBackground(new Background(new BackgroundFill(Color.PINK, null, null)));
-        logoutButton.setFont(Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 14));
-        logoutButton.setPrefWidth(160);
+        //logoutButton.setBackground(new Background(new BackgroundFill(Color.PINK, null, null)));
+        logoutButton.setFont(Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 22));
+        logoutButton.setPrefWidth(250);
 
 
         //root and scene
         BorderPane root = new BorderPane();
         
         GridPane menuPane = new GridPane();
-        menuPane.setPrefWidth(200);
+        menuPane.setPrefWidth(250);
         menuPane.setHgap(20);
         menuPane.setVgap(100);
-        //menuPane.setPadding(new Insets(-10));
-        menuPane.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
-        //menuPane.setStyle("-fx-background-color: #CD5C5C;");
+
+        menuPane.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+        menuPane.setStyle("-fx-border-color: black; -fx-border-width: 1px 1px 0 0;");
 
         ColumnConstraints columnConstraints = new ColumnConstraints();
         columnConstraints.setFillWidth(true);
-        columnConstraints.setPercentWidth(300);       
+        columnConstraints.setPercentWidth(500);       
         menuPane.getColumnConstraints().addAll(columnConstraints);
 
         VBox discoverBox = new VBox();
         discoverBox.setPadding(new Insets(10));
-        discoverBox.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, null, null)));
+        discoverBox.setStyle("-fx-border-width: 0 1px 0 0; -fx-border-color: black;");
+        //discoverBox.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, null, null)));
         discoverBox.getChildren().addAll(discoverLabel, homeLabel, profileLabel, browseLabel);
 
         VBox libraryBox = new VBox();
         libraryBox.setPadding(new Insets(10));
-        libraryBox.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, null, null)));
+        libraryBox.setStyle("-fx-border-width: 0 1px 0 0; -fx-border-color: black;");
+        //libraryBox.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, null, null)));
         libraryBox.getChildren().addAll(libraryLabel, upvotedPostsLabel, bookmarksLabel);
 
         menuPane.add(forumLabel, 0, 1);
