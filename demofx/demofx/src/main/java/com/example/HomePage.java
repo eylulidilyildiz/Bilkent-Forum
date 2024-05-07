@@ -36,11 +36,12 @@ public class HomePage extends Application
     @Override
     public void start(Stage homeStage) throws Exception {
 
+        //MENU ON THE LEFT
+
         //Components of the Menu
         Label forumLabel = new Label(" BILKENT FORUM ");
         forumLabel.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 27));
         forumLabel.setBackground(new Background(new BackgroundFill(Color.PINK, null, null)));
-
 
         //labels of the menu
         Label discoverLabel = new Label("Discover");
@@ -61,13 +62,12 @@ public class HomePage extends Application
         Label bookmarksLabel = new Label("Bookmarks");
         bookmarksLabel.setFont(Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 22));
 
-
         Button logoutButton = new Button("LOGOUT");
         //logoutButton.setBackground(new Background(new BackgroundFill(Color.PINK, null, null)));
-        logoutButton.setFont(Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 22));
+        logoutButton.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 22));
         logoutButton.setPrefWidth(250);
 
-
+     
         //root and scene
         BorderPane root = new BorderPane();
         
@@ -86,14 +86,10 @@ public class HomePage extends Application
 
         VBox discoverBox = new VBox();
         discoverBox.setPadding(new Insets(10));
-        discoverBox.setStyle("-fx-border-width: 0 1px 0 0; -fx-border-color: black;");
-        //discoverBox.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, null, null)));
         discoverBox.getChildren().addAll(discoverLabel, homeLabel, profileLabel, browseLabel);
 
         VBox libraryBox = new VBox();
         libraryBox.setPadding(new Insets(10));
-        libraryBox.setStyle("-fx-border-width: 0 1px 0 0; -fx-border-color: black;");
-        //libraryBox.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, null, null)));
         libraryBox.getChildren().addAll(libraryLabel, upvotedPostsLabel, bookmarksLabel);
 
         menuPane.add(forumLabel, 0, 1);
@@ -101,14 +97,20 @@ public class HomePage extends Application
         menuPane.add(libraryBox, 0, 3);
         menuPane.add(logoutButton, 0, 5);
 
-        //root.setAlignment(menuPane, Pos.CENTER_LEFT);
-
-        //root.getChildren().add(menuPane);
         root.setLeft(menuPane);
 
-        Scene homeScene = new Scene(root, 700, 700);
+        
+        GridPane friendsPane = new GridPane();
+        friendsPane.setPrefWidth(250);
+        friendsPane.setHgap(20);
+        friendsPane.setVgap(100);
+
+        root.setRight(friendsPane);
+
 
         //stage
+        Scene homeScene = new Scene(root, 700, 700);
+
         homeStage.setScene(homeScene);
         homeStage.setMaximized(true);
         homeStage.setTitle("Bilkent Forum Home Page");
