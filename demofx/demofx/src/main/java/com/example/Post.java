@@ -33,9 +33,9 @@ public class Post
 
     @Column(name = "courseName") private String courseName;
 
-    @Column(name = "price") private double price;
+    @Column(name = "price") private Double price;
 
-    @Column(name = "usageAmount") private int usageAmount;
+    @Column(name = "usageAmount") private Integer usageAmount;
 
     @Column(name = "publisherName") private String publisherName;
 
@@ -52,8 +52,8 @@ public class Post
     public String getBookTitle() {return bookTitle;}
     public String getAuthorName() {return authorName;}
     public String getCourseName() {return courseName;}
-    public double getPrice() {return price;}
-    public int getUsageAmount() {return usageAmount;}
+    public Double getPrice() {return price;}
+    public Integer getUsageAmount() {return usageAmount;}
     public String getPublisherName() {return publisherName;}
     public String getBookEdition() {return bookEdition;}
 

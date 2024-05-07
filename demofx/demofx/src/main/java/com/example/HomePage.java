@@ -1,7 +1,11 @@
 package com.example;
 
+import org.hibernate.Session;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -19,6 +23,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Box;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
@@ -116,18 +121,32 @@ public class HomePage extends Application
 
         //POSTS
 
-        Label l1 = new Label("UMUT");
-        l1.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 500));
-        Label l2 = new Label("UMUT");
-        l2.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 500));
-        Label l3 = new Label("UMUT");
-        l3.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 500));
-        Label l5 = new Label("UMUT");
-        l5.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 500));
-        Label l6 = new Label("UMUT");
-        l6.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 500));
         VBox postsBox = new VBox();
-        postsBox.getChildren().addAll(l1,l2,l3,l5,l6);
+        VBox currentPost;
+
+        DatabaseConnection.connect(); 
+
+        try (Session session = DatabaseConnection.getSessionFactory().openSession()) 
+        {
+            int i = 1;
+            while(session.get(Post.class, i) != null)
+            {
+                Post post = session.get(Post.class, i);
+                int ownerID = post.getOwnerID();
+                String username = session.get(User.class, ownerID).getUsername();
+
+                
+                currentPost = new VBox();
+
+                createPost(currentPost, post, username);
+
+                postsBox.getChildren().add(currentPost);
+                i++;
+            }
+
+        //while
+        
+            
         ScrollPane postsPane = new ScrollPane();
         postsPane.setContent(postsBox);
         postsPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
@@ -143,7 +162,26 @@ public class HomePage extends Application
         homeStage.setMaximized(true);
         homeStage.setTitle("Bilkent Forum Home Page");
         homeStage.show();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DatabaseConnection.disconnect(); 
+        }
 
+    }
+
+    public void createPost(VBox box, Post post, String username)
+    {
+        String description = post.getContent();
+        String date = post.getDate();
+        boolean isSalePost = post.getIsSalePost();
+        int numOfUpvotes = post.getUpvotes();
+        int numOfDownvotes = post.getDownvotes();
+
+        Label usernameLabel = new Label(username);
+
+        box.getChildren().add(usernameLabel);
     }
     
 }
