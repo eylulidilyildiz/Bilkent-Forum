@@ -22,6 +22,7 @@
         <!-- Optional: Auto-generate schema -->
         <!-- <property name = "hibernate.hbm2ddl.auto">create</property> -->
         <mapping class="com.example.User"/>
+        <mapping class="com.example.Post"/>
         <!-- <mapping class="com.example.Post"/> -->
  
     </session-factory>
