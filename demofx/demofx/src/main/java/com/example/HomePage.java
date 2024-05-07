@@ -3,6 +3,8 @@ package com.example;
 import org.hibernate.Session;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -11,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.Background;
@@ -122,6 +125,7 @@ public class HomePage extends Application
         //POSTS
 
         VBox postsBox = new VBox();
+        postsBox.setAlignment(Pos.CENTER);
         VBox currentPost;
 
         DatabaseConnection.connect(); 
@@ -135,10 +139,10 @@ public class HomePage extends Application
                 int ownerID = post.getOwnerID();
                 String username = session.get(User.class, ownerID).getUsername();
 
-                
                 currentPost = new VBox();
 
                 createPost(currentPost, post, username);
+                //currentPost.setAlignment(Pos.CENTER);
 
                 postsBox.getChildren().add(currentPost);
                 i++;
@@ -148,6 +152,7 @@ public class HomePage extends Application
         
             
         ScrollPane postsPane = new ScrollPane();
+        postsBox.setAlignment(Pos.CENTER);
         postsPane.setContent(postsBox);
         postsPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
 
@@ -179,9 +184,27 @@ public class HomePage extends Application
         int numOfUpvotes = post.getUpvotes();
         int numOfDownvotes = post.getDownvotes();
 
-        Label usernameLabel = new Label(username);
+        Button upvoteButton = new Button("Upvote");
+        Label upvotesLabel = new Label("" + numOfUpvotes);
+                
+        upvoteButton.setOnAction(new EventHandler<ActionEvent>() 
+        {
+            @Override 
+            public void handle(ActionEvent event) 
+            {
+                post.setUpvotes(numOfUpvotes + 1);
+                upvotesLabel.setText("" + numOfUpvotes);
+            } 
+        });
 
-        box.getChildren().add(usernameLabel);
+        Label usernameLabel = new Label(username + " " + date);
+
+        TextArea postContent = new TextArea();
+        postContent.setPrefSize(500, 100);
+        postContent.setText(description);
+        postContent.setEditable(false);
+
+        box.getChildren().addAll(usernameLabel, postContent, upvoteButton, upvotesLabel);
     }
     
 }
