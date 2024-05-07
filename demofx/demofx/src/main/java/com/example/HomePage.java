@@ -42,6 +42,8 @@ public class HomePage extends Application
         Label forumLabel = new Label(" BILKENT FORUM ");
         forumLabel.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 27));
         forumLabel.setBackground(new Background(new BackgroundFill(Color.PINK, null, null)));
+        forumLabel.setPrefWidth(250);
+        forumLabel.setAlignment(Pos.CENTER);
 
         //labels of the menu
         Label discoverLabel = new Label("Discover");
