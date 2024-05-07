@@ -105,6 +105,9 @@ public class HomePage extends Application
         friendsPane.setHgap(20);
         friendsPane.setVgap(100);
 
+        friendsPane.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+        friendsPane.setStyle("-fx-border-color: black; -fx-border-width: 1px 1px 1px 1px;");
+
         root.setRight(friendsPane);
 
 
