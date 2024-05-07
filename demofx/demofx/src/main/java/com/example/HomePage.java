@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCombination;
@@ -42,7 +43,7 @@ public class HomePage extends Application
         Label forumLabel = new Label(" BILKENT FORUM ");
         forumLabel.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 27));
         forumLabel.setBackground(new Background(new BackgroundFill(Color.PINK, null, null)));
-        forumLabel.setPrefWidth(250);
+        forumLabel.setPrefWidth(248);
         forumLabel.setAlignment(Pos.CENTER);
 
         //labels of the menu
@@ -111,6 +112,28 @@ public class HomePage extends Application
         friendsPane.setStyle("-fx-border-color: black; -fx-border-width: 1px 1px 1px 1px;");
 
         root.setRight(friendsPane);
+
+
+        //POSTS
+
+        Label l1 = new Label("UMUT");
+        l1.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 500));
+        Label l2 = new Label("UMUT");
+        l2.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 500));
+        Label l3 = new Label("UMUT");
+        l3.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 500));
+        Label l5 = new Label("UMUT");
+        l5.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 500));
+        Label l6 = new Label("UMUT");
+        l6.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 500));
+        VBox postsBox = new VBox();
+        postsBox.getChildren().addAll(l1,l2,l3,l5,l6);
+        ScrollPane postsPane = new ScrollPane();
+        postsPane.setContent(postsBox);
+        postsPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+
+        root.setCenter(postsPane);
+
 
 
         //stage
