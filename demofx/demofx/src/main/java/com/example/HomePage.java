@@ -58,6 +58,7 @@ public class HomePage extends Application
         Label discoverLabel = new Label("Discover");
         discoverLabel.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 24));
 
+        // home, profile, browse
         Label homeLabel = new Label("Home");
         homeLabel.setFont(Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 22));
         Label profileLabel = new Label("Profile");
@@ -65,20 +66,36 @@ public class HomePage extends Application
         Label browseLabel = new Label("Browse");
         browseLabel.setFont(Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 22));
 
+        // library
         Label libraryLabel = new Label("Library");
         libraryLabel.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 24));
 
+        // upvoted, bookmarks
         Label upvotedPostsLabel = new Label("Upvoted Posts");
         upvotedPostsLabel.setFont(Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 22));
         Label bookmarksLabel = new Label("Bookmarks");
         bookmarksLabel.setFont(Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 22));
 
+        // LOGUT
         Button logoutButton = new Button("LOGOUT");
         //logoutButton.setBackground(new Background(new BackgroundFill(Color.PINK, null, null)));
         logoutButton.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 22));
         logoutButton.setPrefWidth(250);
 
+        // when button is clicked it logs out, closes the home page
+        logoutButton.setOnAction (new EventHandler<ActionEvent>() 
+        {
+            @Override
+            public void handle (ActionEvent arg0) 
+            {
+                homeStage.close();
+
+                // OR maybe open the login page ???
+            }
+            
+        });
      
+        
         //root and scene
         BorderPane root = new BorderPane();
         
