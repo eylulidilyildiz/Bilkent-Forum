@@ -8,6 +8,8 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -67,6 +69,7 @@ public class HomePage extends Application
         Label browseLabel = new Label("Browse");
         browseLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
 
+       
         // library
         Label libraryLabel = new Label("Library");
         libraryLabel.setFont(Font.font("Tahoma", FontWeight.BOLD, FontPosture.REGULAR, 24));
@@ -77,6 +80,7 @@ public class HomePage extends Application
         upvotedPostsLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
         Label bookmarksLabel = new Label("Bookmarks");
         bookmarksLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
+
 
         // PROFILE PAGE / SCENE
         // when profile is clicked
@@ -132,6 +136,10 @@ public class HomePage extends Application
         Button logoutButton = new Button("LOGOUT");
         //logoutButton.setBackground(new Background(new BackgroundFill(Color.PINK, null, null)));
         logoutButton.setFont(Font.font("Tahoma", FontWeight.BOLD, FontPosture.REGULAR, 22));
+
+        // changing color ???
+        logoutButton.setStyle ("-fx-background-color: pink");
+        logoutButton.setEffect (new DropShadow());
         logoutButton.setPrefWidth(250);
         
         // when button is clicked it logs out, closes the home page
@@ -146,8 +154,10 @@ public class HomePage extends Application
             }
             
         });
+
         
-        // Shadowing when mouse is close to labels
+
+        /* SHADOWING OF LABELS */
 
         // Profile Label
         // when the mouse enters the profile label
