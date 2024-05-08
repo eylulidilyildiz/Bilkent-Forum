@@ -273,11 +273,11 @@ public class HomePage extends Application
         menuPane.getColumnConstraints().addAll(columnConstraints);
 
         VBox discoverBox = new VBox();
-        discoverBox.setPadding(new Insets(50));
+        discoverBox.setPadding(new Insets(10));
         discoverBox.getChildren().addAll(discoverLabel, homeLabel, profileLabel, browseLabel);
 
         VBox libraryBox = new VBox();
-        libraryBox.setPadding(new Insets(50));
+        libraryBox.setPadding(new Insets(10));
         libraryBox.getChildren().addAll(libraryLabel, upvotedPostsLabel, bookmarksLabel);
 
         menuPane.add(forumLabel, 0, 1);
