@@ -16,6 +16,7 @@ import javafx.scene.control.Separator;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
@@ -76,7 +77,25 @@ public class HomePage extends Application
         Label bookmarksLabel = new Label("Bookmarks");
         bookmarksLabel.setFont(Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 22));
 
-        // LOGUT
+        // PROFILE PAGE / SCENE
+        profileLabel.setOnMouseClicked (new EventHandler <MouseEvent>() 
+        {
+            @Override
+            public void handle (MouseEvent event)
+            {
+                
+            }
+        });
+
+        // BROWSE PAGE / SCENE
+
+
+        // UPVOTED SCENE
+
+        // BOOKMARKED SCENE
+
+
+        // LOGOUT
         Button logoutButton = new Button("LOGOUT");
         //logoutButton.setBackground(new Background(new BackgroundFill(Color.PINK, null, null)));
         logoutButton.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 22));
@@ -95,7 +114,7 @@ public class HomePage extends Application
             
         });
      
-        
+
         //root and scene
         BorderPane root = new BorderPane();
         
@@ -193,6 +212,9 @@ public class HomePage extends Application
 
     }
 
+
+
+    /* HELPER METHODS */
     public void createPost(VBox box, Post post, String username)
     {
         String description = post.getContent();
