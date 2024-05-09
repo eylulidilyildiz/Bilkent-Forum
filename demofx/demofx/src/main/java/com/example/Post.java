@@ -67,6 +67,8 @@ public class Post
 
     public void setUpvotes(int upvotes){this.upvotes=upvotes;}
 
+    public void increaseUpvotes(){this.upvotes++;}
+
     public void setDownvotes(int downvotes){this.downvotes=downvotes;}
 
     public void setCommentIDs(String commentIDs){this.commentIDs=commentIDs;}
