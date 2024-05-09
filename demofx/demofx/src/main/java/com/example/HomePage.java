@@ -622,7 +622,7 @@ public class HomePage extends Application
 
                 currentPost = new VBox();
                 createPost(currentPost, post, username);
-                //currentPost.setAlignment(Pos.CENTER);
+                currentPost.setAlignment(Pos.CENTER);
 
                 postsBox.getChildren().add(currentPost);
         
@@ -635,6 +635,8 @@ public class HomePage extends Application
         ScrollPane postsPane = new ScrollPane();
         postsBox.setAlignment(Pos.CENTER);
         postsPane.setContent(postsBox);
+        postsPane.setFitToWidth (true);
+        postsPane.setFitToHeight (true);
         postsPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
 
         root.setCenter(postsPane);
