@@ -16,6 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TextArea;
@@ -586,19 +587,31 @@ public class HomePage extends Application
 
         Label usernameLabel = new Label(username);
         Label dateLabel = new Label(date);
-        HBox usernameAndDateBox = new HBox();
+        BorderPane usernameAndDateBox = new BorderPane();
+        usernameAndDateBox.setLeft(usernameLabel);
+        usernameAndDateBox.setRight(dateLabel);
 
         usernameLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 16));
+        dateLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 16));
 
         TextArea postContent = new TextArea();
         postContent.setPrefSize(450, 500);
         postContent.setText(description);
 
         postContent.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 18));
-
         postContent.setEditable(false);
 
-        box.getChildren().addAll(usernameLabel, postContent, upvoteButton, upvotesLabel, downvoteButton, downvotesLabel);
+         HBox semesterBox = new HBox();
+        semesterBox.setAlignment(Pos.CENTER);
+        semesterBox.setSpacing(10);
+        Label semesterLabel = new Label ("Semester:");
+        
+        RadioButton semesterBtn1 = new RadioButton("1");
+        RadioButton semesterBtn2 = new RadioButton("2");
+        RadioButton semesterBtn3 = new RadioButton("3");
+        RadioButton semesterBtn4 = new RadioButton("4");
+
+        box.getChildren().addAll(usernameAndDateBox, postContent, upvoteButton, upvotesLabel, downvoteButton, downvotesLabel);
 
 
     }
