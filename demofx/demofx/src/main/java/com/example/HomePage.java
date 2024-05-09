@@ -88,6 +88,7 @@ public class HomePage extends Application
         homeButton.setBackground (new Background(new BackgroundFill(Color.rgb (236, 231, 230), CornerRadii.EMPTY, Insets.EMPTY)));
         homeButton.setPrefWidth (WIDTH_MENU_PANE);
         homeButton.setAlignment (Pos.TOP_LEFT);
+        homeButton.setSelected(true);
 
         // when mouse enters the home button
         homeButton.setOnMouseEntered (new EventHandler <MouseEvent>() 
@@ -127,6 +128,7 @@ public class HomePage extends Application
         HBox homeBox = new HBox ();
         homeBox.getChildren().addAll (homeIcon, homeButton);
         homeBox.setAlignment (Pos.CENTER); // Aligning the image and button
+        colorBackground(homeButton, homeBox);
 
         homeBox.setOnMouseEntered (new EventHandler <MouseEvent>() 
         {
