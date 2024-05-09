@@ -91,33 +91,6 @@ public class HomePage extends Application
         homeButton.setAlignment (Pos.TOP_LEFT);
         homeButton.setSelected(true);
 
-        // when mouse enters the home button
-        homeButton.setOnMouseEntered (new EventHandler <MouseEvent>() 
-        {
-
-            @Override
-            public void handle(MouseEvent arg0) 
-            {
-               homeButton.setBackground (new Background (new BackgroundFill (Color.rgb (220, 220, 220), null, null)));
-            }
-            
-        });
-
-        // when mouse exits the home button
-        homeButton.setOnMouseExited (new EventHandler <MouseEvent>() 
-        {
-
-            @Override
-            public void handle(MouseEvent arg0) 
-            {
-                if (!homeButton.isSelected())
-                {
-                    homeButton.setBackground (new Background (new BackgroundFill (null, null, null)));
-
-                }
-            }
-            
-        });
 
         // ImageView of HOME
         ImageView homeIcon = new ImageView (getClass().getResource("images/homeIcon.png").toString());
@@ -131,30 +104,9 @@ public class HomePage extends Application
         homeBox.setAlignment (Pos.CENTER); // Aligning the image and button
         colorBackground(homeButton, homeBox);
 
-        homeBox.setOnMouseEntered (new EventHandler <MouseEvent>() 
-        {
-            @Override
-            public void handle(MouseEvent arg0) 
-            {
-               homeBox.setBackground (new Background (new BackgroundFill (Color.rgb (220, 220, 220), null, null)));
-            }
-            
-        });
-
-        homeBox.setOnMouseExited (new EventHandler <MouseEvent>() 
-        {
-
-            @Override
-            public void handle(MouseEvent arg0) 
-            {
-                if (!homeButton.isSelected())
-                {
-                    homeBox.setBackground (new Background (new BackgroundFill (null, null, null)));
-                    
-                }
-            }
-            
-        });
+        // shadowing effect - mouse entering, exiting button
+        enteringExitingButton (homeButton, homeBox);
+        
 
         // profile
         ToggleButton profileButton = new ToggleButton ("Profile");
@@ -162,34 +114,6 @@ public class HomePage extends Application
         profileButton.setBackground (new Background(new BackgroundFill(Color.rgb (236, 231, 230), CornerRadii.EMPTY, Insets.EMPTY)));
         profileButton.setPrefWidth (WIDTH_MENU_PANE);
         profileButton.setAlignment (Pos.TOP_LEFT);
-
-        // when mouse enters the profile button
-        profileButton.setOnMouseEntered (new EventHandler <MouseEvent>() 
-        {
-
-            @Override
-            public void handle(MouseEvent arg0) 
-            {
-               profileButton.setBackground (new Background (new BackgroundFill (Color.rgb (220, 220, 220), null, null)));
-            }
-            
-        });
-
-        // when mouse exits the profile button
-        profileButton.setOnMouseExited (new EventHandler <MouseEvent>() 
-        {
-
-            @Override
-            public void handle(MouseEvent arg0) 
-            {
-                if (!profileButton.isSelected())
-                {
-                    profileButton.setBackground (new Background (new BackgroundFill (null, null, null)));
-
-                }
-            }
-            
-        });
 
         // ImageView of PROFILE
         ImageView profileIcon = new ImageView (getClass().getResource("images/profileIcon.png").toString());
@@ -200,31 +124,9 @@ public class HomePage extends Application
         profileBox.getChildren().addAll (profileIcon, profileButton);
         profileBox.setAlignment (Pos.CENTER);
 
-        profileBox.setOnMouseEntered (new EventHandler <MouseEvent>() 
-        {
-
-            @Override
-            public void handle(MouseEvent arg0) 
-            {
-               profileBox.setBackground (new Background (new BackgroundFill (Color.rgb (220, 220, 220), null, null)));
-            }
-            
-        });
-
-        profileBox.setOnMouseExited (new EventHandler <MouseEvent>() 
-        {
-
-            @Override
-            public void handle(MouseEvent arg0) 
-            {
-                if (!profileButton.isSelected())
-                {
-                    profileBox.setBackground (new Background (new BackgroundFill (null, null, null)));
-
-                }
-            }
-            
-        });
+        // shadowing effect - mouse entering, exiting button
+        enteringExitingButton (profileButton, profileBox);
+    
 
         // browse
         ToggleButton browseButton = new ToggleButton ("Browse");
@@ -232,34 +134,6 @@ public class HomePage extends Application
         browseButton.setBackground (new Background(new BackgroundFill(Color.rgb (236, 231, 230), CornerRadii.EMPTY, Insets.EMPTY)));
         browseButton.setPrefWidth (WIDTH_MENU_PANE);
         browseButton.setAlignment (Pos.TOP_LEFT);
-
-        // when mouse enters the browse button 
-        browseButton.setOnMouseEntered (new EventHandler <MouseEvent>() 
-        {
-
-            @Override
-            public void handle(MouseEvent arg0) 
-            {
-               browseButton.setBackground (new Background (new BackgroundFill (Color.rgb (220, 220, 220), null, null)));
-            }
-            
-        });
-
-        // when mouse exists the browse button 
-        browseButton.setOnMouseExited (new EventHandler <MouseEvent>() 
-        {
-
-            @Override
-            public void handle(MouseEvent arg0) 
-            {
-                if (!browseButton.isSelected())
-                {
-                    browseButton.setBackground (new Background (new BackgroundFill (null, null, null)));
-
-                }
-            }
-            
-        });
 
         // ImageView of BROWSE
         ImageView browseIcon = new ImageView (getClass().getResource("images/browseIcon.png").toString());
@@ -270,31 +144,9 @@ public class HomePage extends Application
         browseBox.getChildren().addAll (browseIcon, browseButton);
         browseBox.setAlignment (Pos.CENTER);
 
-        browseBox.setOnMouseEntered (new EventHandler <MouseEvent>() 
-        {
-
-            @Override
-            public void handle(MouseEvent arg0) 
-            {
-               browseBox.setBackground (new Background (new BackgroundFill (Color.rgb (220, 220, 220), null, null)));
-            }
-            
-        });
-
-        browseBox.setOnMouseExited (new EventHandler <MouseEvent>() 
-        {
-
-            @Override
-            public void handle(MouseEvent arg0) 
-            {
-                if (!browseButton.isSelected())
-                {
-                    browseBox.setBackground (new Background (new BackgroundFill (null, null, null)));
-
-                }
-            }
-            
-        });
+        // shadowing effect - mouse entering, exiting button
+        enteringExitingButton (browseButton, browseBox);
+        
 
         // library
         ToggleButton libraryButton = new ToggleButton ("Library");
@@ -311,34 +163,6 @@ public class HomePage extends Application
         upvotedButton.setPrefWidth (WIDTH_MENU_PANE);
         upvotedButton.setAlignment (Pos.TOP_LEFT);
 
-        // when mouse enters the upvoted button 
-        upvotedButton.setOnMouseEntered (new EventHandler <MouseEvent>() 
-        {
-
-            @Override
-            public void handle(MouseEvent event) 
-            {
-               upvotedButton.setBackground (new Background (new BackgroundFill (Color.rgb (220, 220, 220), null, null)));
-            }
-            
-        });
-
-        // when mouse exists the upvoted button
-        upvotedButton.setOnMouseExited (new EventHandler <MouseEvent>() 
-        {
-
-            @Override
-            public void handle(MouseEvent event) 
-            {
-                if (!upvotedButton.isSelected())
-                {
-                    upvotedButton.setBackground (new Background (new BackgroundFill (null, null, null)));
-
-                }
-            }
-            
-        });
-
         // ImageView of UPVOTE
         ImageView upvotedIcon = new ImageView (getClass().getResource("images/upvoteIcon.png").toString());
         upvotedIcon.setFitHeight (ICON_HEIGHT);
@@ -348,30 +172,9 @@ public class HomePage extends Application
         upvotedBox.getChildren().addAll (upvotedIcon, upvotedButton);
         upvotedBox.setAlignment (Pos.CENTER);
 
-        upvotedBox.setOnMouseEntered (new EventHandler <MouseEvent>() 
-        {
+        // shadowing effect - mouse entering, exiting button
+        enteringExitingButton (upvotedButton, upvotedBox);
 
-            @Override
-            public void handle(MouseEvent event) 
-            {
-               upvotedBox.setBackground (new Background (new BackgroundFill (Color.rgb (220, 220, 220), null, null)));
-            }
-            
-        });
-
-        upvotedBox.setOnMouseExited (new EventHandler <MouseEvent>() 
-        {
-
-            @Override
-            public void handle(MouseEvent event) 
-            {
-                if (!upvotedButton.isSelected())
-                {
-                    upvotedBox.setBackground (new Background (new BackgroundFill (null, null, null)));
-                }
-            }
-            
-        });
 
         // bookmarks
         ToggleButton bookmarksButton = new ToggleButton ("Bookmarks");
@@ -379,34 +182,6 @@ public class HomePage extends Application
         bookmarksButton.setBackground (new Background(new BackgroundFill(Color.rgb (236, 231, 230), CornerRadii.EMPTY, Insets.EMPTY)));
         bookmarksButton.setPrefWidth (WIDTH_MENU_PANE);
         bookmarksButton.setAlignment (Pos.TOP_LEFT);
-
-        // when mouse enters the bookmark button 
-        bookmarksButton.setOnMouseEntered (new EventHandler <MouseEvent>() 
-        {
-
-            @Override
-            public void handle(MouseEvent event) 
-            {
-               bookmarksButton.setBackground (new Background (new BackgroundFill (Color.rgb (220, 220, 220), null, null)));
-            }
-            
-        });
-        
-        // when mouse exists the bookmarks button 
-        bookmarksButton.setOnMouseExited (new EventHandler <MouseEvent>() 
-        {
-
-            @Override
-            public void handle(MouseEvent event) 
-            {
-                if (!bookmarksButton.isSelected())
-                {
-                    bookmarksButton.setBackground (new Background (new BackgroundFill (null, null, null)));
-
-                }
-            }
-            
-        });
 
         // ImageView of BOOKMARKS
         ImageView bookmarksIcon = new ImageView (getClass().getResource("images/bookmarkIcon.png").toString());
@@ -417,30 +192,9 @@ public class HomePage extends Application
         bookmarksBox.getChildren().addAll (bookmarksIcon, bookmarksButton);
         bookmarksBox.setAlignment (Pos.CENTER);
 
-        bookmarksBox.setOnMouseEntered (new EventHandler <MouseEvent>() 
-        {
-
-            @Override
-            public void handle(MouseEvent event) 
-            {
-               bookmarksBox.setBackground (new Background (new BackgroundFill (Color.rgb (220, 220, 220), null, null)));
-            }
-            
-        });
-
-        bookmarksBox.setOnMouseExited (new EventHandler <MouseEvent>() 
-        {
-
-            @Override
-            public void handle(MouseEvent event) 
-            {
-                if (!bookmarksButton.isSelected())
-                {
-                    bookmarksBox.setBackground (new Background (new BackgroundFill (null, null, null)));
-                }
-            }
-            
-        });
+        // shadowing effect - mouse entering, exiting button
+        enteringExitingButton (bookmarksButton, bookmarksBox);
+        
 
         ToggleGroup menuPaneGroup = new ToggleGroup();
         menuPaneGroup.getToggles().addAll(homeButton, profileButton, browseButton, upvotedButton, bookmarksButton);
@@ -784,6 +538,65 @@ public class HomePage extends Application
         box.getChildren().addAll(usernameLabel, postContent, upvoteButton, upvotesLabel, downvoteButton, downvotesLabel);
 
 
+    }
+
+    private void enteringExitingButton (ToggleButton button, HBox box)
+    {
+        // when mouse enters the button
+        button.setOnMouseEntered (new EventHandler <MouseEvent>() 
+        {
+
+            @Override
+            public void handle (MouseEvent arg0) 
+            {
+                button.setBackground (new Background (new BackgroundFill (Color.rgb (220, 220, 220), null, null)));
+            }
+            
+        });
+
+        // when mouse enters the box
+        box.setOnMouseEntered (new EventHandler <MouseEvent>() 
+        {
+
+            @Override
+            public void handle (MouseEvent arg0) 
+            {
+                box.setBackground (new Background (new BackgroundFill (Color.rgb (220, 220, 220), null, null)));
+            }
+            
+        });
+
+        // when mouse exists the button
+        button.setOnMouseExited (new EventHandler <MouseEvent>() 
+        {
+
+            @Override
+            public void handle (MouseEvent arg0) 
+            {
+                if (!button.isSelected())
+                {
+                    button.setBackground (new Background (new BackgroundFill (null, null, null)));
+
+                }
+            }
+            
+        });
+
+        // when mouse exists the box
+        box.setOnMouseExited (new EventHandler <MouseEvent>() 
+        {
+
+            @Override
+            public void handle (MouseEvent arg0) 
+            {
+                if (!button.isSelected())
+                {
+                    box.setBackground (new Background (new BackgroundFill (null, null, null)));
+
+                }
+            }
+            
+        });
     }
 
     public void colorBackground(ToggleButton button, HBox box)
