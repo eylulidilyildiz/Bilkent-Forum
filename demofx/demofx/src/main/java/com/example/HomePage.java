@@ -494,7 +494,7 @@ public class HomePage extends Application
                     if(isPostUpvoted)
                     {
                         currentpost.decreaseUpvotes();
-                        // TODO: We need to remove this post from main user's liked-posts
+                        mainUser.removeLikedPost("" + postID);
                     }
                     else{
                         currentpost.increaseUpvotes();

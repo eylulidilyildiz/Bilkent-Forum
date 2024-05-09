@@ -83,7 +83,7 @@ public class User
 	}
 
 	public void addLikedPosts(String postID){
-		if(this.likedPosts.length() != 0)
+		if(this.likedPosts != null)
 		{
 			this.likedPosts += ",";
 		}
@@ -93,15 +93,18 @@ public class User
 	public void removeLikedPost(String postID)
 	{
 		String [] currentLikedPosts =  this.likedPosts.split(",");
-		String modifiedLikedPosts = "";
+		String modifiedLikedPosts = null;
 		for (int i = 0; i < currentLikedPosts.length; i++)
 		{
 			if(!postID.equals(currentLikedPosts[i]))
 			{
-				
+				if(modifiedLikedPosts != null)
+				{
+					modifiedLikedPosts += ",";
+				}
+				modifiedLikedPosts += currentLikedPosts[i];
 			}
 		}
-
-
+		this.likedPosts = modifiedLikedPosts;
 	}
 }
