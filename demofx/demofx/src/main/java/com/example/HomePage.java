@@ -39,6 +39,14 @@ import javafx.geometry.*;
 
 public class HomePage extends Application 
 {
+    // Instance Variables for buttons
+    private boolean isHomeClicked = true;
+    private boolean isProfileClicked = false;
+    private boolean isBrowseClicked = false;
+    private boolean isUpvotedClicked = false;
+    private boolean isBookmarksClicked = false;
+
+
     public static void main(String[] args) 
     {
         launch(args);
@@ -282,7 +290,7 @@ public class HomePage extends Application
         {
 
             @Override
-            public void handle(MouseEvent arg0) 
+            public void handle(MouseEvent event) 
             {
                upvotedButton.setBackground (new Background (new BackgroundFill (Color.rgb (220, 220, 220), null, null)));
             }
@@ -294,7 +302,7 @@ public class HomePage extends Application
         {
 
             @Override
-            public void handle(MouseEvent arg0) 
+            public void handle(MouseEvent event) 
             {
                upvotedButton.setBackground (new Background (new BackgroundFill (null, null, null)));
             }
@@ -314,7 +322,7 @@ public class HomePage extends Application
         {
 
             @Override
-            public void handle(MouseEvent arg0) 
+            public void handle(MouseEvent event) 
             {
                upvotedBox.setBackground (new Background (new BackgroundFill (Color.rgb (220, 220, 220), null, null)));
             }
@@ -325,7 +333,7 @@ public class HomePage extends Application
         {
 
             @Override
-            public void handle(MouseEvent arg0) 
+            public void handle(MouseEvent event) 
             {
                upvotedBox.setBackground (new Background (new BackgroundFill (null, null, null)));
             }
@@ -344,7 +352,7 @@ public class HomePage extends Application
         {
 
             @Override
-            public void handle(MouseEvent arg0) 
+            public void handle(MouseEvent event) 
             {
                bookmarksButton.setBackground (new Background (new BackgroundFill (Color.rgb (220, 220, 220), null, null)));
             }
@@ -356,7 +364,7 @@ public class HomePage extends Application
         {
 
             @Override
-            public void handle(MouseEvent arg0) 
+            public void handle(MouseEvent event) 
             {
                bookmarksButton.setBackground (new Background (new BackgroundFill (null, null, null)));
             }
@@ -376,7 +384,7 @@ public class HomePage extends Application
         {
 
             @Override
-            public void handle(MouseEvent arg0) 
+            public void handle(MouseEvent event) 
             {
                bookmarksBox.setBackground (new Background (new BackgroundFill (Color.rgb (220, 220, 220), null, null)));
             }
@@ -387,9 +395,65 @@ public class HomePage extends Application
         {
 
             @Override
-            public void handle(MouseEvent arg0) 
+            public void handle(MouseEvent event) 
             {
                bookmarksBox.setBackground (new Background (new BackgroundFill (null, null, null)));
+            }
+            
+        });
+
+        /* WHEN BUTTONS ARE CLICKED */
+        // when home button is clicked
+        homeButton.setOnAction (new EventHandler <ActionEvent>() 
+        {
+            @Override
+            public void handle (ActionEvent event) 
+            {
+                // Open the home page
+            }
+            
+        });
+
+        // when profile button is clicked
+        profileButton.setOnAction (new EventHandler<ActionEvent>() 
+        {
+            @Override
+            public void handle (ActionEvent event) 
+            {
+                // Open the profile page
+            }
+            
+        });
+
+        // when browse button is clicked
+        browseButton.setOnAction (new EventHandler<ActionEvent>() 
+        {
+            @Override
+            public void handle (ActionEvent event) 
+            {
+                // Open the browse page
+            }
+            
+        });
+
+        // when upvoted botton is clicked
+        upvotedButton.setOnAction (new EventHandler<ActionEvent>() 
+        {
+            @Override
+            public void handle (ActionEvent event) 
+            {
+                // Open the upvoted page
+            }
+            
+        });
+
+        // when the bookmarks button is clicked
+        bookmarksButton.setOnAction (new EventHandler<ActionEvent>() 
+        {
+            @Override
+            public void handle (ActionEvent event) 
+            {
+                // Open the bookmarks page
             }
             
         });
