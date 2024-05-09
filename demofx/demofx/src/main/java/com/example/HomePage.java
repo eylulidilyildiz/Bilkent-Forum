@@ -601,8 +601,10 @@ public class HomePage extends Application
         postContent.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 18));
         postContent.setEditable(false);
 
-         HBox semesterBox = new HBox();
-        semesterBox.setAlignment(Pos.CENTER);
+        HBox supvoteDownvoteBox = new HBox();
+        
+        upvoteDownvoteBox.setAlignment(Pos.CENTER);
+
         semesterBox.setSpacing(10);
         Label semesterLabel = new Label ("Semester:");
         
