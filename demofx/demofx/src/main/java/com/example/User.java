@@ -95,19 +95,45 @@ public class User
 
 	public void removeUpvotedPosts(String postID)
 	{
-		String [] currentLikedPosts =  this.upvotedPosts.split(",");
-		String modifiedLikedPosts = "";
-		for (int i = 0; i < currentLikedPosts.length; i++)
+		String [] currentUpvotedPosts =  this.upvotedPosts.split(",");
+		String modifiedUpvotedPosts = "";
+		for (int i = 0; i < currentUpvotedPosts.length; i++)
 		{
-			if(!postID.equals(currentLikedPosts[i]))
+			if(!postID.equals(currentUpvotedPosts[i]))
 			{
-				if(modifiedLikedPosts != null)
+				if(modifiedUpvotedPosts != null)
 				{
-					modifiedLikedPosts += ",";
+					modifiedUpvotedPosts += ",";
 				}
-				modifiedLikedPosts += currentLikedPosts[i];
+				modifiedUpvotedPosts += currentUpvotedPosts[i];
 			}
 		}
-		this.upvotedPosts = modifiedLikedPosts;
+		this.upvotedPosts = modifiedUpvotedPosts;
+	}
+
+	public void addDownvotedPosts(String postID){
+		if(this.downvotedPosts != null)
+		{
+			this.downvotedPosts += ",";
+		}
+		this.downvotedPosts +=postID;
+	}
+
+	public void removeDownvotedPosts(String postID)
+	{
+		String [] currentDownvotedPosts =  this.downvotedPosts.split(",");
+		String modifiedDownvotedPosts = "";
+		for (int i = 0; i < currentDownvotedPosts.length; i++)
+		{
+			if(!postID.equals(currentDownvotedPosts[i]))
+			{
+				if(modifiedDownvotedPosts != null)
+				{
+					modifiedDownvotedPosts += ",";
+				}
+				modifiedDownvotedPosts += currentDownvotedPosts[i];
+			}
+		}
+		this.downvotedPosts = modifiedDownvotedPosts;
 	}
 }

@@ -492,7 +492,7 @@ public class HomePage extends Application
                 try{
                     tx = session.beginTransaction();
                     Post currentpost = session.get(Post.class, currentid);
-                    upvoteButton.setSelected(true);
+
                     if(isPostUpvoted)
                     {
                         currentpost.decreaseUpvotes();
@@ -523,6 +523,7 @@ public class HomePage extends Application
             public void handle(ActionEvent event) 
             {
                 int currentid = downvoteButton.getPostID();
+                boolean isPostDownvoted = isPostDownvoted(currentid);
 
                 DatabaseConnection.connect(); 
 
@@ -532,9 +533,22 @@ public class HomePage extends Application
                 try{
                     tx = session.beginTransaction();
                     Post currentpost = session.get(Post.class, currentid);
-                    currentpost.increaseDownvotes();
+
+                    if(isPostDownvoted)
+                    {
+                        currentpost.decreaseDownvotes();
+                        mainUser.removeDownvotedPosts("" + postID);
+                        downvoteButton.setSelected(false);
+                    }
+                    else{
+                        currentpost.increaseDownvotes();
+                        mainUser.addDownvotedPosts(""+ postID);
+                        downvoteButton.setSelected(true);
+                    }
                     tx.commit();
+
                     downvotesLabel.setText("" + currentpost.getDownvotes());
+
   
                 } catch (Exception e) {
                     if (tx != null) tx.rollback();
@@ -643,6 +657,25 @@ public class HomePage extends Application
         for(int i = 0; i < upvotedPostsArray.length; i++)
         {
             if(postIDString.equals(upvotedPostsArray[i]))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isPostDownvoted(int postID)
+    {
+        String downvotedPosts = mainUser.getDownvotedPosts();
+        if(downvotedPosts == null)
+        {
+            return false;
+        }
+        String [] downvotedPostsArray = downvotedPosts.split(",");
+        String postIDString = "" + postID;
+        for(int i = 0; i < downvotedPostsArray.length; i++)
+        {
+            if(postIDString.equals(downvotedPostsArray[i]))
             {
                 return true;
             }
