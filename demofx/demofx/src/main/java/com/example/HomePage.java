@@ -40,7 +40,7 @@ import javafx.geometry.*;
 public class HomePage extends Application 
 {
     // Instance Variables for buttons
-    private boolean isHomeClicked = true;
+    private boolean isHomeClicked = false;
     private boolean isProfileClicked = false;
     private boolean isBrowseClicked = false;
     private boolean isUpvotedClicked = false;
@@ -171,7 +171,11 @@ public class HomePage extends Application
             @Override
             public void handle(MouseEvent arg0) 
             {
-               profileButton.setBackground (new Background (new BackgroundFill (null, null, null)));
+                if (!isProfileClicked || isBookmarksClicked || isBrowseClicked || isHomeClicked || isUpvotedClicked)
+                {
+                    profileButton.setBackground (new Background (new BackgroundFill (null, null, null)));
+
+                }
             }
             
         });
@@ -202,7 +206,11 @@ public class HomePage extends Application
             @Override
             public void handle(MouseEvent arg0) 
             {
-               profileBox.setBackground (new Background (new BackgroundFill (null, null, null)));
+                if (!isProfileClicked || isBookmarksClicked || isBrowseClicked || isHomeClicked || isUpvotedClicked)
+                {
+                    profileBox.setBackground (new Background (new BackgroundFill (null, null, null)));
+
+                }
             }
             
         });
@@ -233,7 +241,11 @@ public class HomePage extends Application
             @Override
             public void handle(MouseEvent arg0) 
             {
-               browseButton.setBackground (new Background (new BackgroundFill (null, null, null)));
+                if (!isBrowseClicked || isProfileClicked || isBookmarksClicked || isUpvotedClicked || isHomeClicked)
+                {
+                    browseButton.setBackground (new Background (new BackgroundFill (null, null, null)));
+
+                }
             }
             
         });
@@ -420,6 +432,11 @@ public class HomePage extends Application
             @Override
             public void handle (ActionEvent event) 
             {
+                if (!isProfileClicked)
+                {
+                    isProfileClicked = !isProfileClicked;
+
+                }
                 // Open the profile page
             }
             
@@ -431,6 +448,10 @@ public class HomePage extends Application
             @Override
             public void handle (ActionEvent event) 
             {
+                if (!isBrowseClicked)
+                {
+                    isBrowseClicked = !isBrowseClicked;
+                }
                 // Open the browse page
             }
             
