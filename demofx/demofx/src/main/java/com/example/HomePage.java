@@ -10,6 +10,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -170,6 +171,17 @@ public class HomePage extends Application
             
         });
 
+        // ImageView of HOME
+        ImageView homeIcon = new ImageView (getClass().getResource("images/homeIcon.png").toString());
+        homeIcon.setFitHeight (20);
+        homeIcon.setFitWidth (20);
+        
+
+        // The whole home section with the image
+        HBox homeBox = new HBox ();
+        homeBox.getChildren().addAll (homeIcon, homeButton);
+        homeBox.setAlignment (Pos.CENTER); // Aligning the image and button
+
 
         // profile
         Button profileButton = new Button ("Profile");
@@ -202,6 +214,14 @@ public class HomePage extends Application
             
         });
 
+        // ImageView of PROFILE
+        ImageView profileIcon = new ImageView (getClass().getResource("images/profileIcon.png").toString());
+        profileIcon.setFitHeight (20);
+        profileIcon.setFitWidth (20);
+
+        HBox profileBox = new HBox();
+        profileBox.getChildren().addAll (profileIcon, profileButton);
+        profileBox.setAlignment (Pos.CENTER);
 
 
         // browse
@@ -234,6 +254,16 @@ public class HomePage extends Application
             }
             
         });
+
+        // ImageView of BROWSE
+        ImageView browseIcon = new ImageView (getClass().getResource("images/browseIcon.png").toString());
+        browseIcon.setFitHeight (20);
+        browseIcon.setFitWidth (20);
+
+        HBox browseBox = new HBox();
+        browseBox.getChildren().addAll (browseIcon, browseButton);
+        browseBox.setAlignment (Pos.CENTER);
+
 
         // library
         Button libraryButton = new Button ("Library");
@@ -275,6 +305,16 @@ public class HomePage extends Application
             
         });
 
+        // ImageView of UPVOTE
+        ImageView upvotedIcon = new ImageView (getClass().getResource("images/upvoteIcon.png").toString());
+        upvotedIcon.setFitHeight (20);
+        upvotedIcon.setFitWidth (20);
+
+        HBox upvotedBox = new HBox();
+        upvotedBox.getChildren().addAll (upvotedIcon, upvotedButton);
+        upvotedBox.setAlignment (Pos.CENTER);
+
+
         // bookmarks
         Button bookmarksButton = new Button ("Bookmarks");
         bookmarksButton.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
@@ -305,6 +345,15 @@ public class HomePage extends Application
             }
             
         });
+
+        // ImageView of BOOKMARKS
+        ImageView bookmarksIcon = new ImageView (getClass().getResource("images/bookmarkIcon.png").toString());
+        bookmarksIcon.setFitHeight (20);
+        bookmarksIcon.setFitWidth (20);
+
+        HBox bookmarksBox = new HBox();
+        bookmarksBox.getChildren().addAll (bookmarksIcon, bookmarksButton);
+        bookmarksBox.setAlignment (Pos.CENTER);
 
 
         // LOGOUT
@@ -350,11 +399,11 @@ public class HomePage extends Application
 
         VBox discoverBox = new VBox();
         discoverBox.setPadding(new Insets(10));
-        discoverBox.getChildren().addAll (discoverButton, homeButton, profileButton, browseButton);
+        discoverBox.getChildren().addAll (discoverButton, homeBox, profileBox, browseBox);
 
         VBox libraryBox = new VBox();
         libraryBox.setPadding(new Insets(10));
-        libraryBox.getChildren().addAll (libraryButton, upvotedButton, bookmarksButton);
+        libraryBox.getChildren().addAll (libraryButton, upvotedBox, bookmarksBox);
 
         menuPane.add(forumLabel, 0, 1);
         menuPane.add(discoverBox, 0, 2);
