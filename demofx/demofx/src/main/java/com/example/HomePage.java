@@ -1,5 +1,6 @@
 package com.example;
 
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -661,8 +662,8 @@ public class HomePage extends Application
 
 
 
-    /* HELPER METHODS */
-    class UpvoteButton extends Button{
+    //UPVOTE AND DOWNVOTE BUTTONS
+    class UpvoteButton extends ToggleButton{
         private int postID;
 
         public UpvoteButton(String str, int postID)
@@ -675,7 +676,21 @@ public class HomePage extends Application
         {
             return this.postID;
         }
+    }
 
+    class DownvoteButton extends ToggleButton{
+        private int postID;
+
+        public DownvoteButton(String str, int postID)
+        {
+            super(str);
+            this.postID = postID; 
+        }
+
+        public int getPostID()
+        {
+            return this.postID;
+        }
     }
 
 
@@ -685,12 +700,19 @@ public class HomePage extends Application
         String description = post.getContent();
         String date = post.getDate();
         boolean isSalePost = post.getIsSalePost();
-        //int numOfUpvotes = post.getUpvotes();
-        int numOfDownvotes = post.getDownvotes();
+
         int postID = post.getId();
 
         UpvoteButton upvoteButton = new UpvoteButton("Upvote", postID);
         Label upvotesLabel = new Label("" + post.getUpvotes());
+        DownvoteButton downvoteButton = new DownvoteButton("Downvote", postID);
+        Label downvotesLabel = new Label("" + post.getDownvotes());
+
+        ToggleGroup upvoteAndDownvote = new ToggleGroup();
+        upvoteButton.setToggleGroup(upvoteAndDownvote);
+        downvoteButton.setToggleGroup(upvoteAndDownvote);
+        //upvoteAndDownvote.getToggles().addAll(upvoteButton, downvoteButton);
+        
                 
         upvoteButton.setOnAction(new EventHandler<ActionEvent>() 
         {
@@ -707,9 +729,38 @@ public class HomePage extends Application
                 try{
                     tx = session.beginTransaction();
                     Post currentpost = session.get(Post.class, currentid);
-                    currentpost.setUpvotes(currentpost.getUpvotes() + 1);
+                    currentpost.increaseUpvotes();
                     tx.commit();
                     upvotesLabel.setText("" + currentpost.getUpvotes());
+  
+                } catch (Exception e) {
+                    if (tx != null) tx.rollback();
+                    e.printStackTrace();
+                } finally {
+                    session.close();
+                }
+                
+            } 
+        });
+
+        downvoteButton.setOnAction(new EventHandler<ActionEvent>() 
+        {
+            @Override 
+            public void handle(ActionEvent event) 
+            {
+                int currentid = downvoteButton.getPostID();
+
+                DatabaseConnection.connect(); 
+
+                Session session = DatabaseConnection.getSessionFactory().openSession();
+                Transaction tx = null;
+
+                try{
+                    tx = session.beginTransaction();
+                    Post currentpost = session.get(Post.class, currentid);
+                    currentpost.increaseDownvotes();
+                    tx.commit();
+                    downvotesLabel.setText("" + currentpost.getDownvotes());
   
                 } catch (Exception e) {
                     if (tx != null) tx.rollback();
@@ -730,7 +781,7 @@ public class HomePage extends Application
         
         
 
-        box.getChildren().addAll(usernameLabel, postContent, upvoteButton, upvotesLabel);
+        box.getChildren().addAll(usernameLabel, postContent, upvoteButton, upvotesLabel, downvoteButton, downvotesLabel);
 
 
     }
