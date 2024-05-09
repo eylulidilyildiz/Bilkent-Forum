@@ -82,7 +82,26 @@ public class User
 		this.department = newDepartment;
 	}
 
-	public void addLikedPosts(String newPost){
-		this.likedPosts += "," + newPost;
+	public void addLikedPosts(String postID){
+		if(this.likedPosts.length() != 0)
+		{
+			this.likedPosts += ",";
+		}
+		this.likedPosts +=postID;
+	}
+
+	public void removeLikedPost(String postID)
+	{
+		String [] currentLikedPosts =  this.likedPosts.split(",");
+		String modifiedLikedPosts = "";
+		for (int i = 0; i < currentLikedPosts.length; i++)
+		{
+			if(!postID.equals(currentLikedPosts[i]))
+			{
+				
+			}
+		}
+
+
 	}
 }
