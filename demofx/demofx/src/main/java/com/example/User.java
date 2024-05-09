@@ -101,10 +101,13 @@ public class User
 		{
 			if(!postID.equals(currentLikedPosts[i]))
 			{
-				
+				if(modifiedLikedPosts != null)
+				{
+					modifiedLikedPosts += ",";
+				}
+				modifiedLikedPosts += currentLikedPosts[i];
 			}
 		}
-
-
+		this.upvotedPosts = modifiedLikedPosts;
 	}
 }
