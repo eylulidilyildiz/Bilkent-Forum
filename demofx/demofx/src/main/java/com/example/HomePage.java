@@ -1,6 +1,7 @@
 package com.example;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -598,11 +599,29 @@ public class HomePage extends Application
         catch (Exception e) {
             e.printStackTrace();
         } finally {
-            DatabaseConnection.disconnect(); 
+            //DatabaseConnection.disconnect(); 
         }
 
     }
 
+
+
+    /* HELPER METHODS */
+    class UpvoteButton extends Button{
+        private int postID;
+
+        public UpvoteButton(String str, int postID)
+        {
+            super(str);
+            this.postID = postID; 
+        }
+
+        public int getPostID()
+        {
+            return this.postID;
+        }
+
+    }
 
 
     /* HELPER METHODS */
@@ -613,8 +632,9 @@ public class HomePage extends Application
         boolean isSalePost = post.getIsSalePost();
         //int numOfUpvotes = post.getUpvotes();
         int numOfDownvotes = post.getDownvotes();
+        int postID = post.getId();
 
-        Button upvoteButton = new Button("Upvote");
+        UpvoteButton upvoteButton = new UpvoteButton("Upvote", postID);
         Label upvotesLabel = new Label("" + post.getUpvotes());
                 
         upvoteButton.setOnAction(new EventHandler<ActionEvent>() 
@@ -622,8 +642,27 @@ public class HomePage extends Application
             @Override 
             public void handle(ActionEvent event) 
             {
-                post.setUpvotes(post.getUpvotes() + 1);
-                upvotesLabel.setText("" + post.getUpvotes());
+                int currentid = upvoteButton.getPostID();
+
+                DatabaseConnection.connect(); 
+
+                Session session = DatabaseConnection.getSessionFactory().openSession();
+                Transaction tx = null;
+
+                try{
+                    tx = session.beginTransaction();
+                    Post currentpost = session.get(Post.class, currentid);
+                    currentpost.setUpvotes(currentpost.getUpvotes() + 1);
+                    tx.commit();
+                    upvotesLabel.setText("" + currentpost.getUpvotes());
+  
+                } catch (Exception e) {
+                    if (tx != null) tx.rollback();
+                    e.printStackTrace();
+                } finally {
+                    session.close();
+                }
+                
             } 
         });
 
@@ -640,4 +679,5 @@ public class HomePage extends Application
     }
     
 }
+    
 
