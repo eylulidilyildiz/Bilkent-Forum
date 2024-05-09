@@ -31,7 +31,9 @@ public class User
 
 	@Column(name = "Department") private String department;
 
-	@Column(name = "likedPosts") private String likedPosts;
+	@Column(name = "upvotedPosts") private String upvotedPosts;
+
+	@Column(name = "downvotedPosts") private String downvotedPosts;
 
 	public int getId() { return id; }
 	public String getUsername() { return username; }
@@ -43,7 +45,8 @@ public class User
 	public String getSurname() { return surname; }
 	public int getSemester() { return semester; }
 	public String getDepartment() { return department; }
-	public String getLikedPosts() { return likedPosts; }
+	public String getUpvotedPosts() { return upvotedPosts; }
+	public String getDownvotedPosts() { return downvotedPosts; }
 
 
 	public void setPostIDs(String newIDs){
@@ -82,17 +85,17 @@ public class User
 		this.department = newDepartment;
 	}
 
-	public void addLikedPosts(String postID){
-		if(this.likedPosts.length() != 0)
+	public void addUpvotedPosts(String postID){
+		if(this.upvotedPosts.length() != 0)
 		{
-			this.likedPosts += ",";
+			this.upvotedPosts += ",";
 		}
-		this.likedPosts +=postID;
+		this.upvotedPosts +=postID;
 	}
 
-	public void removeLikedPost(String postID)
+	public void removeUpvotedPosts(String postID)
 	{
-		String [] currentLikedPosts =  this.likedPosts.split(",");
+		String [] currentLikedPosts =  this.upvotedPosts.split(",");
 		String modifiedLikedPosts = "";
 		for (int i = 0; i < currentLikedPosts.length; i++)
 		{
