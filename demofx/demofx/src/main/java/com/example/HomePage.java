@@ -57,81 +57,8 @@ public class HomePage extends Application
         forumLabel.setPrefWidth(248);
         forumLabel.setAlignment(Pos.CENTER);
 
-        //labels of the menu
-        Label discoverLabel = new Label("Discover");
-        discoverLabel.setFont(Font.font("Tahoma", FontWeight.BOLD, FontPosture.REGULAR, 24));
-        discoverLabel.setTextFill (Color.rgb (101, 14, 63));
 
-        // home, profile, browse
-        Label homeLabel = new Label("Home");
-        homeLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
-        Label profileLabel = new Label("Profile");
-        profileLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
-        Label browseLabel = new Label("Browse");
-        browseLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
-
-       
-        // library
-        Label libraryLabel = new Label("Library");
-        libraryLabel.setFont(Font.font("Tahoma", FontWeight.BOLD, FontPosture.REGULAR, 24));
-        libraryLabel.setTextFill (Color.rgb (101, 14, 63));
-
-        // upvoted, bookmarks
-        Label upvotedPostsLabel = new Label("Upvoted Posts");
-        upvotedPostsLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
-        Label bookmarksLabel = new Label("Bookmarks");
-        bookmarksLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
-
-
-        // PROFILE PAGE / SCENE
-        // when profile is clicked
-        profileLabel.setOnMouseClicked (new EventHandler <MouseEvent>() 
-        {
-            @Override
-            public void handle (MouseEvent event)
-            {
-               
-            }
-        });
-
-        
-        // BROWSE PAGE / SCENE
-        // when browse is clicked
-        browseLabel.setOnMouseClicked(new EventHandler <MouseEvent>() 
-        {
-            @Override
-            public void handle (MouseEvent event)
-            {
-               
-            }
-
-        });
-        
-        // UPVOTED SCENE
-        // when upvoted is clicked
-        upvotedPostsLabel.setOnMouseClicked(new EventHandler <MouseEvent>() 
-        {
-            @Override
-            public void handle (MouseEvent event)
-            {
-               
-            }
-
-        });
-        
-        // BOOKMARKED SCENE
-        // when bookmarks is clicked
-        bookmarksLabel.setOnMouseClicked(new EventHandler <MouseEvent>() 
-        {
-            @Override
-            public void handle (MouseEvent event)
-            {
-               
-            }
-
-        });
-        
-        // Buttonss
+        // SECTIONS OF THE MENU
         // discovery
         Button discoverButton = new Button ("Discovery");
         discoverButton.setFont(Font.font("Tahoma", FontWeight.BOLD, FontPosture.REGULAR, 22));
@@ -182,6 +109,27 @@ public class HomePage extends Application
         homeBox.getChildren().addAll (homeIcon, homeButton);
         homeBox.setAlignment (Pos.CENTER); // Aligning the image and button
 
+        homeBox.setOnMouseEntered (new EventHandler <MouseEvent>() 
+        {
+            @Override
+            public void handle(MouseEvent arg0) 
+            {
+               homeBox.setBackground (new Background (new BackgroundFill (Color.rgb (220, 220, 220), null, null)));
+            }
+            
+        });
+
+        homeBox.setOnMouseExited (new EventHandler <MouseEvent>() 
+        {
+
+            @Override
+            public void handle(MouseEvent arg0) 
+            {
+               homeBox.setBackground (new Background (new BackgroundFill (null, null, null)));
+            }
+            
+        });
+
 
         // profile
         Button profileButton = new Button ("Profile");
@@ -223,6 +171,27 @@ public class HomePage extends Application
         profileBox.getChildren().addAll (profileIcon, profileButton);
         profileBox.setAlignment (Pos.CENTER);
 
+        profileBox.setOnMouseEntered (new EventHandler <MouseEvent>() 
+        {
+
+            @Override
+            public void handle(MouseEvent arg0) 
+            {
+               profileBox.setBackground (new Background (new BackgroundFill (Color.rgb (220, 220, 220), null, null)));
+            }
+            
+        });
+
+        profileBox.setOnMouseExited (new EventHandler <MouseEvent>() 
+        {
+
+            @Override
+            public void handle(MouseEvent arg0) 
+            {
+               profileBox.setBackground (new Background (new BackgroundFill (null, null, null)));
+            }
+            
+        });
 
         // browse
         Button browseButton = new Button ("Browse");
@@ -264,6 +233,27 @@ public class HomePage extends Application
         browseBox.getChildren().addAll (browseIcon, browseButton);
         browseBox.setAlignment (Pos.CENTER);
 
+        browseBox.setOnMouseEntered (new EventHandler <MouseEvent>() 
+        {
+
+            @Override
+            public void handle(MouseEvent arg0) 
+            {
+               browseBox.setBackground (new Background (new BackgroundFill (Color.rgb (220, 220, 220), null, null)));
+            }
+            
+        });
+
+        browseBox.setOnMouseExited (new EventHandler <MouseEvent>() 
+        {
+
+            @Override
+            public void handle(MouseEvent arg0) 
+            {
+               browseBox.setBackground (new Background (new BackgroundFill (null, null, null)));
+            }
+            
+        });
 
         // library
         Button libraryButton = new Button ("Library");
@@ -314,6 +304,27 @@ public class HomePage extends Application
         upvotedBox.getChildren().addAll (upvotedIcon, upvotedButton);
         upvotedBox.setAlignment (Pos.CENTER);
 
+        upvotedBox.setOnMouseEntered (new EventHandler <MouseEvent>() 
+        {
+
+            @Override
+            public void handle(MouseEvent arg0) 
+            {
+               upvotedBox.setBackground (new Background (new BackgroundFill (Color.rgb (220, 220, 220), null, null)));
+            }
+            
+        });
+
+        upvotedBox.setOnMouseExited (new EventHandler <MouseEvent>() 
+        {
+
+            @Override
+            public void handle(MouseEvent arg0) 
+            {
+               upvotedBox.setBackground (new Background (new BackgroundFill (null, null, null)));
+            }
+            
+        });
 
         // bookmarks
         Button bookmarksButton = new Button ("Bookmarks");
@@ -354,6 +365,28 @@ public class HomePage extends Application
         HBox bookmarksBox = new HBox();
         bookmarksBox.getChildren().addAll (bookmarksIcon, bookmarksButton);
         bookmarksBox.setAlignment (Pos.CENTER);
+
+        bookmarksBox.setOnMouseEntered (new EventHandler <MouseEvent>() 
+        {
+
+            @Override
+            public void handle(MouseEvent arg0) 
+            {
+               bookmarksBox.setBackground (new Background (new BackgroundFill (Color.rgb (220, 220, 220), null, null)));
+            }
+            
+        });
+
+        bookmarksBox.setOnMouseExited (new EventHandler <MouseEvent>() 
+        {
+
+            @Override
+            public void handle(MouseEvent arg0) 
+            {
+               bookmarksBox.setBackground (new Background (new BackgroundFill (null, null, null)));
+            }
+            
+        });
 
 
         // LOGOUT
