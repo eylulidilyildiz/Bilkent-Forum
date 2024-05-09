@@ -513,6 +513,7 @@ public class HomePage extends Application
                         currentpost.decreaseUpvotes();
                         mainUser.removeUpvotedPosts("" + postID);
                         upvoteButton.setSelected(false);
+                        neitherIsSelected.setSelected(true);
                         downvoteButton.setDisable(false);
                     }
                     else{
@@ -556,6 +557,7 @@ public class HomePage extends Application
                         currentpost.decreaseDownvotes();
                         mainUser.removeDownvotedPosts("" + postID);
                         downvoteButton.setSelected(false);
+                        neitherIsSelected.setSelected(true);
                         upvoteButton.setDisable(false);
                     }
                     else{
@@ -671,8 +673,9 @@ public class HomePage extends Application
         {
             return false;
         }
-        String [] upvotedPostsArray = upvotedPosts.split(",");
+
         String postIDString = "" + postID;
+        String [] upvotedPostsArray = upvotedPosts.split(",");
         for(int i = 0; i < upvotedPostsArray.length; i++)
         {
             if(postIDString.equals(upvotedPostsArray[i]))
