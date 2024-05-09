@@ -469,11 +469,26 @@ public class HomePage extends Application
         DownvoteButton downvoteButton = new DownvoteButton("Downvote", postID);
         Label downvotesLabel = new Label("" + post.getDownvotes());
 
+        ToggleButton neitherIsSelected = new ToggleButton();
 
         ToggleGroup upvoteAndDownvote = new ToggleGroup();
         upvoteButton.setToggleGroup(upvoteAndDownvote);
         downvoteButton.setToggleGroup(upvoteAndDownvote);
-        //upvoteAndDownvote.getToggles().addAll(upvoteButton, downvoteButton);
+        neitherIsSelected.setToggleGroup(upvoteAndDownvote);
+
+        if(isPostUpvoted(postID))
+        {
+            upvoteButton.setSelected(true);
+            downvoteButton.setDisable(true);
+        }
+        else if(isPostDownvoted(postID))
+        {
+            downvoteButton.setSelected(true);
+            upvoteButton.setDisable(true);
+        }
+        else{
+            neitherIsSelected.setSelected(true);
+        }
         
                 
         upvoteButton.setOnAction(new EventHandler<ActionEvent>() 
@@ -498,11 +513,13 @@ public class HomePage extends Application
                         currentpost.decreaseUpvotes();
                         mainUser.removeUpvotedPosts("" + postID);
                         upvoteButton.setSelected(false);
+                        downvoteButton.setDisable(false);
                     }
                     else{
                         currentpost.increaseUpvotes();
                         mainUser.addUpvotedPosts(""+ postID);
                         upvoteButton.setSelected(true);
+                        downvoteButton.setDisable(true);
                     }
                     tx.commit();
 
@@ -539,11 +556,13 @@ public class HomePage extends Application
                         currentpost.decreaseDownvotes();
                         mainUser.removeDownvotedPosts("" + postID);
                         downvoteButton.setSelected(false);
+                        upvoteButton.setDisable(false);
                     }
                     else{
                         currentpost.increaseDownvotes();
                         mainUser.addDownvotedPosts(""+ postID);
                         downvoteButton.setSelected(true);
+                        upvoteButton.setDisable(true);
                     }
                     tx.commit();
 
