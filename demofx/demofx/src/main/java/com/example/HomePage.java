@@ -697,7 +697,7 @@ public class HomePage extends Application
                 try{
                     tx = session.beginTransaction();
                     Post currentpost = session.get(Post.class, currentid);
-                    currentpost.setUpvotes(currentpost.getUpvotes() + 1);
+                    currentpost.increaseUpvotes();;
                     tx.commit();
                     upvotesLabel.setText("" + currentpost.getUpvotes());
   
