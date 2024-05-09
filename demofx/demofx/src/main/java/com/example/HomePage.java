@@ -19,6 +19,8 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
@@ -54,14 +56,13 @@ public class HomePage extends Application
     }
     
 
-    @Override
+   @Override
     public void start (Stage homeStage) throws Exception {
 
         // CONSTANTS
         final int WIDTH_MENU_PANE = 250;
         final int ICON_WIDTH = 20;
         final int ICON_HEIGHT = 20;
-
 
         //MENU ON THE LEFT
 
@@ -72,10 +73,9 @@ public class HomePage extends Application
         forumLabel.setPrefWidth(248);
         forumLabel.setAlignment(Pos.CENTER);
 
-
         // SECTIONS OF THE MENU
         // discovery
-        Button discoverButton = new Button ("Discovery");
+        ToggleButton discoverButton = new ToggleButton ("Discovery");
         discoverButton.setFont(Font.font("Tahoma", FontWeight.BOLD, FontPosture.REGULAR, 22));
         discoverButton.setBackground (new Background(new BackgroundFill(Color.rgb (236, 231, 230), CornerRadii.EMPTY, Insets.EMPTY)));
         discoverButton.setPrefWidth (WIDTH_MENU_PANE);
@@ -83,7 +83,7 @@ public class HomePage extends Application
         discoverButton.setTextFill (Color.rgb (101, 14, 63));
 
         // home
-        Button homeButton = new Button ("Home");
+        ToggleButton homeButton = new ToggleButton ("Home");
         homeButton.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
         homeButton.setBackground (new Background(new BackgroundFill(Color.rgb (236, 231, 230), CornerRadii.EMPTY, Insets.EMPTY)));
         homeButton.setPrefWidth (WIDTH_MENU_PANE);
@@ -108,7 +108,11 @@ public class HomePage extends Application
             @Override
             public void handle(MouseEvent arg0) 
             {
-               homeButton.setBackground (new Background (new BackgroundFill (null, null, null)));
+                if (!homeButton.isSelected())
+                {
+                    homeButton.setBackground (new Background (new BackgroundFill (null, null, null)));
+
+                }
             }
             
         });
@@ -140,14 +144,17 @@ public class HomePage extends Application
             @Override
             public void handle(MouseEvent arg0) 
             {
-               homeBox.setBackground (new Background (new BackgroundFill (null, null, null)));
+                if (!homeButton.isSelected())
+                {
+                    homeBox.setBackground (new Background (new BackgroundFill (null, null, null)));
+                    
+                }
             }
             
         });
 
-
         // profile
-        Button profileButton = new Button ("Profile");
+        ToggleButton profileButton = new ToggleButton ("Profile");
         profileButton.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
         profileButton.setBackground (new Background(new BackgroundFill(Color.rgb (236, 231, 230), CornerRadii.EMPTY, Insets.EMPTY)));
         profileButton.setPrefWidth (WIDTH_MENU_PANE);
@@ -172,7 +179,7 @@ public class HomePage extends Application
             @Override
             public void handle(MouseEvent arg0) 
             {
-                if (!isProfileClicked || isBookmarksClicked || isBrowseClicked || isHomeClicked || isUpvotedClicked)
+                if (!profileButton.isSelected())
                 {
                     profileButton.setBackground (new Background (new BackgroundFill (null, null, null)));
 
@@ -207,7 +214,7 @@ public class HomePage extends Application
             @Override
             public void handle(MouseEvent arg0) 
             {
-                if (!isProfileClicked || isBookmarksClicked || isBrowseClicked || isHomeClicked || isUpvotedClicked)
+                if (!profileButton.isSelected())
                 {
                     profileBox.setBackground (new Background (new BackgroundFill (null, null, null)));
 
@@ -217,7 +224,7 @@ public class HomePage extends Application
         });
 
         // browse
-        Button browseButton = new Button ("Browse");
+        ToggleButton browseButton = new ToggleButton ("Browse");
         browseButton.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
         browseButton.setBackground (new Background(new BackgroundFill(Color.rgb (236, 231, 230), CornerRadii.EMPTY, Insets.EMPTY)));
         browseButton.setPrefWidth (WIDTH_MENU_PANE);
@@ -242,7 +249,7 @@ public class HomePage extends Application
             @Override
             public void handle(MouseEvent arg0) 
             {
-                if (!isBrowseClicked || isProfileClicked || isBookmarksClicked || isUpvotedClicked || isHomeClicked)
+                if (!browseButton.isSelected())
                 {
                     browseButton.setBackground (new Background (new BackgroundFill (null, null, null)));
 
@@ -277,22 +284,25 @@ public class HomePage extends Application
             @Override
             public void handle(MouseEvent arg0) 
             {
-               browseBox.setBackground (new Background (new BackgroundFill (null, null, null)));
+                if (!browseButton.isSelected())
+                {
+                    browseBox.setBackground (new Background (new BackgroundFill (null, null, null)));
+
+                }
             }
             
         });
 
         // library
-        Button libraryButton = new Button ("Library");
+        ToggleButton libraryButton = new ToggleButton ("Library");
         libraryButton.setFont(Font.font("Tahoma", FontWeight.BOLD, FontPosture.REGULAR, 22));
         libraryButton.setBackground (new Background(new BackgroundFill(Color.rgb (236, 231, 230), CornerRadii.EMPTY, Insets.EMPTY)));
         libraryButton.setPrefWidth (WIDTH_MENU_PANE);
         libraryButton.setAlignment (Pos.TOP_LEFT);
         libraryButton.setTextFill (Color.rgb (101, 14, 63));
 
-
         // upvoted
-        Button upvotedButton = new Button ("Upvoted Posts");
+        ToggleButton upvotedButton = new ToggleButton ("Upvoted Posts");
         upvotedButton.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
         upvotedButton.setBackground (new Background(new BackgroundFill(Color.rgb (236, 231, 230), CornerRadii.EMPTY, Insets.EMPTY)));
         upvotedButton.setPrefWidth (WIDTH_MENU_PANE);
@@ -317,7 +327,11 @@ public class HomePage extends Application
             @Override
             public void handle(MouseEvent event) 
             {
-               upvotedButton.setBackground (new Background (new BackgroundFill (null, null, null)));
+                if (!upvotedButton.isSelected())
+                {
+                    upvotedButton.setBackground (new Background (new BackgroundFill (null, null, null)));
+
+                }
             }
             
         });
@@ -348,13 +362,16 @@ public class HomePage extends Application
             @Override
             public void handle(MouseEvent event) 
             {
-               upvotedBox.setBackground (new Background (new BackgroundFill (null, null, null)));
+                if (!upvotedButton.isSelected())
+                {
+                    upvotedBox.setBackground (new Background (new BackgroundFill (null, null, null)));
+                }
             }
             
         });
 
         // bookmarks
-        Button bookmarksButton = new Button ("Bookmarks");
+        ToggleButton bookmarksButton = new ToggleButton ("Bookmarks");
         bookmarksButton.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
         bookmarksButton.setBackground (new Background(new BackgroundFill(Color.rgb (236, 231, 230), CornerRadii.EMPTY, Insets.EMPTY)));
         bookmarksButton.setPrefWidth (WIDTH_MENU_PANE);
@@ -379,7 +396,11 @@ public class HomePage extends Application
             @Override
             public void handle(MouseEvent event) 
             {
-               bookmarksButton.setBackground (new Background (new BackgroundFill (null, null, null)));
+                if (!bookmarksButton.isSelected())
+                {
+                    bookmarksButton.setBackground (new Background (new BackgroundFill (null, null, null)));
+
+                }
             }
             
         });
@@ -410,76 +431,98 @@ public class HomePage extends Application
             @Override
             public void handle(MouseEvent event) 
             {
-               bookmarksBox.setBackground (new Background (new BackgroundFill (null, null, null)));
-            }
-            
-        });
-
-        /* WHEN BUTTONS ARE CLICKED */
-        // when home button is clicked
-        homeButton.setOnAction (new EventHandler <ActionEvent>() 
-        {
-            @Override
-            public void handle (ActionEvent event) 
-            {
-                // Open the home page
-            }
-            
-        });
-
-        // when profile button is clicked
-        profileButton.setOnAction (new EventHandler<ActionEvent>() 
-        {
-            @Override
-            public void handle (ActionEvent event) 
-            {
-                if (!isProfileClicked)
+                if (!bookmarksButton.isSelected())
                 {
-                    isProfileClicked = !isProfileClicked;
-
+                    bookmarksBox.setBackground (new Background (new BackgroundFill (null, null, null)));
                 }
-                // Open the profile page
             }
             
         });
 
-        // when browse button is clicked
-        browseButton.setOnAction (new EventHandler<ActionEvent>() 
+        ToggleGroup menuPaneGroup = new ToggleGroup();
+        menuPaneGroup.getToggles().addAll(homeButton, profileButton, browseButton, upvotedButton, bookmarksButton);
+        //homeButton.setSelected(true);
+        
+        homeButton.setToggleGroup(menuPaneGroup);
+        profileButton.setToggleGroup(menuPaneGroup);
+        browseButton.setToggleGroup(menuPaneGroup);
+        upvotedButton.setToggleGroup(menuPaneGroup);
+        bookmarksButton.setToggleGroup(menuPaneGroup);
+
+        homeButton.setOnAction(new EventHandler <ActionEvent>() 
         {
             @Override
-            public void handle (ActionEvent event) 
+            public void handle(ActionEvent event) 
             {
-                if (!isBrowseClicked)
-                {
-                    isBrowseClicked = !isBrowseClicked;
-                }
-                // Open the browse page
+                homeButton.setSelected(true);
+
+                colorBackground(homeButton, homeBox);
+                discolorBackground(profileButton, profileBox);
+                discolorBackground(browseButton, browseBox);
+                discolorBackground(upvotedButton, upvotedBox);
+                discolorBackground(bookmarksButton, bookmarksBox);
             }
-            
         });
 
-        // when upvoted botton is clicked
-        upvotedButton.setOnAction (new EventHandler<ActionEvent>() 
+        profileButton.setOnAction(new EventHandler <ActionEvent>() 
         {
             @Override
-            public void handle (ActionEvent event) 
+            public void handle(ActionEvent event) 
             {
-                // Open the upvoted page
+                profileButton.setSelected(true);
+
+                colorBackground(profileButton, profileBox);
+                discolorBackground(homeButton, homeBox);
+                discolorBackground(browseButton, browseBox);
+                discolorBackground(upvotedButton, upvotedBox);
+                discolorBackground(bookmarksButton, bookmarksBox);
             }
-            
         });
 
-        // when the bookmarks button is clicked
-        bookmarksButton.setOnAction (new EventHandler<ActionEvent>() 
+        browseButton.setOnAction(new EventHandler <ActionEvent>() 
         {
             @Override
-            public void handle (ActionEvent event) 
+            public void handle(ActionEvent event) 
             {
-                // Open the bookmarks page
+                browseButton.setSelected(true);
+
+                colorBackground(browseButton, browseBox);
+                discolorBackground(homeButton, homeBox);
+                discolorBackground(profileButton, profileBox);
+                discolorBackground(upvotedButton, upvotedBox);
+                discolorBackground(bookmarksButton, bookmarksBox);
             }
-            
         });
 
+        upvotedButton.setOnAction(new EventHandler <ActionEvent>() 
+        {
+            @Override
+            public void handle(ActionEvent event) 
+            {
+                upvotedButton.setSelected(true);
+
+                colorBackground(upvotedButton, upvotedBox);
+                discolorBackground(profileButton, profileBox);
+                discolorBackground(browseButton, browseBox);
+                discolorBackground(homeButton, homeBox);
+                discolorBackground(bookmarksButton, bookmarksBox);
+            }
+        });
+
+        bookmarksButton.setOnAction(new EventHandler <ActionEvent>() 
+        {
+            @Override
+            public void handle(ActionEvent event) 
+            {
+                bookmarksButton.setSelected(true);
+
+                colorBackground(bookmarksButton, bookmarksBox);
+                discolorBackground(profileButton, profileBox);
+                discolorBackground(browseButton, browseBox);
+                discolorBackground(homeButton, homeBox);
+                discolorBackground(upvotedButton, upvotedBox);
+            }
+        });
 
         // LOGOUT
         Button logoutButton = new Button("LOGOUT");
@@ -677,7 +720,21 @@ public class HomePage extends Application
 
 
     }
-    
+
+    public void colorBackground(ToggleButton button, HBox box)
+    {
+        box.setBackground (new Background (new BackgroundFill (Color.rgb (220, 220, 220), null, null)));
+        button.setBackground (new Background (new BackgroundFill (Color.rgb (220, 220, 220), null, null)));
+    }
+
+    public void discolorBackground(ToggleButton button, HBox box)
+    {
+        box.setBackground (new Background (new BackgroundFill (null, null, null)));
+        button.setBackground (new Background (new BackgroundFill (null, null, null)));
+    }
 }
+
+    
+
     
 
