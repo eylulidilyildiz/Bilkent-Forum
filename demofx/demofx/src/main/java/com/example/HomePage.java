@@ -46,7 +46,13 @@ public class HomePage extends Application
     
 
     @Override
-    public void start(Stage homeStage) throws Exception {
+    public void start (Stage homeStage) throws Exception {
+
+        // CONSTANTS
+        final int WIDTH_MENU_PANE = 250;
+        final int ICON_WIDTH = 20;
+        final int ICON_HEIGHT = 20;
+
 
         //MENU ON THE LEFT
 
@@ -63,7 +69,7 @@ public class HomePage extends Application
         Button discoverButton = new Button ("Discovery");
         discoverButton.setFont(Font.font("Tahoma", FontWeight.BOLD, FontPosture.REGULAR, 22));
         discoverButton.setBackground (new Background(new BackgroundFill(Color.rgb (236, 231, 230), CornerRadii.EMPTY, Insets.EMPTY)));
-        discoverButton.setPrefWidth (250);
+        discoverButton.setPrefWidth (WIDTH_MENU_PANE);
         discoverButton.setAlignment (Pos.TOP_LEFT);
         discoverButton.setTextFill (Color.rgb (101, 14, 63));
 
@@ -71,7 +77,7 @@ public class HomePage extends Application
         Button homeButton = new Button ("Home");
         homeButton.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
         homeButton.setBackground (new Background(new BackgroundFill(Color.rgb (236, 231, 230), CornerRadii.EMPTY, Insets.EMPTY)));
-        homeButton.setPrefWidth (250);
+        homeButton.setPrefWidth (WIDTH_MENU_PANE);
         homeButton.setAlignment (Pos.TOP_LEFT);
 
         // when mouse enters the home button
@@ -100,8 +106,8 @@ public class HomePage extends Application
 
         // ImageView of HOME
         ImageView homeIcon = new ImageView (getClass().getResource("images/homeIcon.png").toString());
-        homeIcon.setFitHeight (20);
-        homeIcon.setFitWidth (20);
+        homeIcon.setFitHeight (ICON_HEIGHT);
+        homeIcon.setFitWidth (ICON_WIDTH);
         
 
         // The whole home section with the image
@@ -135,7 +141,7 @@ public class HomePage extends Application
         Button profileButton = new Button ("Profile");
         profileButton.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
         profileButton.setBackground (new Background(new BackgroundFill(Color.rgb (236, 231, 230), CornerRadii.EMPTY, Insets.EMPTY)));
-        profileButton.setPrefWidth (250);
+        profileButton.setPrefWidth (WIDTH_MENU_PANE);
         profileButton.setAlignment (Pos.TOP_LEFT);
 
         // when mouse enters the profile button
@@ -164,8 +170,8 @@ public class HomePage extends Application
 
         // ImageView of PROFILE
         ImageView profileIcon = new ImageView (getClass().getResource("images/profileIcon.png").toString());
-        profileIcon.setFitHeight (20);
-        profileIcon.setFitWidth (20);
+        profileIcon.setFitHeight (ICON_HEIGHT);
+        profileIcon.setFitWidth (ICON_WIDTH);
 
         HBox profileBox = new HBox();
         profileBox.getChildren().addAll (profileIcon, profileButton);
@@ -197,7 +203,7 @@ public class HomePage extends Application
         Button browseButton = new Button ("Browse");
         browseButton.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
         browseButton.setBackground (new Background(new BackgroundFill(Color.rgb (236, 231, 230), CornerRadii.EMPTY, Insets.EMPTY)));
-        browseButton.setPrefWidth (250);
+        browseButton.setPrefWidth (WIDTH_MENU_PANE);
         browseButton.setAlignment (Pos.TOP_LEFT);
 
         // when mouse enters the browse button 
@@ -226,8 +232,8 @@ public class HomePage extends Application
 
         // ImageView of BROWSE
         ImageView browseIcon = new ImageView (getClass().getResource("images/browseIcon.png").toString());
-        browseIcon.setFitHeight (20);
-        browseIcon.setFitWidth (20);
+        browseIcon.setFitHeight (ICON_HEIGHT);
+        browseIcon.setFitWidth (ICON_WIDTH);
 
         HBox browseBox = new HBox();
         browseBox.getChildren().addAll (browseIcon, browseButton);
@@ -259,7 +265,7 @@ public class HomePage extends Application
         Button libraryButton = new Button ("Library");
         libraryButton.setFont(Font.font("Tahoma", FontWeight.BOLD, FontPosture.REGULAR, 22));
         libraryButton.setBackground (new Background(new BackgroundFill(Color.rgb (236, 231, 230), CornerRadii.EMPTY, Insets.EMPTY)));
-        libraryButton.setPrefWidth (250);
+        libraryButton.setPrefWidth (WIDTH_MENU_PANE);
         libraryButton.setAlignment (Pos.TOP_LEFT);
         libraryButton.setTextFill (Color.rgb (101, 14, 63));
 
@@ -268,7 +274,7 @@ public class HomePage extends Application
         Button upvotedButton = new Button ("Upvoted Posts");
         upvotedButton.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
         upvotedButton.setBackground (new Background(new BackgroundFill(Color.rgb (236, 231, 230), CornerRadii.EMPTY, Insets.EMPTY)));
-        upvotedButton.setPrefWidth (250);
+        upvotedButton.setPrefWidth (WIDTH_MENU_PANE);
         upvotedButton.setAlignment (Pos.TOP_LEFT);
 
         // when mouse enters the upvoted button 
@@ -297,8 +303,8 @@ public class HomePage extends Application
 
         // ImageView of UPVOTE
         ImageView upvotedIcon = new ImageView (getClass().getResource("images/upvoteIcon.png").toString());
-        upvotedIcon.setFitHeight (20);
-        upvotedIcon.setFitWidth (20);
+        upvotedIcon.setFitHeight (ICON_HEIGHT);
+        upvotedIcon.setFitWidth (ICON_WIDTH);
 
         HBox upvotedBox = new HBox();
         upvotedBox.getChildren().addAll (upvotedIcon, upvotedButton);
@@ -330,7 +336,7 @@ public class HomePage extends Application
         Button bookmarksButton = new Button ("Bookmarks");
         bookmarksButton.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
         bookmarksButton.setBackground (new Background(new BackgroundFill(Color.rgb (236, 231, 230), CornerRadii.EMPTY, Insets.EMPTY)));
-        bookmarksButton.setPrefWidth (250);
+        bookmarksButton.setPrefWidth (WIDTH_MENU_PANE);
         bookmarksButton.setAlignment (Pos.TOP_LEFT);
 
         // when mouse enters the bookmark button 
@@ -359,8 +365,8 @@ public class HomePage extends Application
 
         // ImageView of BOOKMARKS
         ImageView bookmarksIcon = new ImageView (getClass().getResource("images/bookmarkIcon.png").toString());
-        bookmarksIcon.setFitHeight (20);
-        bookmarksIcon.setFitWidth (20);
+        bookmarksIcon.setFitHeight (ICON_HEIGHT);
+        bookmarksIcon.setFitWidth (ICON_WIDTH);
 
         HBox bookmarksBox = new HBox();
         bookmarksBox.getChildren().addAll (bookmarksIcon, bookmarksButton);
@@ -397,7 +403,7 @@ public class HomePage extends Application
         // changing color ???
         logoutButton.setStyle ("-fx-background-color: pink");
         logoutButton.setEffect (new DropShadow());
-        logoutButton.setPrefWidth(250);
+        logoutButton.setPrefWidth(WIDTH_MENU_PANE);
         
         // when button is clicked it logs out, closes the home page
         logoutButton.setOnAction (new EventHandler<ActionEvent>() 
@@ -418,7 +424,7 @@ public class HomePage extends Application
         BorderPane root = new BorderPane();
         
         GridPane menuPane = new GridPane();
-        menuPane.setPrefWidth(250);
+        menuPane.setPrefWidth(WIDTH_MENU_PANE);
         menuPane.setHgap(20);
         menuPane.setVgap(100);
 
@@ -447,7 +453,7 @@ public class HomePage extends Application
 
         
         GridPane friendsPane = new GridPane();
-        friendsPane.setPrefWidth(250);
+        friendsPane.setPrefWidth(WIDTH_MENU_PANE);
         friendsPane.setHgap(20);
         friendsPane.setVgap(100);
 
