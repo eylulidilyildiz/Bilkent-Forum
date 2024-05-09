@@ -601,19 +601,13 @@ public class HomePage extends Application
         postContent.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 18));
         postContent.setEditable(false);
 
-        HBox supvoteDownvoteBox = new HBox();
-        
+        HBox upvoteDownvoteBox = new HBox();
         upvoteDownvoteBox.setAlignment(Pos.CENTER);
-
-        semesterBox.setSpacing(10);
-        Label semesterLabel = new Label ("Semester:");
+        upvoteDownvoteBox.setSpacing(10);
+        upvoteDownvoteBox.getChildren().addAll(upvoteButton, upvotesLabel, downvoteButton, downvotesLabel);
         
-        RadioButton semesterBtn1 = new RadioButton("1");
-        RadioButton semesterBtn2 = new RadioButton("2");
-        RadioButton semesterBtn3 = new RadioButton("3");
-        RadioButton semesterBtn4 = new RadioButton("4");
 
-        box.getChildren().addAll(usernameAndDateBox, postContent, upvoteButton, upvotesLabel, downvoteButton, downvotesLabel);
+        box.getChildren().addAll(usernameAndDateBox, postContent, upvoteDownvoteBox);
 
 
     }
