@@ -96,7 +96,7 @@ public class Login extends Application{
                         if(user.getPassword().equals(inputPassword))
                         {
                             loginStage.close();
-                            Application home = new HomePage();
+                            Application home = new HomePage(user);
                             Stage homeStage = new Stage();
                             home.start(homeStage);
                         }

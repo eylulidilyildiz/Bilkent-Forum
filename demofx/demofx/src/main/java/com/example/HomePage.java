@@ -50,6 +50,13 @@ public class HomePage extends Application
     private boolean isUpvotedClicked = false;
     private boolean isBookmarksClicked = false;
 
+    // Main User for the application
+    User mainUser;
+
+    public HomePage(User user)
+    {
+        mainUser = user;
+    }
 
     public static void main(String[] args) 
     {
@@ -474,6 +481,7 @@ public class HomePage extends Application
             public void handle(ActionEvent event) 
             {
                 int currentid = upvoteButton.getPostID();
+                boolean isPostUpvoted = isPostUpvoted(currentid);
 
                 DatabaseConnection.connect(); 
 
@@ -483,8 +491,17 @@ public class HomePage extends Application
                 try{
                     tx = session.beginTransaction();
                     Post currentpost = session.get(Post.class, currentid);
-                    currentpost.increaseUpvotes();
+                    if(isPostUpvoted)
+                    {
+                        currentpost.decreaseUpvotes();
+                        // TODO: We need to remove this post from main user's liked-posts
+                    }
+                    else{
+                        currentpost.increaseUpvotes();
+                        mainUser.addLikedPosts(""+ postID);
+                    }
                     tx.commit();
+
                     upvotesLabel.setText("" + currentpost.getUpvotes());
   
                 } catch (Exception e) {
@@ -609,6 +626,25 @@ public class HomePage extends Application
     {
         box.setBackground (new Background (new BackgroundFill (null, null, null)));
         button.setBackground (new Background (new BackgroundFill (null, null, null)));
+    }
+
+    public boolean isPostUpvoted(int postID)
+    {
+        String upvotedPosts = mainUser.getLikedPosts();
+        if(upvotedPosts == null)
+        {
+            return false;
+        }
+        String [] upvotedPostsArray = upvotedPosts.split(",");
+        String postIDString = "" + postID;
+        for(int i = 0; i < upvotedPostsArray.length; i++)
+        {
+            if(postIDString.equals(upvotedPostsArray[i]))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }
 

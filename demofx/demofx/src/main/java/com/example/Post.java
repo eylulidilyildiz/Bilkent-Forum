@@ -69,7 +69,11 @@ public class Post
 
     public void increaseUpvotes(){this.upvotes++;}
 
+    public void decreaseUpvotes(){this.upvotes--;}
+
     public void increaseDownvotes(){this.downvotes++;}
+
+    public void decreaseDownvotes(){this.downvotes--;}
 
     public void setDownvotes(int downvotes){this.downvotes=downvotes;}
 
