@@ -612,19 +612,19 @@ public class HomePage extends Application
         String description = post.getContent();
         String date = post.getDate();
         boolean isSalePost = post.getIsSalePost();
-        int numOfUpvotes = post.getUpvotes();
+        //int numOfUpvotes = post.getUpvotes();
         int numOfDownvotes = post.getDownvotes();
 
         Button upvoteButton = new Button("Upvote");
-        Label upvotesLabel = new Label("" + numOfUpvotes);
+        Label upvotesLabel = new Label("" + post.getUpvotes());
                 
         upvoteButton.setOnAction(new EventHandler<ActionEvent>() 
         {
             @Override 
             public void handle(ActionEvent event) 
             {
-                post.setUpvotes(numOfUpvotes + 1);
-                upvotesLabel.setText("" + numOfUpvotes);
+                post.setUpvotes(post.getUpvotes() + 1);
+                upvotesLabel.setText("" + post.getUpvotes());
             } 
         });
 
@@ -636,6 +636,8 @@ public class HomePage extends Application
         postContent.setEditable(false);
 
         box.getChildren().addAll(usernameLabel, postContent, upvoteButton, upvotesLabel);
+
+
     }
     
 }
