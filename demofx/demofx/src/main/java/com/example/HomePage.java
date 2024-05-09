@@ -383,6 +383,8 @@ public class HomePage extends Application
                 String username = session.get(User.class, ownerID).getUsername();
 
                 currentPost = new VBox();
+
+                currentPost.setPrefSize(500, 500);
                 createPost(currentPost, post, username);
                 currentPost.setAlignment(Pos.CENTER);
 
@@ -395,6 +397,7 @@ public class HomePage extends Application
         
             
         ScrollPane postsPane = new ScrollPane();
+        postsPane.setPadding(new Insets(50));
         postsBox.setAlignment(Pos.CENTER);
         postsPane.setContent(postsBox);
         postsPane.setFitToWidth (true);
@@ -581,14 +584,19 @@ public class HomePage extends Application
             } 
         });
 
-        Label usernameLabel = new Label(username + " " + date);
+        Label usernameLabel = new Label(username);
+        Label dateLabel = new Label(date);
+        HBox usernameAndDateBox = new HBox();
+
+        usernameLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 16));
 
         TextArea postContent = new TextArea();
-        postContent.setPrefSize(500, 100);
+        postContent.setPrefSize(450, 500);
         postContent.setText(description);
+
+        postContent.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 18));
+
         postContent.setEditable(false);
-        
-        
 
         box.getChildren().addAll(usernameLabel, postContent, upvoteButton, upvotesLabel, downvoteButton, downvotesLabel);
 
