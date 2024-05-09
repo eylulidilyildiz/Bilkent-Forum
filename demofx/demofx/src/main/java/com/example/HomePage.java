@@ -8,6 +8,8 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -16,6 +18,7 @@ import javafx.scene.control.Separator;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
@@ -35,7 +38,6 @@ import javafx.geometry.*;
 
 public class HomePage extends Application 
 {
-
     public static void main(String[] args) 
     {
         launch(args);
@@ -49,36 +51,211 @@ public class HomePage extends Application
 
         //Components of the Menu
         Label forumLabel = new Label(" BILKENT FORUM ");
-        forumLabel.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 27));
-        forumLabel.setBackground(new Background(new BackgroundFill(Color.PINK, null, null)));
+        forumLabel.setFont(Font.font("Tahoma", FontWeight.BOLD, FontPosture.REGULAR, 27));
+        forumLabel.setBackground(new Background(new BackgroundFill (Color.rgb (248, 200, 220), null, null))); // pink
         forumLabel.setPrefWidth(248);
         forumLabel.setAlignment(Pos.CENTER);
 
         //labels of the menu
         Label discoverLabel = new Label("Discover");
-        discoverLabel.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 24));
+        discoverLabel.setFont(Font.font("Tahoma", FontWeight.BOLD, FontPosture.REGULAR, 24));
+        discoverLabel.setTextFill (Color.rgb (101, 14, 63));
 
+        // home, profile, browse
         Label homeLabel = new Label("Home");
-        homeLabel.setFont(Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 22));
+        homeLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
         Label profileLabel = new Label("Profile");
-        profileLabel.setFont(Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 22));
+        profileLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
         Label browseLabel = new Label("Browse");
-        browseLabel.setFont(Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 22));
+        browseLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
 
+       
+        // library
         Label libraryLabel = new Label("Library");
-        libraryLabel.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 24));
+        libraryLabel.setFont(Font.font("Tahoma", FontWeight.BOLD, FontPosture.REGULAR, 24));
+        libraryLabel.setTextFill (Color.rgb (101, 14, 63));
 
+        // upvoted, bookmarks
         Label upvotedPostsLabel = new Label("Upvoted Posts");
-        upvotedPostsLabel.setFont(Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 22));
+        upvotedPostsLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
         Label bookmarksLabel = new Label("Bookmarks");
-        bookmarksLabel.setFont(Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 22));
+        bookmarksLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
 
+
+        // PROFILE PAGE / SCENE
+        // when profile is clicked
+        profileLabel.setOnMouseClicked (new EventHandler <MouseEvent>() 
+        {
+            @Override
+            public void handle (MouseEvent event)
+            {
+               
+            }
+        });
+
+        
+        // BROWSE PAGE / SCENE
+        // when browse is clicked
+        browseLabel.setOnMouseClicked(new EventHandler <MouseEvent>() 
+        {
+            @Override
+            public void handle (MouseEvent event)
+            {
+               
+            }
+
+        });
+        
+        // UPVOTED SCENE
+        // when upvoted is clicked
+        upvotedPostsLabel.setOnMouseClicked(new EventHandler <MouseEvent>() 
+        {
+            @Override
+            public void handle (MouseEvent event)
+            {
+               
+            }
+
+        });
+        
+        // BOOKMARKED SCENE
+        // when bookmarks is clicked
+        bookmarksLabel.setOnMouseClicked(new EventHandler <MouseEvent>() 
+        {
+            @Override
+            public void handle (MouseEvent event)
+            {
+               
+            }
+
+        });
+        
+        
+        
+        // LOGOUT
         Button logoutButton = new Button("LOGOUT");
         //logoutButton.setBackground(new Background(new BackgroundFill(Color.PINK, null, null)));
-        logoutButton.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 22));
-        logoutButton.setPrefWidth(250);
+        logoutButton.setFont(Font.font("Tahoma", FontWeight.BOLD, FontPosture.REGULAR, 22));
 
-     
+        // changing color ???
+        logoutButton.setStyle ("-fx-background-color: pink");
+        logoutButton.setEffect (new DropShadow());
+        logoutButton.setPrefWidth(250);
+        
+        // when button is clicked it logs out, closes the home page
+        logoutButton.setOnAction (new EventHandler<ActionEvent>() 
+        {
+            @Override
+            public void handle (ActionEvent arg0) 
+            {
+                homeStage.close();
+                
+                // OR maybe open the login page ???
+            }
+            
+        });
+
+        
+
+        /* SHADOWING OF LABELS */
+
+        // Profile Label
+        // when the mouse enters the profile label
+        profileLabel.setOnMouseEntered (new EventHandler <MouseEvent>() 
+        {
+            @Override
+            public void handle (MouseEvent event)
+            {
+                profileLabel.setBackground (new Background (new BackgroundFill (Color.rgb (220, 220, 220), null, null)));
+            }
+        });
+
+        // when the mouse exists the profile label
+        profileLabel.setOnMouseExited (new EventHandler <MouseEvent>() 
+        {
+
+            @Override
+            public void handle (MouseEvent event) 
+            {
+                profileLabel.setBackground (new Background (new BackgroundFill (null, null, null)));
+            }
+            
+            
+        });
+
+        // Browse label
+        // when the mouse enters the browse label
+        browseLabel.setOnMouseEntered (new EventHandler <MouseEvent>() 
+        {
+            @Override
+            public void handle (MouseEvent event)
+            {
+                browseLabel.setBackground (new Background (new BackgroundFill (Color.rgb (220, 220, 220), null, null)));
+            }
+        });
+
+        // when the mouse exists the browse label
+        browseLabel.setOnMouseExited (new EventHandler <MouseEvent>() 
+        {
+
+            @Override
+            public void handle (MouseEvent event) 
+            {
+                browseLabel.setBackground (new Background (new BackgroundFill (null, null, null)));
+            }
+            
+            
+        });
+
+
+        // Upvoted label
+        // when the mouse enters the upvoted label
+        upvotedPostsLabel.setOnMouseEntered (new EventHandler <MouseEvent>() 
+        {
+            @Override
+            public void handle (MouseEvent event)
+            {
+                upvotedPostsLabel.setBackground (new Background (new BackgroundFill (Color.rgb (220, 220, 220), null, null)));
+            }
+         });
+ 
+        // when the mouse exists the upvoted label
+        upvotedPostsLabel.setOnMouseExited (new EventHandler <MouseEvent>() 
+        {
+ 
+            @Override
+            public void handle (MouseEvent event) 
+            {
+                upvotedPostsLabel.setBackground (new Background (new BackgroundFill (null, null, null)));
+            }
+             
+             
+        });
+
+        // Bookmarks label
+        // when the mouse enters the bookmarks label
+        bookmarksLabel.setOnMouseEntered (new EventHandler <MouseEvent>() 
+        {
+            @Override
+            public void handle (MouseEvent event)
+            {
+               bookmarksLabel.setBackground (new Background (new BackgroundFill (Color.rgb (220, 220, 220), null, null)));
+            }
+        });
+    
+        // when the mouse exists the bookmarks label
+        bookmarksLabel.setOnMouseExited (new EventHandler <MouseEvent>() 
+        {
+    
+           @Override
+            public void handle (MouseEvent event) 
+            {
+              bookmarksLabel.setBackground (new Background (new BackgroundFill (null, null, null)));
+            }
+                
+                
+        });
+
         //root and scene
         BorderPane root = new BorderPane();
         
@@ -87,8 +264,8 @@ public class HomePage extends Application
         menuPane.setHgap(20);
         menuPane.setVgap(100);
 
-        menuPane.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
-        menuPane.setStyle("-fx-border-color: black; -fx-border-width: 1px 1px 0 0;");
+        menuPane.setBackground(new Background(new BackgroundFill(Color.rgb (236, 231, 230), CornerRadii.EMPTY, Insets.EMPTY)));
+        menuPane.setStyle("-fx-border-color: gray; -fx-border-width: 1px 1px 0 0;");
 
         ColumnConstraints columnConstraints = new ColumnConstraints();
         columnConstraints.setFillWidth(true);
@@ -107,7 +284,7 @@ public class HomePage extends Application
         menuPane.add(discoverBox, 0, 2);
         menuPane.add(libraryBox, 0, 3);
         menuPane.add(logoutButton, 0, 5);
-
+        
         root.setLeft(menuPane);
 
         
@@ -116,8 +293,8 @@ public class HomePage extends Application
         friendsPane.setHgap(20);
         friendsPane.setVgap(100);
 
-        friendsPane.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
-        friendsPane.setStyle("-fx-border-color: black; -fx-border-width: 1px 1px 1px 1px;");
+        friendsPane.setBackground(new Background(new BackgroundFill(Color.rgb (236, 231, 230), CornerRadii.EMPTY, Insets.EMPTY)));
+        friendsPane.setStyle("-fx-border-color: gray; -fx-border-width: 1px 1px 1px 1px;");
 
         root.setRight(friendsPane);
 
@@ -176,6 +353,9 @@ public class HomePage extends Application
 
     }
 
+
+
+    /* HELPER METHODS */
     public void createPost(VBox box, Post post, String username)
     {
         String description = post.getContent();
