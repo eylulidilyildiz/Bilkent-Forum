@@ -130,8 +130,183 @@ public class HomePage extends Application
 
         });
         
+        // Buttonss
+        // discovery
+        Button discoverButton = new Button ("Discovery");
+        discoverButton.setFont(Font.font("Tahoma", FontWeight.BOLD, FontPosture.REGULAR, 22));
+        discoverButton.setBackground (new Background(new BackgroundFill(Color.rgb (236, 231, 230), CornerRadii.EMPTY, Insets.EMPTY)));
+        discoverButton.setPrefWidth (250);
+        discoverButton.setAlignment (Pos.TOP_LEFT);
+        discoverButton.setTextFill (Color.rgb (101, 14, 63));
+
+        // home
+        Button homeButton = new Button ("Home");
+        homeButton.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
+        homeButton.setBackground (new Background(new BackgroundFill(Color.rgb (236, 231, 230), CornerRadii.EMPTY, Insets.EMPTY)));
+        homeButton.setPrefWidth (250);
+        homeButton.setAlignment (Pos.TOP_LEFT);
+
+        // when mouse enters the home button
+        homeButton.setOnMouseEntered (new EventHandler <MouseEvent>() 
+        {
+
+            @Override
+            public void handle(MouseEvent arg0) 
+            {
+               homeButton.setBackground (new Background (new BackgroundFill (Color.rgb (220, 220, 220), null, null)));
+            }
+            
+        });
+
+        // when mouse exits the home button
+        homeButton.setOnMouseExited (new EventHandler <MouseEvent>() 
+        {
+
+            @Override
+            public void handle(MouseEvent arg0) 
+            {
+               homeButton.setBackground (new Background (new BackgroundFill (null, null, null)));
+            }
+            
+        });
+
+
+        // profile
+        Button profileButton = new Button ("Profile");
+        profileButton.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
+        profileButton.setBackground (new Background(new BackgroundFill(Color.rgb (236, 231, 230), CornerRadii.EMPTY, Insets.EMPTY)));
+        profileButton.setPrefWidth (250);
+        profileButton.setAlignment (Pos.TOP_LEFT);
+
+        // when mouse enters the profile button
+        profileButton.setOnMouseEntered (new EventHandler <MouseEvent>() 
+        {
+
+            @Override
+            public void handle(MouseEvent arg0) 
+            {
+               profileButton.setBackground (new Background (new BackgroundFill (Color.rgb (220, 220, 220), null, null)));
+            }
+            
+        });
+
+        // when mouse exits the profile button
+        profileButton.setOnMouseExited (new EventHandler <MouseEvent>() 
+        {
+
+            @Override
+            public void handle(MouseEvent arg0) 
+            {
+               profileButton.setBackground (new Background (new BackgroundFill (null, null, null)));
+            }
+            
+        });
+
+
+
+        // browse
+        Button browseButton = new Button ("Browse");
+        browseButton.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
+        browseButton.setBackground (new Background(new BackgroundFill(Color.rgb (236, 231, 230), CornerRadii.EMPTY, Insets.EMPTY)));
+        browseButton.setPrefWidth (250);
+        browseButton.setAlignment (Pos.TOP_LEFT);
+
+        // when mouse enters the browse button 
+        browseButton.setOnMouseEntered (new EventHandler <MouseEvent>() 
+        {
+
+            @Override
+            public void handle(MouseEvent arg0) 
+            {
+               browseButton.setBackground (new Background (new BackgroundFill (Color.rgb (220, 220, 220), null, null)));
+            }
+            
+        });
+
+        // when mouse exists the browse button 
+        browseButton.setOnMouseExited (new EventHandler <MouseEvent>() 
+        {
+
+            @Override
+            public void handle(MouseEvent arg0) 
+            {
+               browseButton.setBackground (new Background (new BackgroundFill (null, null, null)));
+            }
+            
+        });
+
+        // library
+        Button libraryButton = new Button ("Library");
+        libraryButton.setFont(Font.font("Tahoma", FontWeight.BOLD, FontPosture.REGULAR, 22));
+        libraryButton.setBackground (new Background(new BackgroundFill(Color.rgb (236, 231, 230), CornerRadii.EMPTY, Insets.EMPTY)));
+        libraryButton.setPrefWidth (250);
+        libraryButton.setAlignment (Pos.TOP_LEFT);
+        libraryButton.setTextFill (Color.rgb (101, 14, 63));
+
+
+        // upvoted
+        Button upvotedButton = new Button ("Upvoted Posts");
+        upvotedButton.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
+        upvotedButton.setBackground (new Background(new BackgroundFill(Color.rgb (236, 231, 230), CornerRadii.EMPTY, Insets.EMPTY)));
+        upvotedButton.setPrefWidth (250);
+        upvotedButton.setAlignment (Pos.TOP_LEFT);
+
+        // when mouse enters the upvoted button 
+        upvotedButton.setOnMouseEntered (new EventHandler <MouseEvent>() 
+        {
+
+            @Override
+            public void handle(MouseEvent arg0) 
+            {
+               upvotedButton.setBackground (new Background (new BackgroundFill (Color.rgb (220, 220, 220), null, null)));
+            }
+            
+        });
+
+        // when mouse exists the upvoted button
+        upvotedButton.setOnMouseExited (new EventHandler <MouseEvent>() 
+        {
+
+            @Override
+            public void handle(MouseEvent arg0) 
+            {
+               upvotedButton.setBackground (new Background (new BackgroundFill (null, null, null)));
+            }
+            
+        });
+
+        // bookmarks
+        Button bookmarksButton = new Button ("Bookmarks");
+        bookmarksButton.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
+        bookmarksButton.setBackground (new Background(new BackgroundFill(Color.rgb (236, 231, 230), CornerRadii.EMPTY, Insets.EMPTY)));
+        bookmarksButton.setPrefWidth (250);
+        bookmarksButton.setAlignment (Pos.TOP_LEFT);
+
+        // when mouse enters the bookmark button 
+        bookmarksButton.setOnMouseEntered (new EventHandler <MouseEvent>() 
+        {
+
+            @Override
+            public void handle(MouseEvent arg0) 
+            {
+               bookmarksButton.setBackground (new Background (new BackgroundFill (Color.rgb (220, 220, 220), null, null)));
+            }
+            
+        });
         
-        
+        // when mouse exists the bookmarks button 
+        bookmarksButton.setOnMouseExited (new EventHandler <MouseEvent>() 
+        {
+
+            @Override
+            public void handle(MouseEvent arg0) 
+            {
+               bookmarksButton.setBackground (new Background (new BackgroundFill (null, null, null)));
+            }
+            
+        });
+
+
         // LOGOUT
         Button logoutButton = new Button("LOGOUT");
         //logoutButton.setBackground(new Background(new BackgroundFill(Color.PINK, null, null)));
@@ -155,106 +330,7 @@ public class HomePage extends Application
             
         });
 
-        
 
-        /* SHADOWING OF LABELS */
-
-        // Profile Label
-        // when the mouse enters the profile label
-        profileLabel.setOnMouseEntered (new EventHandler <MouseEvent>() 
-        {
-            @Override
-            public void handle (MouseEvent event)
-            {
-                profileLabel.setBackground (new Background (new BackgroundFill (Color.rgb (220, 220, 220), null, null)));
-            }
-        });
-
-        // when the mouse exists the profile label
-        profileLabel.setOnMouseExited (new EventHandler <MouseEvent>() 
-        {
-
-            @Override
-            public void handle (MouseEvent event) 
-            {
-                profileLabel.setBackground (new Background (new BackgroundFill (null, null, null)));
-            }
-            
-            
-        });
-
-        // Browse label
-        // when the mouse enters the browse label
-        browseLabel.setOnMouseEntered (new EventHandler <MouseEvent>() 
-        {
-            @Override
-            public void handle (MouseEvent event)
-            {
-                browseLabel.setBackground (new Background (new BackgroundFill (Color.rgb (220, 220, 220), null, null)));
-            }
-        });
-
-        // when the mouse exists the browse label
-        browseLabel.setOnMouseExited (new EventHandler <MouseEvent>() 
-        {
-
-            @Override
-            public void handle (MouseEvent event) 
-            {
-                browseLabel.setBackground (new Background (new BackgroundFill (null, null, null)));
-            }
-            
-            
-        });
-
-
-        // Upvoted label
-        // when the mouse enters the upvoted label
-        upvotedPostsLabel.setOnMouseEntered (new EventHandler <MouseEvent>() 
-        {
-            @Override
-            public void handle (MouseEvent event)
-            {
-                upvotedPostsLabel.setBackground (new Background (new BackgroundFill (Color.rgb (220, 220, 220), null, null)));
-            }
-         });
- 
-        // when the mouse exists the upvoted label
-        upvotedPostsLabel.setOnMouseExited (new EventHandler <MouseEvent>() 
-        {
- 
-            @Override
-            public void handle (MouseEvent event) 
-            {
-                upvotedPostsLabel.setBackground (new Background (new BackgroundFill (null, null, null)));
-            }
-             
-             
-        });
-
-        // Bookmarks label
-        // when the mouse enters the bookmarks label
-        bookmarksLabel.setOnMouseEntered (new EventHandler <MouseEvent>() 
-        {
-            @Override
-            public void handle (MouseEvent event)
-            {
-               bookmarksLabel.setBackground (new Background (new BackgroundFill (Color.rgb (220, 220, 220), null, null)));
-            }
-        });
-    
-        // when the mouse exists the bookmarks label
-        bookmarksLabel.setOnMouseExited (new EventHandler <MouseEvent>() 
-        {
-    
-           @Override
-            public void handle (MouseEvent event) 
-            {
-              bookmarksLabel.setBackground (new Background (new BackgroundFill (null, null, null)));
-            }
-                
-                
-        });
 
         //root and scene
         BorderPane root = new BorderPane();
@@ -270,15 +346,15 @@ public class HomePage extends Application
         ColumnConstraints columnConstraints = new ColumnConstraints();
         columnConstraints.setFillWidth(true);
         columnConstraints.setPercentWidth(500);       
-        menuPane.getColumnConstraints().addAll(columnConstraints);
+        menuPane.getColumnConstraints().addAll (columnConstraints);
 
         VBox discoverBox = new VBox();
         discoverBox.setPadding(new Insets(10));
-        discoverBox.getChildren().addAll(discoverLabel, homeLabel, profileLabel, browseLabel);
+        discoverBox.getChildren().addAll (discoverButton, homeButton, profileButton, browseButton);
 
         VBox libraryBox = new VBox();
         libraryBox.setPadding(new Insets(10));
-        libraryBox.getChildren().addAll(libraryLabel, upvotedPostsLabel, bookmarksLabel);
+        libraryBox.getChildren().addAll (libraryButton, upvotedButton, bookmarksButton);
 
         menuPane.add(forumLabel, 0, 1);
         menuPane.add(discoverBox, 0, 2);
