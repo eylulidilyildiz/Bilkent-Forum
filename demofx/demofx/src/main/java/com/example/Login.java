@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
@@ -40,10 +41,11 @@ public class Login extends Application{
 
         //Components of the scene
         Label forumLabel = new Label(" BILKENT FORUM ");
-        forumLabel.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 20));
+        forumLabel.setFont(Font.font("Tahoma", FontWeight.BOLD, FontPosture.REGULAR, 20));
         forumLabel.setBackground(new Background(new BackgroundFill(Color.PINK, new CornerRadii(11), new Insets(1))));
         Button loginButton = new Button("LOGIN");
         loginButton.setPrefWidth(212.5);
+        loginButton.setFont(Font.font("Tahoma", FontWeight.BOLD, FontPosture.REGULAR, 12));
 
         //root 
         VBox root = new VBox();
