@@ -469,6 +469,7 @@ public class HomePage extends Application
         DownvoteButton downvoteButton = new DownvoteButton("Downvote", postID);
         Label downvotesLabel = new Label("" + post.getDownvotes());
 
+
         ToggleGroup upvoteAndDownvote = new ToggleGroup();
         upvoteButton.setToggleGroup(upvoteAndDownvote);
         downvoteButton.setToggleGroup(upvoteAndDownvote);
@@ -491,14 +492,17 @@ public class HomePage extends Application
                 try{
                     tx = session.beginTransaction();
                     Post currentpost = session.get(Post.class, currentid);
+                    upvoteButton.setSelected(true);
                     if(isPostUpvoted)
                     {
                         currentpost.decreaseUpvotes();
-                        // TODO: We need to remove this post from main user's liked-posts
+                        mainUser.removeUpvotedPosts("" + postID);
+                        upvoteButton.setSelected(false);
                     }
                     else{
                         currentpost.increaseUpvotes();
-                        mainUser.addLikedPosts(""+ postID);
+                        mainUser.addUpvotedPosts(""+ postID);
+                        upvoteButton.setSelected(true);
                     }
                     tx.commit();
 
@@ -510,7 +514,6 @@ public class HomePage extends Application
                 } finally {
                     session.close();
                 }
-                
             } 
         });
 
@@ -630,7 +633,7 @@ public class HomePage extends Application
 
     public boolean isPostUpvoted(int postID)
     {
-        String upvotedPosts = mainUser.getLikedPosts();
+        String upvotedPosts = mainUser.getUpvotedPosts();
         if(upvotedPosts == null)
         {
             return false;

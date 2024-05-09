@@ -86,7 +86,7 @@ public class User
 	}
 
 	public void addUpvotedPosts(String postID){
-		if(this.upvotedPosts.length() != 0)
+		if(this.upvotedPosts != null)
 		{
 			this.upvotedPosts += ",";
 		}
