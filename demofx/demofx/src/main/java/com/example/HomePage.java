@@ -456,6 +456,7 @@ public class HomePage extends Application
             @Override
             public void handle(ActionEvent event) 
             {
+                // UI way of showing the button is selected
                 homeButton.setSelected(true);
 
                 colorBackground(homeButton, homeBox);
@@ -471,6 +472,7 @@ public class HomePage extends Application
             @Override
             public void handle(ActionEvent event) 
             {
+                // UI way of showing the button is selected
                 profileButton.setSelected(true);
 
                 colorBackground(profileButton, profileBox);
@@ -486,6 +488,7 @@ public class HomePage extends Application
             @Override
             public void handle(ActionEvent event) 
             {
+                // UI way of showing the button is selected
                 browseButton.setSelected(true);
 
                 colorBackground(browseButton, browseBox);
@@ -501,6 +504,7 @@ public class HomePage extends Application
             @Override
             public void handle(ActionEvent event) 
             {
+                // UI way of showing the button is selected
                 upvotedButton.setSelected(true);
 
                 colorBackground(upvotedButton, upvotedBox);
@@ -508,6 +512,7 @@ public class HomePage extends Application
                 discolorBackground(browseButton, browseBox);
                 discolorBackground(homeButton, homeBox);
                 discolorBackground(bookmarksButton, bookmarksBox);
+
             }
         });
 
@@ -516,6 +521,7 @@ public class HomePage extends Application
             @Override
             public void handle(ActionEvent event) 
             {
+                // UI way of showing the button is selected
                 bookmarksButton.setSelected(true);
 
                 colorBackground(bookmarksButton, bookmarksBox);
@@ -523,6 +529,8 @@ public class HomePage extends Application
                 discolorBackground(browseButton, browseBox);
                 discolorBackground(homeButton, homeBox);
                 discolorBackground(upvotedButton, upvotedBox);
+
+
             }
         });
 
@@ -614,7 +622,7 @@ public class HomePage extends Application
 
                 currentPost = new VBox();
                 createPost(currentPost, post, username);
-                //currentPost.setAlignment(Pos.CENTER);
+                currentPost.setAlignment(Pos.CENTER);
 
                 postsBox.getChildren().add(currentPost);
         
@@ -627,6 +635,8 @@ public class HomePage extends Application
         ScrollPane postsPane = new ScrollPane();
         postsBox.setAlignment(Pos.CENTER);
         postsPane.setContent(postsBox);
+        postsPane.setFitToWidth (true);
+        postsPane.setFitToHeight (true);
         postsPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
 
         root.setCenter(postsPane);
@@ -697,7 +707,7 @@ public class HomePage extends Application
                 try{
                     tx = session.beginTransaction();
                     Post currentpost = session.get(Post.class, currentid);
-                    currentpost.increaseUpvotes();;
+                    currentpost.setUpvotes(currentpost.getUpvotes() + 1);
                     tx.commit();
                     upvotesLabel.setText("" + currentpost.getUpvotes());
   
@@ -717,6 +727,8 @@ public class HomePage extends Application
         postContent.setPrefSize(500, 100);
         postContent.setText(description);
         postContent.setEditable(false);
+        
+        
 
         box.getChildren().addAll(usernameLabel, postContent, upvoteButton, upvotesLabel);
 
