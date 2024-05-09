@@ -31,6 +31,8 @@ public class User
 
 	@Column(name = "Department") private String department;
 
+	@Column(name = "likedPosts") private String likedPosts;
+
 	public int getId() { return id; }
 	public String getUsername() { return username; }
 	public String getPassword() { return password; }
@@ -41,6 +43,8 @@ public class User
 	public String getSurname() { return surname; }
 	public int getSemester() { return semester; }
 	public String getDepartment() { return department; }
+	public String getLikedPosts() { return likedPosts; }
+
 
 	public void setPostIDs(String newIDs){
 		this.postIDs = newIDs;
@@ -76,5 +80,9 @@ public class User
 
 	public void setDepartment(String newDepartment){
 		this.department = newDepartment;
+	}
+
+	public void addLikedPosts(String newPost){
+		this.likedPosts += "," + newPost;
 	}
 }
