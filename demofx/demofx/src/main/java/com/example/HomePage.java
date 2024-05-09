@@ -368,6 +368,7 @@ public class HomePage extends Application
         //POSTS
 
         VBox postsBox = new VBox();
+        postsBox.setSpacing(30);
         postsBox.setAlignment(Pos.CENTER);
         VBox currentPost;
 
@@ -398,7 +399,7 @@ public class HomePage extends Application
         
             
         ScrollPane postsPane = new ScrollPane();
-        postsPane.setPadding(new Insets(50));
+        postsPane.setPadding(new Insets(70));
         postsBox.setAlignment(Pos.CENTER);
         postsPane.setContent(postsBox);
         postsPane.setFitToWidth (true);
@@ -435,6 +436,7 @@ public class HomePage extends Application
         {
             super(str);
             this.postID = postID; 
+            setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 14));
         }
 
         public int getPostID()
@@ -450,6 +452,7 @@ public class HomePage extends Application
         {
             super(str);
             this.postID = postID; 
+            setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 14));
         }
 
         public int getPostID()
@@ -470,8 +473,11 @@ public class HomePage extends Application
 
         UpvoteButton upvoteButton = new UpvoteButton("Upvote", postID);
         Label upvotesLabel = new Label("" + post.getUpvotes());
+        upvotesLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 14));
+
         DownvoteButton downvoteButton = new DownvoteButton("Downvote", postID);
         Label downvotesLabel = new Label("" + post.getDownvotes());
+        downvotesLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 14));
 
         ToggleButton neitherIsSelected = new ToggleButton();
 
@@ -602,11 +608,11 @@ public class HomePage extends Application
         postContent.setEditable(false);
 
         HBox upvoteDownvoteBox = new HBox();
-        upvoteDownvoteBox.setAlignment(Pos.CENTER);
+        upvoteDownvoteBox.setAlignment(Pos.BASELINE_LEFT);
         upvoteDownvoteBox.setSpacing(10);
         upvoteDownvoteBox.getChildren().addAll(upvoteButton, upvotesLabel, downvoteButton, downvotesLabel);
         
-
+        box.setSpacing(10);
         box.getChildren().addAll(usernameAndDateBox, postContent, upvoteDownvoteBox);
 
 
