@@ -671,7 +671,35 @@ public class HomePage extends Application
 
         TextArea postContent = new TextArea();
         postContent.setPrefSize (450, 500);
-        postContent.setText(description);
+        String content = description;
+        if(isSalePost)
+        {
+            String bookTitle = post.getBookTitle();
+            String author = post.getAuthorName();
+            String courseName = post.getCourseName();
+            double price = post.getPrice();
+            int usageAmount = post.getUsageAmount();
+            String usageInfo = "";
+            if(usageAmount == 1)
+            {
+                usageInfo += "Brand New";
+            }
+            else if(usageAmount == 2)
+            {
+                usageInfo += "Under-used";
+            }
+            else if(usageAmount == 3)
+            {
+                usageInfo += "Over-used";
+            }
+
+            String publisher = post.getPublisherName();
+            String edition = post.getBookEdition();
+            content += "\n• Title: " + bookTitle + "\n• Author: " + author + "\n• Publisher: " + publisher + "\n• Edition: " + edition 
+            + "\n• Course Code: " + courseName + "\n• Price: " + price + " TL\n• Usage Amount: " + usageInfo;
+            
+        }
+        postContent.setText(content);
 
         postContent.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 18));
         postContent.setEditable(false);
