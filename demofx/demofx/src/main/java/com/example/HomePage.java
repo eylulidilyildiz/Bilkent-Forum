@@ -670,10 +670,11 @@ public class HomePage extends Application
         dateLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 16));
 
         TextArea postContent = new TextArea();
-        postContent.setPrefSize (450, 500);
+        postContent.setMinSize (450, 100);
         String content = description;
         if(isSalePost)
         {
+            postContent.setMinSize(450, 250);
             String bookTitle = post.getBookTitle();
             String author = post.getAuthorName();
             String courseName = post.getCourseName();
@@ -695,7 +696,7 @@ public class HomePage extends Application
 
             String publisher = post.getPublisherName();
             String edition = post.getBookEdition();
-            content += "\n• Title: " + bookTitle + "\n• Author: " + author + "\n• Publisher: " + publisher + "\n• Edition: " + edition 
+            content += "\n\n• Title: " + bookTitle + "\n• Author: " + author + "\n• Publisher: " + publisher + "\n• Edition: " + edition 
             + "\n• Course Code: " + courseName + "\n• Price: " + price + " TL\n• Usage Amount: " + usageInfo;
             
         }
