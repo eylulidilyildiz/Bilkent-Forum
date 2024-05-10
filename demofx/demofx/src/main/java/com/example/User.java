@@ -37,6 +37,8 @@ public class User
 
 	@Column(name = "bookmarkedPosts") private String bookmarkedPosts;
 
+	@Column(name = "friendsID") private String friendsID;
+
 	public int getId() { return id; }
 	public String getUsername() { return username; }
 	public String getPassword() { return password; }
@@ -50,6 +52,7 @@ public class User
 	public String getUpvotedPosts() { return upvotedPosts; }
 	public String getDownvotedPosts() { return downvotedPosts; }
 	public String getBookmarkedPosts() { return bookmarkedPosts; }
+	public String getFriendsID() { return friendsID; }
 
 
 	public void setPostIDs(String newIDs){
@@ -146,5 +149,13 @@ public class User
 			this.bookmarkedPosts += ",";
 		}
 		this.bookmarkedPosts += postID;;
+	}
+
+	public void addFriendsID(String newID){
+		if(this.friendsID != null)
+		{
+			this.friendsID += ",";
+		}
+		this.friendsID += newID;;
 	}
 }
