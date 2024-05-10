@@ -437,6 +437,14 @@ public class HomePage extends Application
             super(str);
             this.postID = postID; 
             setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 14));
+            if(isPostUpvoted(postID))
+            {
+                setSelected(true);
+            }
+            else if(isPostDownvoted(postID))
+            {
+                setDisable(true);
+            }
         }
 
         public int getPostID()
@@ -453,6 +461,14 @@ public class HomePage extends Application
             super(str);
             this.postID = postID; 
             setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 14));
+            if(isPostDownvoted(postID))
+            {
+                setSelected(true);
+            }
+            else if(isPostUpvoted(postID))
+            {
+                setDisable(true);
+            }
         }
 
         public int getPostID()
@@ -521,14 +537,14 @@ public class HomePage extends Application
                     if(isPostUpvoted)
                     {
                         currentpost.decreaseUpvotes();
-                        mainUser.removeUpvotedPosts("" + postID);
+                        mainUser.removeUpvotedPosts("" + currentid);
                         upvoteButton.setSelected(false);
                         neitherIsSelected.setSelected(true);
                         downvoteButton.setDisable(false);
                     }
-                    else{
+                    else if(!isPostDownvoted(currentid)){
                         currentpost.increaseUpvotes();
-                        mainUser.addUpvotedPosts(""+ postID);
+                        mainUser.addUpvotedPosts(""+ currentid);
                         upvoteButton.setSelected(true);
                         downvoteButton.setDisable(true);
                     }
@@ -565,14 +581,14 @@ public class HomePage extends Application
                     if(isPostDownvoted)
                     {
                         currentpost.decreaseDownvotes();
-                        mainUser.removeDownvotedPosts("" + postID);
+                        mainUser.removeDownvotedPosts("" + currentid);
                         downvoteButton.setSelected(false);
                         neitherIsSelected.setSelected(true);
                         upvoteButton.setDisable(false);
                     }
-                    else{
+                    else if(!isPostUpvoted(currentid)){
                         currentpost.increaseDownvotes();
-                        mainUser.addDownvotedPosts(""+ postID);
+                        mainUser.addDownvotedPosts(""+ currentid);
                         downvoteButton.setSelected(true);
                         upvoteButton.setDisable(true);
                     }
