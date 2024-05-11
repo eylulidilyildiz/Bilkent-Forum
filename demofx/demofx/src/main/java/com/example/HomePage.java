@@ -535,6 +535,38 @@ public class HomePage extends Application
         }
     }
 
+    //BOOKMARK BUTTON
+
+    class BookmarkButton extends Button{
+        private int postID;
+
+        public BookmarkButton(int postID)
+        {
+            super();
+            this.postID = postID;
+
+            final int ICON_HEIGHT = 20;
+            final int ICON_WIDTH = 20;
+            ImageView filledBookmarkIcon = new ImageView (getClass().getResource("images/filledBookmark.png").toString());
+            filledBookmarkIcon.setFitHeight (ICON_HEIGHT);
+            filledBookmarkIcon.setFitWidth (ICON_WIDTH);
+            ImageView emptyBookmarkIcon = new ImageView (getClass().getResource("images/emptyBookmark.png").toString());
+            emptyBookmarkIcon.setFitHeight (ICON_HEIGHT);
+            emptyBookmarkIcon.setFitWidth (ICON_WIDTH);
+            if(isPostBookmarked(postID))
+            {
+                setGraphic(filledBookmarkIcon);
+            }
+            else{
+                setGraphic(emptyBookmarkIcon);
+            }
+        }
+
+        public int getPostID()
+        {
+            return this.postID;
+        }
+    }
 
     /* HELPER METHODS */
     public void createPost(VBox box, Post post, String username)
@@ -819,6 +851,25 @@ public class HomePage extends Application
         for(int i = 0; i < downvotedPostsArray.length; i++)
         {
             if(postIDString.equals(downvotedPostsArray[i]))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isPostBookmarked(int postID)
+    {
+        String bookmarkedPosts = mainUser.getBookmarkedPosts();
+        if(bookmarkedPosts == null)
+        {
+            return false;
+        }
+        String [] bookmarkedPostsArray = bookmarkedPosts.split(",");
+        String postIDString = "" + postID;
+        for(int i = 0; i < bookmarkedPostsArray.length; i++)
+        {
+            if(postIDString.equals(bookmarkedPostsArray[i]))
             {
                 return true;
             }
