@@ -45,8 +45,6 @@ import javafx.geometry.*;
 
 public class HomePage extends Application 
 {
-   
-
     // Main User for the application
     User mainUser;
 
@@ -309,7 +307,7 @@ public class HomePage extends Application
         postButtonPane.setVgap (10);
         postButtonPane.setPadding(new Insets(70));
 
-        ToggleButton addPostButton = new ToggleButton ();
+        Button addPostButton = new Button ();
         addPostButton.setBackground (new Background(new BackgroundFill(null, CornerRadii.EMPTY, Insets.EMPTY)));
         addPostButton.setPrefHeight (60);
         addPostButton.setPrefWidth (60);
@@ -319,6 +317,18 @@ public class HomePage extends Application
         plusIcon.setFitWidth (60);
 
         addPostButton.setGraphic (plusIcon);
+        
+        AddPostBox addPostBox = new AddPostBox(mainUser);
+
+        addPostButton.setOnAction(new EventHandler <ActionEvent>() 
+        {
+            @Override
+            public void handle(ActionEvent event) 
+            {
+                root.setCenter(addPostBox);
+            }
+        });
+
 
         postButtonPane.add (addPostButton, 0, 1);
 
@@ -467,7 +477,6 @@ public class HomePage extends Application
         root.setCenter (homePageBox);
 
         
-
         //stage
         Scene homeScene = new Scene(root, 700, 700);
 
@@ -481,6 +490,7 @@ public class HomePage extends Application
         } finally {
             DatabaseConnection.disconnect(); 
         }
+
 
     }
 
