@@ -64,7 +64,7 @@ public class ProfileBox extends VBox
         informationTextBox.setAlignment (Pos.CENTER_LEFT);
 
         // Name Label
-        Label nameLabel = new Label ("Ayça Topkaya");
+        Label nameLabel = new Label (mainUser.getName() + " " + mainUser.getSurname());
         nameLabel.setFont (Font.font ("Tahoma", FontWeight.BOLD, FontPosture.REGULAR, 45));
 
 
@@ -73,16 +73,31 @@ public class ProfileBox extends VBox
         universityLabel.setFont (Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 30));
 
         // Department Label
-        Label departmentLabel = new Label ("CS");
+        Label departmentLabel = new Label (mainUser.getDepartment());
         departmentLabel.setFont (Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 30));
         
 
         // Semester Label
-        Label semesterLabel = new Label ("Freshman");
+        Label semesterLabel;
+        if(mainUser.getSemester() == 1)
+        {
+            semesterLabel = new Label ("Freshman");
+        }
+        else if(mainUser.getSemester() == 2)
+        {
+            semesterLabel = new Label("Sophomore");
+        }
+        else if(mainUser.getSemester() == 3)
+        {
+            semesterLabel = new Label("Junior");
+        }
+        else{ //semester == 4
+            semesterLabel = new Label ("Senior");
+        }
         semesterLabel.setFont (Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 30));
 
         // Email Label
-        Label emailLabel = new Label ("Contact: ayca@example.com");
+        Label emailLabel = new Label ("Contact: " + mainUser.getEmail() );
         emailLabel.setFont (Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 30));
 
         // adding the components together
