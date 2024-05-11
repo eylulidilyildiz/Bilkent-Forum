@@ -12,6 +12,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -33,12 +34,15 @@ public class ProfileBox extends VBox
     private HBox informationBox;
     private ImageView profileIcon;
     private HBox searchAddPostBox;
+    private BorderPane root;
     
     // Constructor
-    public ProfileBox (User user)
+    @SuppressWarnings("exports")
+    public ProfileBox (User user, BorderPane root)
     {
         super();
         this.mainUser = user;
+        this.root = root;
 
         this.createSearchAndAddPost();
         this.createInfoPane();
@@ -77,13 +81,19 @@ public class ProfileBox extends VBox
         Label semesterLabel = new Label ("Freshman");
         semesterLabel.setFont (Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 30));
 
+        // Email Label
+        Label emailLabel = new Label ("Contact: ayca@example.com");
+        emailLabel.setFont (Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 30));
+
         // adding the components together
-        informationTextBox.getChildren().addAll (nameLabel, universityLabel, departmentLabel, semesterLabel);
+        informationTextBox.getChildren().addAll (nameLabel, universityLabel, departmentLabel, semesterLabel, emailLabel);
 
         editProfileButton = new Button ("Edit Profile");
         editProfileButton.setFont(Font.font("Tahoma", FontWeight.BOLD, FontPosture.REGULAR, 22));
         editProfileButton.setPrefHeight (60);
         editProfileButton.setPrefWidth (200);
+
+        this.editProfileIsClicked(editProfileButton);
         
         VBox textAndProfileBox = new VBox();
         textAndProfileBox.setPadding (new Insets(10));
@@ -172,6 +182,7 @@ public class ProfileBox extends VBox
             public void handle(ActionEvent arg0) 
             {
                 EditProfileBox editProfileBox = new EditProfileBox (mainUser);
+                root.setCenter (editProfileBox);
             }
             
         });

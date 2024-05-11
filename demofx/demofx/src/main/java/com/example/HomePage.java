@@ -374,7 +374,7 @@ public class HomePage extends Application
         homePageBox.getChildren().addAll (searchAddPostBox, postsPane);
 
         // Profile page
-        ProfileBox profilePageBox = new ProfileBox (this.mainUser);
+        ProfileBox profilePageBox = new ProfileBox (this.mainUser, root);
 
         /* WHEN BUTTONS ARE CLICKED */ 
         homeButton.setOnAction(new EventHandler <ActionEvent>() 

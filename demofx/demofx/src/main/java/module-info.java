@@ -5,6 +5,7 @@ module com.example {
     requires jakarta.persistence;
     requires java.sql;
     requires org.hibernate.orm.core;
+    requires javafx.base;
     
     opens com.example to javafx.fxml, javafx.graphics, org.hibernate.orm.core;
     exports com.example;
