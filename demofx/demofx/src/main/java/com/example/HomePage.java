@@ -535,6 +535,51 @@ public class HomePage extends Application
         }
     }
 
+    //BOOKMARK BUTTON
+
+    class BookmarkButton extends Button{
+        private int postID;
+        final int ICON_HEIGHT = 30;
+        final int ICON_WIDTH = 35;
+        ImageView filledBookmarkIcon;
+        ImageView emptyBookmarkIcon;
+
+        public BookmarkButton(int postID)
+        {
+            super();
+            this.postID = postID;
+            setBackground (new Background(new BackgroundFill(null, CornerRadii.EMPTY, Insets.EMPTY)));
+            setPrefHeight (ICON_HEIGHT);
+            setPrefWidth (ICON_WIDTH);
+
+            filledBookmarkIcon = new ImageView (getClass().getResource("images/filledBookmark.png").toString());
+            filledBookmarkIcon.setFitHeight (ICON_HEIGHT);
+            filledBookmarkIcon.setFitWidth (ICON_WIDTH);
+            emptyBookmarkIcon = new ImageView (getClass().getResource("images/emptyBookmark.png").toString());
+            emptyBookmarkIcon.setFitHeight (ICON_HEIGHT);
+            emptyBookmarkIcon.setFitWidth (ICON_WIDTH);
+            if(isPostBookmarked(postID))
+            {
+                setGraphic(filledBookmarkIcon);
+            }
+            else{
+                setGraphic(emptyBookmarkIcon);
+            }
+        }
+
+        public int getPostID()
+        {
+            return this.postID;
+        }
+        public ImageView getFilledBookmarkIcon()
+        {
+            return filledBookmarkIcon;
+        }
+        public ImageView getEmptyBookmarkIcon()
+        {
+            return emptyBookmarkIcon;
+        }
+    }
 
     /* HELPER METHODS */
     public void createPost(VBox box, Post post, String username)
@@ -585,14 +630,10 @@ public class HomePage extends Application
 
                 DatabaseConnection.connect(); 
 
-                
-
                 try(Session session = DatabaseConnection.getSessionFactory().openSession()) {
                     Transaction tx = session.beginTransaction();
                     Post currentpost = session.get(Post.class, currentid);
                     
-                    
-
                     if(isPostUpvoted)
                     {
                         currentpost.decreaseUpvotes();
@@ -601,19 +642,19 @@ public class HomePage extends Application
                         neitherIsSelected.setSelected(true);
                         downvoteButton.setDisable(false);
                     }
-                    else if(!isPostDownvoted(currentid)){
+                    else if(!isPostDownvoted(currentid))
+                    {
                         currentpost.increaseUpvotes();
                         mainUser.addUpvotedPosts("" + currentid);
                         upvoteButton.setSelected(true);
                         downvoteButton.setDisable(true);
                     }
-                    session.merge("User",mainUser);
+                    session.merge("User", mainUser);
                     tx.commit();
 
                     upvotesLabel.setText("" + currentpost.getUpvotes());
   
                 } catch (Exception e) {
-                    
                     e.printStackTrace();
                 } finally {
                     DatabaseConnection.disconnect();
@@ -631,11 +672,8 @@ public class HomePage extends Application
 
                 DatabaseConnection.connect(); 
 
-                Session session = DatabaseConnection.getSessionFactory().openSession();
-                Transaction tx = null;
-
-                try{
-                    tx = session.beginTransaction();
+                try(Session session = DatabaseConnection.getSessionFactory().openSession()) {
+                    Transaction tx = session.beginTransaction();
                     Post currentpost = session.get(Post.class, currentid);
 
                     if(isPostDownvoted)
@@ -646,24 +684,23 @@ public class HomePage extends Application
                         neitherIsSelected.setSelected(true);
                         upvoteButton.setDisable(false);
                     }
-                    else if(!isPostUpvoted(currentid)){
+                    else if(!isPostUpvoted(currentid))
+                    {
                         currentpost.increaseDownvotes();
                         mainUser.addDownvotedPosts(""+ currentid);
                         downvoteButton.setSelected(true);
                         upvoteButton.setDisable(true);
                     }
+                    session.merge("User", mainUser);
                     tx.commit();
 
                     downvotesLabel.setText("" + currentpost.getDownvotes());
 
-  
                 } catch (Exception e) {
-                    if (tx != null) tx.rollback();
                     e.printStackTrace();
                 } finally {
-                    session.close();
-                }
-                
+                    DatabaseConnection.disconnect();
+                }  
             } 
         });
 
@@ -712,10 +749,45 @@ public class HomePage extends Application
         postContent.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 18));
         postContent.setEditable(false);
 
+        BookmarkButton bookmarkButton = new BookmarkButton(postID);
+        bookmarkButton.setOnAction(new EventHandler<ActionEvent>() 
+        {
+            @Override 
+            public void handle(ActionEvent event) 
+            {
+                int currentid = bookmarkButton.getPostID();
+                boolean isPostBookmarked = isPostBookmarked(currentid);
+
+                DatabaseConnection.connect(); 
+
+                try(Session session = DatabaseConnection.getSessionFactory().openSession()) {
+                    Transaction tx = session.beginTransaction();
+                    
+                    if(!isPostBookmarked)
+                    {
+                        mainUser.addBookmarkedPost( "" + currentid );
+                        bookmarkButton.setGraphic(bookmarkButton.getFilledBookmarkIcon());
+                    }
+                    else{
+                        mainUser.removeBookmarkedPosts( "" + currentid );
+                        bookmarkButton.setGraphic(bookmarkButton.getEmptyBookmarkIcon());
+                    }
+                    session.merge("User", mainUser);
+                    tx.commit();
+  
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    DatabaseConnection.disconnect();
+                }
+            } 
+        });
+
         HBox upvoteDownvoteBox = new HBox();
         upvoteDownvoteBox.setAlignment(Pos.BASELINE_LEFT);
         upvoteDownvoteBox.setSpacing(10);
-        upvoteDownvoteBox.getChildren().addAll(upvoteButton, upvotesLabel, downvoteButton, downvotesLabel);
+        upvoteDownvoteBox.getChildren().addAll(upvoteButton, upvotesLabel, downvoteButton, downvotesLabel, bookmarkButton);
+
         
         box.setSpacing(10);
         box.getChildren().addAll(usernameAndDateBox, postContent, upvoteDownvoteBox);
@@ -826,6 +898,25 @@ public class HomePage extends Application
         for(int i = 0; i < downvotedPostsArray.length; i++)
         {
             if(postIDString.equals(downvotedPostsArray[i]))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isPostBookmarked(int postID)
+    {
+        String bookmarkedPosts = mainUser.getBookmarkedPosts();
+        if(bookmarkedPosts == null)
+        {
+            return false;
+        }
+        String [] bookmarkedPostsArray = bookmarkedPosts.split(",");
+        String postIDString = "" + postID;
+        for(int i = 0; i < bookmarkedPostsArray.length; i++)
+        {
+            if(postIDString.equals(bookmarkedPostsArray[i]))
             {
                 return true;
             }
