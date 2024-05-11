@@ -4,6 +4,8 @@ package com.example;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
+import java.util.List;
 
 
 public class DatabaseConnection {
@@ -35,4 +37,15 @@ public class DatabaseConnection {
     public static SessionFactory getSessionFactory() {
         return sessionFactory;
     }
+
+    public static int countPosts() {
+        try (Session session = sessionFactory.openSession()) {
+            Long count = session.createQuery("SELECT COUNT(*) FROM Post", Long.class).getSingleResult();
+            return count != null ? count.intValue() : 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1; // Handle exception appropriately
+        }
+    }
+    
 }
