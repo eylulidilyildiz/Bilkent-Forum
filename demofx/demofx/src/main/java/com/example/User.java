@@ -93,69 +93,97 @@ public class User
 
 	public void addUpvotedPosts(String postID){
 		if (this.upvotedPosts != null) {
-			this.upvotedPosts += "," + postID; // Concatenate the post ID with a comma
+			this.upvotedPosts += "," + postID; 
 		} else {
-			this.upvotedPosts = postID; // Initialize the upvotedPosts string if it's null
+			this.upvotedPosts = postID; 
 		}
 	}
 
 	public void removeUpvotedPosts(String postID)
 	{
-		String [] currentUpvotedPosts =  this.upvotedPosts.split(",");
-		String modifiedUpvotedPosts = "";
-		for (int i = 0; i < currentUpvotedPosts.length; i++)
-		{
-			if(!postID.equals(currentUpvotedPosts[i]))
-			{
-				if(modifiedUpvotedPosts != null)
-				{
-					modifiedUpvotedPosts += ",";
+		String[] currentUpvotedPosts = this.upvotedPosts.split(",");
+		StringBuilder modifiedUpvotedPosts = new StringBuilder();
+
+		for (String upvotedPost : currentUpvotedPosts) {
+			if (!postID.equals(upvotedPost)) {
+				if (modifiedUpvotedPosts.length() > 0) {
+					modifiedUpvotedPosts.append(",");
 				}
-				modifiedUpvotedPosts += currentUpvotedPosts[i];
+				modifiedUpvotedPosts.append(upvotedPost);
 			}
 		}
-		this.upvotedPosts = modifiedUpvotedPosts;
+		this.upvotedPosts = modifiedUpvotedPosts.toString();
 	}
 
 	public void addDownvotedPosts(String postID){
-		if(this.downvotedPosts != null)
-		{
-			this.downvotedPosts += ",";
+		if (this.downvotedPosts != null) {
+			this.downvotedPosts += "," + postID; 
+		} else {
+			this.downvotedPosts = postID; 
 		}
-		this.downvotedPosts +=postID;
 	}
 
 	public void removeDownvotedPosts(String postID)
 	{
-		String [] currentDownvotedPosts =  this.downvotedPosts.split(",");
-		String modifiedDownvotedPosts = "";
-		for (int i = 0; i < currentDownvotedPosts.length; i++)
-		{
-			if(!postID.equals(currentDownvotedPosts[i]))
-			{
-				if(modifiedDownvotedPosts != null)
-				{
-					modifiedDownvotedPosts += ",";
+		String[] currentDownvotedPosts = this.downvotedPosts.split(",");
+		StringBuilder modifiedDownvotedPosts = new StringBuilder();
+
+		for (String downvotedPost : currentDownvotedPosts) {
+			if (!postID.equals(downvotedPost)) {
+				if (modifiedDownvotedPosts.length() > 0) {
+					modifiedDownvotedPosts.append(",");
 				}
-				modifiedDownvotedPosts += currentDownvotedPosts[i];
+				modifiedDownvotedPosts.append(downvotedPost);
 			}
 		}
-		this.downvotedPosts = modifiedDownvotedPosts;
+		this.downvotedPosts = modifiedDownvotedPosts.toString();
 	}
 
 	public void addBookmarkedPost(String postID){
-		if(this.bookmarkedPosts != null)
-		{
-			this.bookmarkedPosts += ",";
+		if (this.bookmarkedPosts != null) {
+			this.bookmarkedPosts += "," + postID; 
+		} else {
+			this.bookmarkedPosts = postID; 
 		}
-		this.bookmarkedPosts += postID;;
+	}
+
+	public void removeBookmarkedPosts(String postID)
+	{
+		String[] currentBookmarkedPosts = this.bookmarkedPosts.split(",");
+		StringBuilder modifiedBookmarkedPosts = new StringBuilder();
+
+		for (String bookmarkedPost : currentBookmarkedPosts) {
+			if (!postID.equals(bookmarkedPost)) {
+				if (modifiedBookmarkedPosts.length() > 0) {
+					modifiedBookmarkedPosts.append(",");
+				}
+				modifiedBookmarkedPosts.append(bookmarkedPost);
+			}
+		}
+		this.bookmarkedPosts = modifiedBookmarkedPosts.toString();
 	}
 
 	public void addFriendsID(String newID){
-		if(this.friendsID != null)
-		{
-			this.friendsID += ",";
+		if (this.friendsID != null) {
+			this.friendsID += "," + newID; 
+		} else {
+			this.friendsID = newID; 
 		}
-		this.friendsID += newID;;
+	}
+
+	public void removeFriendsID(String postID)
+	{
+		String[] currentFriendsID = this.friendsID.split(",");
+		StringBuilder modifiedFriendsID = new StringBuilder();
+
+		for (String friendsID : currentFriendsID) {
+			if (!postID.equals(friendsID)) {
+				if (modifiedFriendsID.length() > 0) {
+					modifiedFriendsID.append(",");
+				}
+				modifiedFriendsID.append(friendsID);
+			}
+		}
+		this.friendsID = modifiedFriendsID.toString();
 	}
 }
