@@ -585,14 +585,10 @@ public class HomePage extends Application
 
                 DatabaseConnection.connect(); 
 
-                
-
                 try(Session session = DatabaseConnection.getSessionFactory().openSession()) {
                     Transaction tx = session.beginTransaction();
                     Post currentpost = session.get(Post.class, currentid);
                     
-                    
-
                     if(isPostUpvoted)
                     {
                         currentpost.decreaseUpvotes();
@@ -601,19 +597,19 @@ public class HomePage extends Application
                         neitherIsSelected.setSelected(true);
                         downvoteButton.setDisable(false);
                     }
-                    else if(!isPostDownvoted(currentid)){
+                    else if(!isPostDownvoted(currentid))
+                    {
                         currentpost.increaseUpvotes();
                         mainUser.addUpvotedPosts("" + currentid);
                         upvoteButton.setSelected(true);
                         downvoteButton.setDisable(true);
                     }
-                    session.merge("User",mainUser);
+                    session.merge("User", mainUser);
                     tx.commit();
 
                     upvotesLabel.setText("" + currentpost.getUpvotes());
   
                 } catch (Exception e) {
-                    
                     e.printStackTrace();
                 } finally {
                     DatabaseConnection.disconnect();
@@ -631,11 +627,8 @@ public class HomePage extends Application
 
                 DatabaseConnection.connect(); 
 
-                Session session = DatabaseConnection.getSessionFactory().openSession();
-                Transaction tx = null;
-
-                try{
-                    tx = session.beginTransaction();
+                try(Session session = DatabaseConnection.getSessionFactory().openSession()) {
+                    Transaction tx = session.beginTransaction();
                     Post currentpost = session.get(Post.class, currentid);
 
                     if(isPostDownvoted)
@@ -646,24 +639,23 @@ public class HomePage extends Application
                         neitherIsSelected.setSelected(true);
                         upvoteButton.setDisable(false);
                     }
-                    else if(!isPostUpvoted(currentid)){
+                    else if(!isPostUpvoted(currentid))
+                    {
                         currentpost.increaseDownvotes();
                         mainUser.addDownvotedPosts(""+ currentid);
                         downvoteButton.setSelected(true);
                         upvoteButton.setDisable(true);
                     }
+                    session.merge("User", mainUser);
                     tx.commit();
 
                     downvotesLabel.setText("" + currentpost.getDownvotes());
 
-  
                 } catch (Exception e) {
-                    if (tx != null) tx.rollback();
                     e.printStackTrace();
                 } finally {
-                    session.close();
-                }
-                
+                    DatabaseConnection.disconnect();
+                }  
             } 
         });
 
