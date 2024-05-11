@@ -47,5 +47,15 @@ public class DatabaseConnection {
             return -1; // Handle exception appropriately
         }
     }
+
+    public static int getMaxPostID() {
+        try (Session session = sessionFactory.openSession()) {
+            Long count = session.createQuery("SELECT MAX(postID) FROM Post", Long.class).getSingleResult();
+            return count != null ? count.intValue() : 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1; // Handle exception appropriately
+        }
+    }
     
 }
