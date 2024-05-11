@@ -45,12 +45,7 @@ import javafx.geometry.*;
 
 public class HomePage extends Application 
 {
-    // Instance Variables for buttons
-    private boolean isHomeClicked = false;
-    private boolean isProfileClicked = false;
-    private boolean isBrowseClicked = false;
-    private boolean isUpvotedClicked = false;
-    private boolean isBookmarksClicked = false;
+   
 
     // Main User for the application
     User mainUser;
@@ -215,88 +210,7 @@ public class HomePage extends Application
         upvotedButton.setToggleGroup(menuPaneGroup);
         bookmarksButton.setToggleGroup(menuPaneGroup);
 
-        homeButton.setOnAction(new EventHandler <ActionEvent>() 
-        {
-            @Override
-            public void handle(ActionEvent event) 
-            {
-                // UI way of showing the button is selected
-                homeButton.setSelected(true);
 
-                colorBackground(homeButton, homeBox);
-                discolorBackground(profileButton, profileBox);
-                discolorBackground(browseButton, browseBox);
-                discolorBackground(upvotedButton, upvotedBox);
-                discolorBackground(bookmarksButton, bookmarksBox);
-            }
-        });
-
-        profileButton.setOnAction(new EventHandler <ActionEvent>() 
-        {
-            @Override
-            public void handle(ActionEvent event) 
-            {
-                // UI way of showing the button is selected
-                profileButton.setSelected(true);
-
-                colorBackground(profileButton, profileBox);
-                discolorBackground(homeButton, homeBox);
-                discolorBackground(browseButton, browseBox);
-                discolorBackground(upvotedButton, upvotedBox);
-                discolorBackground(bookmarksButton, bookmarksBox);
-            }
-        });
-
-        browseButton.setOnAction(new EventHandler <ActionEvent>() 
-        {
-            @Override
-            public void handle(ActionEvent event) 
-            {
-                // UI way of showing the button is selected
-                browseButton.setSelected(true);
-
-                colorBackground(browseButton, browseBox);
-                discolorBackground(homeButton, homeBox);
-                discolorBackground(profileButton, profileBox);
-                discolorBackground(upvotedButton, upvotedBox);
-                discolorBackground(bookmarksButton, bookmarksBox);
-            }
-        });
-
-        upvotedButton.setOnAction(new EventHandler <ActionEvent>() 
-        {
-            @Override
-            public void handle(ActionEvent event) 
-            {
-                // UI way of showing the button is selected
-                upvotedButton.setSelected(true);
-
-                colorBackground(upvotedButton, upvotedBox);
-                discolorBackground(profileButton, profileBox);
-                discolorBackground(browseButton, browseBox);
-                discolorBackground(homeButton, homeBox);
-                discolorBackground(bookmarksButton, bookmarksBox);
-
-            }
-        });
-
-        bookmarksButton.setOnAction(new EventHandler <ActionEvent>() 
-        {
-            @Override
-            public void handle(ActionEvent event) 
-            {
-                // UI way of showing the button is selected
-                bookmarksButton.setSelected(true);
-
-                colorBackground(bookmarksButton, bookmarksBox);
-                discolorBackground(profileButton, profileBox);
-                discolorBackground(browseButton, browseBox);
-                discolorBackground(homeButton, homeBox);
-                discolorBackground(upvotedButton, upvotedBox);
-
-
-            }
-        });
 
         // LOGOUT
         Button logoutButton = new Button("LOGOUT");
@@ -458,6 +372,97 @@ public class HomePage extends Application
         // combining the searchPane and postsPane
         VBox homePageBox = new VBox();
         homePageBox.getChildren().addAll (searchAddPostBox, postsPane);
+
+        // Profile page
+        ProfileBox profilePageBox = new ProfileBox (this.mainUser);
+
+        /* WHEN BUTTONS ARE CLICKED */ 
+        homeButton.setOnAction(new EventHandler <ActionEvent>() 
+        {
+            @Override
+            public void handle(ActionEvent event) 
+            {
+                // UI way of showing the button is selected
+                homeButton.setSelected(true);
+
+                colorBackground(homeButton, homeBox);
+                discolorBackground(profileButton, profileBox);
+                discolorBackground(browseButton, browseBox);
+                discolorBackground(upvotedButton, upvotedBox);
+                discolorBackground(bookmarksButton, bookmarksBox);
+
+                root.setCenter (homePageBox);
+            }
+        });
+
+        profileButton.setOnAction(new EventHandler <ActionEvent>() 
+        {
+            @Override
+            public void handle(ActionEvent event) 
+            {
+                // UI way of showing the button is selected
+                profileButton.setSelected(true);
+
+                colorBackground(profileButton, profileBox);
+                discolorBackground(homeButton, homeBox);
+                discolorBackground(browseButton, browseBox);
+                discolorBackground(upvotedButton, upvotedBox);
+                discolorBackground(bookmarksButton, bookmarksBox);
+
+                root.setCenter (profilePageBox);
+            }
+        });
+
+        browseButton.setOnAction(new EventHandler <ActionEvent>() 
+        {
+            @Override
+            public void handle(ActionEvent event) 
+            {
+                // UI way of showing the button is selected
+                browseButton.setSelected(true);
+
+                colorBackground(browseButton, browseBox);
+                discolorBackground(homeButton, homeBox);
+                discolorBackground(profileButton, profileBox);
+                discolorBackground(upvotedButton, upvotedBox);
+                discolorBackground(bookmarksButton, bookmarksBox);
+            }
+        });
+
+        upvotedButton.setOnAction(new EventHandler <ActionEvent>() 
+        {
+            @Override
+            public void handle(ActionEvent event) 
+            {
+                // UI way of showing the button is selected
+                upvotedButton.setSelected(true);
+
+                colorBackground(upvotedButton, upvotedBox);
+                discolorBackground(profileButton, profileBox);
+                discolorBackground(browseButton, browseBox);
+                discolorBackground(homeButton, homeBox);
+                discolorBackground(bookmarksButton, bookmarksBox);
+
+            }
+        });
+
+        bookmarksButton.setOnAction(new EventHandler <ActionEvent>() 
+        {
+            @Override
+            public void handle(ActionEvent event) 
+            {
+                // UI way of showing the button is selected
+                bookmarksButton.setSelected(true);
+
+                colorBackground(bookmarksButton, bookmarksBox);
+                discolorBackground(profileButton, profileBox);
+                discolorBackground(browseButton, browseBox);
+                discolorBackground(homeButton, homeBox);
+                discolorBackground(upvotedButton, upvotedBox);
+
+
+            }
+        });
 
         root.setCenter (homePageBox);
 
