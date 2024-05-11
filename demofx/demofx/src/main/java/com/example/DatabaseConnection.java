@@ -40,7 +40,7 @@ public class DatabaseConnection {
 
     public static int countPosts() {
         try (Session session = sessionFactory.openSession()) {
-            Long count = session.createQuery("SELECT COUNT(*) FROM Post", Long.class).getSingleResult();
+            Long count = session.createQuery("SELECT COUNT(postID) FROM Post", Long.class).getSingleResult();
             return count != null ? count.intValue() : 0;
         } catch (Exception e) {
             e.printStackTrace();

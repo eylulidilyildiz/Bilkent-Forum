@@ -40,7 +40,7 @@ public class AddPostBox extends VBox {
 
         HBox addPostBox = new HBox();
         addPostBox.setSpacing (500);
-        addPostBox.getChildren().addAll (this.nameDepartmentSemesterBox, this.mailPasswordBox);
+        //addPostBox.getChildren().addAll (this.nameDepartmentSemesterBox, this.mailPasswordBox);
         this.getChildren().add (addPostBox);
     }
 
@@ -52,7 +52,7 @@ public class AddPostBox extends VBox {
 
         // name label and text field
        
-        nameDepartmentSemesterBox.getChildren().addAll (nameLabel, nameTextField, departmentLabel, departmentTextField, semesterLabel, semesterBox);
+        //nameDepartmentSemesterBox.getChildren().addAll (nameLabel, nameTextField, departmentLabel, departmentTextField, semesterLabel, semesterBox);
 
 
     }
@@ -62,7 +62,7 @@ public class AddPostBox extends VBox {
         this.mailPasswordBox = new VBox();
         this.mailPasswordBox.setAlignment (Pos.CENTER_LEFT);
         
-        this.mailPasswordBox.getChildren().addAll (mailLabel, mailTextField, passwordLabel, passwordTextField, passAgainLabel, passAgainTextField);
+        //this.mailPasswordBox.getChildren().addAll (mailLabel, mailTextField, passwordLabel, passwordTextField, passAgainLabel, passAgainTextField);
     
     }
 

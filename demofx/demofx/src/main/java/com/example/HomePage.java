@@ -349,10 +349,10 @@ public class HomePage extends Application
 
         try (Session session = DatabaseConnection.getSessionFactory().openSession()) 
         {
-            int i = 1;
+            int i = DatabaseConnection.getMaxPostID();
             int postsDisplayed = 0;
             int totalPostCount = DatabaseConnection.countPosts();
-            while(session.get(Post.class, i) != null || postsDisplayed < totalPostCount)
+            while(i > 0 && postsDisplayed < totalPostCount)
             {
                 if(session.get(Post.class, i) != null)
                 {
@@ -369,7 +369,7 @@ public class HomePage extends Application
                     postsBox.getChildren().add(currentPost);
                     postsDisplayed++;
                 }      
-                i++;
+                i--;
             }
 
         //while
