@@ -40,7 +40,7 @@ public class DatabaseConnection {
 
     public static int countPosts() {
         try (Session session = sessionFactory.openSession()) {
-            Long count = session.createQuery("SELECT COUNT(postID) FROM Post", Long.class).getSingleResult();
+            Long count = session.createQuery("SELECT COUNT(*) FROM Post", Long.class).getSingleResult();
             return count != null ? count.intValue() : 0;
         } catch (Exception e) {
             e.printStackTrace();
@@ -50,12 +50,17 @@ public class DatabaseConnection {
 
     public static int getMaxPostID() {
         try (Session session = sessionFactory.openSession()) {
-            Long count = session.createQuery("SELECT MAX(postID) FROM Post", Long.class).getSingleResult();
-            return count != null ? count.intValue() : 0;
+            Object result = session.createQuery("SELECT MAX(id) FROM Post", Object.class).uniqueResult();
+            if (result instanceof Number) {
+                return ((Number) result).intValue();
+            } else {
+                return 0; // Handle unexpected result
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return -1; // Handle exception appropriately
         }
     }
+    
     
 }
