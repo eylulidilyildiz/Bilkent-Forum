@@ -350,21 +350,25 @@ public class HomePage extends Application
         try (Session session = DatabaseConnection.getSessionFactory().openSession()) 
         {
             int i = 1;
-            while(session.get(Post.class, i) != null)
+            int postsDisplayed = 0;
+            int totalPostCount = DatabaseConnection.countPosts();
+            while(session.get(Post.class, i) != null || postsDisplayed < totalPostCount)
             {
-                
-                Post post = session.get(Post.class, i);
-                int ownerID = post.getOwnerID();
-                String username = session.get(User.class, ownerID).getUsername();
-
-                currentPost = new VBox();
-
-                currentPost.setPrefSize(500, 500);
-                createPost(currentPost, post, username);
-                currentPost.setAlignment(Pos.CENTER);
-
-                postsBox.getChildren().add(currentPost);
-        
+                if(session.get(Post.class, i) != null)
+                {
+                    Post post = session.get(Post.class, i);
+                    int ownerID = post.getOwnerID();
+                    String username = session.get(User.class, ownerID).getUsername();
+    
+                    currentPost = new VBox();
+    
+                    currentPost.setPrefSize(500, 500);
+                    createPost(currentPost, post, username);
+                    currentPost.setAlignment(Pos.CENTER);
+    
+                    postsBox.getChildren().add(currentPost);
+                    postsDisplayed++;
+                }      
                 i++;
             }
 

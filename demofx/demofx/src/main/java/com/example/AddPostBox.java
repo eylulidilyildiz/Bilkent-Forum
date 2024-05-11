@@ -40,7 +40,7 @@ public class AddPostBox extends VBox {
 
         HBox addPostBox = new HBox();
         addPostBox.setSpacing (500);
-        editProfileBox.getChildren().addAll (this.nameDepartmentSemesterBox, this.mailPasswordBox);
+        addPostBox.getChildren().addAll (this.nameDepartmentSemesterBox, this.mailPasswordBox);
         this.getChildren().add (addPostBox);
     }
 
