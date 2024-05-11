@@ -544,9 +544,11 @@ public class HomePage extends Application
         {
             super();
             this.postID = postID;
-
-            final int ICON_HEIGHT = 20;
-            final int ICON_WIDTH = 20;
+            setBackground (new Background(new BackgroundFill(null, CornerRadii.EMPTY, Insets.EMPTY)));
+            final int ICON_HEIGHT = 30;
+            final int ICON_WIDTH = 35;
+            setPrefHeight (ICON_HEIGHT);
+            setPrefWidth (ICON_WIDTH);
             ImageView filledBookmarkIcon = new ImageView (getClass().getResource("images/filledBookmark.png").toString());
             filledBookmarkIcon.setFitHeight (ICON_HEIGHT);
             filledBookmarkIcon.setFitWidth (ICON_WIDTH);
@@ -736,10 +738,11 @@ public class HomePage extends Application
         postContent.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 18));
         postContent.setEditable(false);
 
+        BookmarkButton bookmark = new BookmarkButton(postID);
         HBox upvoteDownvoteBox = new HBox();
         upvoteDownvoteBox.setAlignment(Pos.BASELINE_LEFT);
         upvoteDownvoteBox.setSpacing(10);
-        upvoteDownvoteBox.getChildren().addAll(upvoteButton, upvotesLabel, downvoteButton, downvotesLabel);
+        upvoteDownvoteBox.getChildren().addAll(upvoteButton, upvotesLabel, downvoteButton, downvotesLabel, bookmark);
 
         
         box.setSpacing(10);
