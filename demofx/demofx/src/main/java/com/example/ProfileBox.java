@@ -1,7 +1,10 @@
 package com.example;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -26,7 +29,7 @@ public class ProfileBox extends VBox
     // Instance Variables 
     private User mainUser;
     private ScrollPane postsBox;
-    private ToggleButton editProfileButton;
+    private Button editProfileButton;
     private HBox informationBox;
     private ImageView profileIcon;
     private HBox searchAddPostBox;
@@ -74,19 +77,33 @@ public class ProfileBox extends VBox
         Label semesterLabel = new Label ("Freshman");
         semesterLabel.setFont (Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 30));
 
-
         // adding the components together
         informationTextBox.getChildren().addAll (nameLabel, universityLabel, departmentLabel, semesterLabel);
+
+        editProfileButton = new Button ("Edit Profile");
+        editProfileButton.setFont(Font.font("Tahoma", FontWeight.BOLD, FontPosture.REGULAR, 22));
+        editProfileButton.setPrefHeight (60);
+        editProfileButton.setPrefWidth (200);
+        
+        VBox textAndProfileBox = new VBox();
+        textAndProfileBox.setPadding (new Insets(10));
+        textAndProfileBox.setAlignment (Pos.CENTER_RIGHT);
+
+        textAndProfileBox.getChildren().addAll (informationTextBox, editProfileButton);
+        
 
         // ImageView for PROFILE
         profileIcon = new ImageView (getClass().getResource("images/profileIcon.png").toString());
         profileIcon.setFitHeight (400);
         profileIcon.setFitWidth (400);
 
-        this.informationBox.getChildren().addAll (profileIcon, informationTextBox);
-        this.informationBox.setSpacing (200);
 
+        
         // adding the info pane to the profile box
+        this.informationBox.getChildren().addAll (profileIcon, textAndProfileBox);
+        this.informationBox.setSpacing (200);
+        
+
         this.getChildren().add (this.informationBox);
 
 
@@ -144,5 +161,19 @@ public class ProfileBox extends VBox
 
         this.getChildren().add (searchAddPostBox);
         
+    }
+
+    private void editProfileIsClicked (Button button)
+    {
+        button.setOnAction (new EventHandler <ActionEvent>() 
+        {
+
+            @Override
+            public void handle(ActionEvent arg0) 
+            {
+                EditProfileBox editProfileBox = new EditProfileBox (mainUser);
+            }
+            
+        });
     }
 }
