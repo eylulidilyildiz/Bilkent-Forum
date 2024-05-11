@@ -3,8 +3,6 @@ package com.example;
 
 
 import javafx.event.*;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -46,6 +44,8 @@ public class EditProfileBox extends VBox
     {
         super();
         this.mainUser = user;
+        setPadding(new Insets(30));
+        setMinHeight(500);
 
         this.createSearchAndAddPost();
         this.createNameDepartmentSemesterBox();
@@ -58,6 +58,8 @@ public class EditProfileBox extends VBox
         saveButton.setFont (Font.font ("Tahoma", FontWeight.BOLD, FontPosture.REGULAR, 22));
 
         HBox editProfileBox = new HBox();
+        editProfileBox.setStyle("-fx-border-color: gray; -fx-border-width: 1px 1px 1px 1px;");
+
         editProfileBox.getChildren().addAll (this.nameDepartmentSemesterBox, this.mailPasswordBox);
         editProfileBox.setSpacing (500);
         editProfileBox.setAlignment (Pos.CENTER);
