@@ -708,6 +708,7 @@ public class HomePage extends Application
         upvoteDownvoteBox.setAlignment(Pos.BASELINE_LEFT);
         upvoteDownvoteBox.setSpacing(10);
         upvoteDownvoteBox.getChildren().addAll(upvoteButton, upvotesLabel, downvoteButton, downvotesLabel);
+
         
         box.setSpacing(10);
         box.getChildren().addAll(usernameAndDateBox, postContent, upvoteDownvoteBox);
