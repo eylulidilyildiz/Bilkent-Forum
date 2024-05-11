@@ -92,11 +92,11 @@ public class User
 	}
 
 	public void addUpvotedPosts(String postID){
-		if(this.upvotedPosts != null)
-		{
-			this.upvotedPosts += ",";
+		if (this.upvotedPosts != null) {
+			this.upvotedPosts += "," + postID; // Concatenate the post ID with a comma
+		} else {
+			this.upvotedPosts = postID; // Initialize the upvotedPosts string if it's null
 		}
-		this.upvotedPosts +=postID;
 	}
 
 	public void removeUpvotedPosts(String postID)

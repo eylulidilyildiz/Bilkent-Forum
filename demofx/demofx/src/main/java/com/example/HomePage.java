@@ -474,7 +474,7 @@ public class HomePage extends Application
         catch (Exception e) {
             e.printStackTrace();
         } finally {
-            //DatabaseConnection.disconnect(); 
+            DatabaseConnection.disconnect(); 
         }
 
     }
@@ -580,12 +580,13 @@ public class HomePage extends Application
 
                 DatabaseConnection.connect(); 
 
-                Session session = DatabaseConnection.getSessionFactory().openSession();
-                Transaction tx = null;
+                
 
-                try{
-                    tx = session.beginTransaction();
+                try(Session session = DatabaseConnection.getSessionFactory().openSession()) {
+                    Transaction tx = session.beginTransaction();
                     Post currentpost = session.get(Post.class, currentid);
+                    
+                    
 
                     if(isPostUpvoted)
                     {
@@ -597,19 +598,20 @@ public class HomePage extends Application
                     }
                     else if(!isPostDownvoted(currentid)){
                         currentpost.increaseUpvotes();
-                        mainUser.addUpvotedPosts(""+ currentid);
+                        mainUser.addUpvotedPosts("" + currentid);
                         upvoteButton.setSelected(true);
                         downvoteButton.setDisable(true);
                     }
+                    session.merge("User",mainUser);
                     tx.commit();
 
                     upvotesLabel.setText("" + currentpost.getUpvotes());
   
                 } catch (Exception e) {
-                    if (tx != null) tx.rollback();
+                    
                     e.printStackTrace();
                 } finally {
-                    session.close();
+                    DatabaseConnection.disconnect();
                 }
             } 
         });
