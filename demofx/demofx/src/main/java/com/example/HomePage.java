@@ -382,6 +382,7 @@ public class HomePage extends Application
             postsPane.setFitToWidth (true);
             postsPane.setFitToHeight (true);
             postsPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+            postsPane.setStyle ("-fx-border-color: #F0F0F0; -fx-border-width: 1px 1px 1px 1px;");
 
             // combining the searchPane and postsPane
             VBox homePageBox = new VBox();
@@ -489,6 +490,7 @@ public class HomePage extends Application
                             }      
                         }
                         postsPane.setContent(upvotedPostsBox);
+                        root.setCenter (homePageBox);
                     }
                     catch (Exception e) {
                         e.printStackTrace();
@@ -537,6 +539,7 @@ public class HomePage extends Application
                             }      
                         }
                         postsPane.setContent(bookmarkedPostsBox);
+                        root.setCenter (homePageBox);
                     }
                     catch (Exception e) {
                         e.printStackTrace();
