@@ -392,7 +392,7 @@ public class HomePage extends Application
             ProfileBox profilePageBox = new ProfileBox (this.mainUser, root);
 
             // Browse Page
-            BrowseBox browsePageBox = new BrowseBox ();
+            BrowseBox browsePageBox = new BrowseBox (mainUser);
 
             /* WHEN BUTTONS ARE CLICKED */ 
             homeButton.setOnAction(new EventHandler <ActionEvent>() 

@@ -1,5 +1,7 @@
 package com.example;
 
+import org.hibernate.Session;
+
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -31,6 +33,8 @@ public class BrowseBox extends VBox
     private VBox searchAndFilterBox;
     private HBox searchBox;
     private ScrollPane postsAndFilters;
+    private User mainUser;
+    private ScrollPane scrollPane;
 
     @SuppressWarnings("rawtypes")
     private ChoiceBox priceBox;
@@ -43,9 +47,11 @@ public class BrowseBox extends VBox
     private ChoiceBox postTypeBox;
    
 
+
     // Constructor
-    public BrowseBox ()
+    public BrowseBox (User user)
     {
+        this.mainUser = user;
         this.createSearchBox();
         this.createFiltrationBox();
 
@@ -164,6 +170,56 @@ public class BrowseBox extends VBox
 
         searchBox.setSpacing (550);
         searchBox.getChildren().add(searchPane);
+
+        searchBar.setOnAction(event -> searchAndPrint(searchBar.getText()));
+    }
+
+    public void searchAndPrint(String input)
+    {
+        PostBox currentPost;
+
+        DatabaseConnection.connect(); 
+        try (Session session = DatabaseConnection.getSessionFactory().openSession()) 
+        {
+            int i = DatabaseConnection.getMaxPostID();
+            int postsDisplayed = 0;
+            int totalPostCount = DatabaseConnection.countPosts();
+            while(i > 0 && postsDisplayed < totalPostCount)
+            {
+                if(session.get(Post.class, i) != null)
+                {
+                    Post post = session.get(Post.class, i);
+                    String content = post.getContent();
+
+                    content = content.toLowerCase();
+                    input = input.toLowerCase();
+
+                    String bookProperties = post.getAuthorName() + " " + 
+                    post.getBookEdition() + " " + post.getBookTitle() + " "
+                    + post.getPublisherName();
+
+                    bookProperties = bookProperties.toLowerCase();
+
+                    if(content.contains(input) || bookProperties.contains(input))
+                    {
+                        currentPost = new PostBox(post, mainUser, session);
         
+                        currentPost.setPrefSize(500, 500);
+                        currentPost.setAlignment(Pos.CENTER);
+                        
+                        postsAndFilters.setContent(currentPost);
+                        
+                        postsDisplayed++;
+                    }
+                }      
+                i--;
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            postsAndFilters.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+            DatabaseConnection.disconnect(); 
+        }
     }
 }
