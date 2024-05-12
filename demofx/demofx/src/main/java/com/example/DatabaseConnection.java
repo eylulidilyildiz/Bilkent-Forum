@@ -61,6 +61,20 @@ public class DatabaseConnection {
             return -1; // Handle exception appropriately
         }
     }
+
+    public static int getMaxCommentID() {
+        try (Session session = sessionFactory.openSession()) {
+            Object result = session.createQuery("SELECT MAX(id) FROM Comment", Object.class).uniqueResult();
+            if (result instanceof Number) {
+                return ((Number) result).intValue();
+            } else {
+                return 0; // Handle unexpected result
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1; // Handle exception appropriately
+        }
+    }
     
     
 }

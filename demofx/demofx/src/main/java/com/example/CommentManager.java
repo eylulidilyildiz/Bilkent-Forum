@@ -5,7 +5,7 @@ import org.hibernate.Transaction;
 
 public class CommentManager 
 {
-    public void createPost(int id, String content, int ownerID, int commentedPostID) 
+    public void createComment(int id, String content, int ownerID, int commentedPostID) 
     {
         Comment newComment = new Comment();
         newComment.setId(id);

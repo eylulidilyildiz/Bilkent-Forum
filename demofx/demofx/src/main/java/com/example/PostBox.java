@@ -140,8 +140,6 @@ public class PostBox extends VBox
     }
 
     class CommentsButton extends ToggleButton{
-        private int commentID;
-        private int ownerID;
         private int commentedPostID;
 
         public CommentsButton(int postID)
@@ -160,6 +158,32 @@ public class PostBox extends VBox
         }
     }
 
+    class AddCommentButton extends Button{
+        private int commentedPostID;
+        private TextArea commentArea;
+
+        public AddCommentButton(int postID, TextArea commentArea)
+        {
+            super("Add Comment");
+            setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 14));
+            this.commentedPostID = postID;
+
+            this.commentArea = commentArea;
+
+            setPrefHeight (30);
+            setPrefWidth (150);
+        }
+
+        public int getPostID()
+        {
+            return this.commentedPostID;
+        }
+        public TextArea getCommentArea()
+        {
+            return this.commentArea;
+        }
+    }
+
     
     class CommentBox extends VBox
     {
@@ -167,6 +191,9 @@ public class PostBox extends VBox
 
         public CommentBox(int postID)
         {
+            super();
+            this.postID = postID;
+        
             setSpacing(15);
             setAlignment(Pos.CENTER_LEFT);
             Label commentsLabel = new Label("Comments");
@@ -217,11 +244,44 @@ public class PostBox extends VBox
                 }
 
                 HBox addCommentBox = new HBox();
+                addCommentBox.setSpacing(20);
+
                 TextArea addCommentArea = new TextArea("Write a comment!");
                 addCommentArea.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 16));
                 addCommentArea.setMinWidth(600);
-                Button addCommentButton = new Button("Add Comment");
-                addCommentButton.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 16));
+                addCommentArea.setPrefWidth(600);
+
+                AddCommentButton addCommentButton = new AddCommentButton(this.postID, addCommentArea);
+                addCommentButton.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 14));
+                addCommentButton.setAlignment(Pos.BASELINE_LEFT);
+
+                addCommentButton.setOnAction(new EventHandler<ActionEvent>()
+                {
+                    @Override
+                    public void handle(ActionEvent arg0) 
+                    {                       
+                        DatabaseConnection.connect(); 
+                        try (Session session = DatabaseConnection.getSessionFactory().openSession()) 
+                        {
+                            Transaction tx = session.beginTransaction();
+
+                            int commentID = DatabaseConnection.getMaxCommentID() + 1;
+                            String content = addCommentButton.getCommentArea().getText();
+                            int ownerID = mainUser.getId();
+                            int postID = addCommentButton.getPostID();
+
+                            CommentManager commentManager = new CommentManager();
+                            commentManager.createComment(commentID, content, ownerID, postID);
+
+                        } 
+                        catch (Exception e) {
+                            e.printStackTrace();
+                        } finally {
+                            DatabaseConnection.disconnect(); 
+                        }
+                    }
+
+                });
 
                 addCommentBox.getChildren().addAll(addCommentArea, addCommentButton);
                 this.getChildren().add(addCommentBox);
