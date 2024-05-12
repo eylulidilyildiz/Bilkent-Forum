@@ -46,7 +46,9 @@ import javafx.geometry.*;
 public class HomePage extends Application 
 {
     // Main User for the application
-    User mainUser;
+    private User mainUser;
+    private VBox allPostsBox;
+    private ScrollPane postsPane;
 
     public HomePage(User user)
     {
@@ -340,13 +342,13 @@ public class HomePage extends Application
        
         //POSTS
 
-        VBox postsBox = new VBox();
-        postsBox.setSpacing(30);
-        postsBox.setAlignment(Pos.CENTER);
+        allPostsBox = new VBox();
+        allPostsBox.setSpacing(30);
+        allPostsBox.setAlignment(Pos.CENTER);
+
         PostBox currentPost;
 
         DatabaseConnection.connect(); 
-
         try (Session session = DatabaseConnection.getSessionFactory().openSession()) 
         {
             int i = DatabaseConnection.getMaxPostID();
@@ -366,133 +368,196 @@ public class HomePage extends Application
                     currentPost.setPrefSize(500, 500);
                     currentPost.setAlignment(Pos.CENTER);
     
-                    postsBox.getChildren().add(currentPost);
+                    allPostsBox.getChildren().add(currentPost);
                     postsDisplayed++;
                 }      
                 i--;
             }
 
-        //while
-        
             
-        ScrollPane postsPane = new ScrollPane();
-        postsPane.setPadding(new Insets(70));
-        postsBox.setAlignment(Pos.CENTER);
-        postsPane.setContent(postsBox);
-        postsPane.setFitToWidth (true);
-        postsPane.setFitToHeight (true);
-        postsPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+            postsPane = new ScrollPane();
+            postsPane.setPadding(new Insets(70));
+            allPostsBox.setAlignment(Pos.CENTER);
+            postsPane.setContent(allPostsBox);
+            postsPane.setFitToWidth (true);
+            postsPane.setFitToHeight (true);
+            postsPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
 
-        // combining the searchPane and postsPane
-        VBox homePageBox = new VBox();
-        homePageBox.getChildren().addAll (searchAddPostBox, postsPane);
+            // combining the searchPane and postsPane
+            VBox homePageBox = new VBox();
+            homePageBox.getChildren().addAll (searchAddPostBox, postsPane);
 
-        // Profile page
-        ProfileBox profilePageBox = new ProfileBox (this.mainUser, root);
+            // Profile page
+            ProfileBox profilePageBox = new ProfileBox (this.mainUser, root);
 
-        // Browse Page
-        BrowseBox browsePageBox = new BrowseBox ();
+            // Browse Page
+            BrowseBox browsePageBox = new BrowseBox ();
 
-        /* WHEN BUTTONS ARE CLICKED */ 
-        homeButton.setOnAction(new EventHandler <ActionEvent>() 
-        {
-            @Override
-            public void handle(ActionEvent event) 
+            /* WHEN BUTTONS ARE CLICKED */ 
+            homeButton.setOnAction(new EventHandler <ActionEvent>() 
             {
-                // UI way of showing the button is selected
-                homeButton.setSelected(true);
+                @Override
+                public void handle(ActionEvent event) 
+                {
+                    // UI way of showing the button is selected
+                    homeButton.setSelected(true);
 
-                colorBackground(homeButton, homeBox);
-                discolorBackground(profileButton, profileBox);
-                discolorBackground(browseButton, browseBox);
-                discolorBackground(upvotedButton, upvotedBox);
-                discolorBackground(bookmarksButton, bookmarksBox);
+                    colorBackground(homeButton, homeBox);
+                    discolorBackground(profileButton, profileBox);
+                    discolorBackground(browseButton, browseBox);
+                    discolorBackground(upvotedButton, upvotedBox);
+                    discolorBackground(bookmarksButton, bookmarksBox);
 
-                root.setCenter (homePageBox);
-            }
-        });
+                    postsPane.setContent(allPostsBox);
+                    root.setCenter (homePageBox);
+                }
+            });
 
-        profileButton.setOnAction(new EventHandler <ActionEvent>() 
-        {
-            @Override
-            public void handle(ActionEvent event) 
+            profileButton.setOnAction(new EventHandler <ActionEvent>() 
             {
-                // UI way of showing the button is selected
-                profileButton.setSelected(true);
+                @Override
+                public void handle(ActionEvent event) 
+                {
+                    // UI way of showing the button is selected
+                    profileButton.setSelected(true);
 
-                colorBackground(profileButton, profileBox);
-                discolorBackground(homeButton, homeBox);
-                discolorBackground(browseButton, browseBox);
-                discolorBackground(upvotedButton, upvotedBox);
-                discolorBackground(bookmarksButton, bookmarksBox);
+                    colorBackground(profileButton, profileBox);
+                    discolorBackground(homeButton, homeBox);
+                    discolorBackground(browseButton, browseBox);
+                    discolorBackground(upvotedButton, upvotedBox);
+                    discolorBackground(bookmarksButton, bookmarksBox);
 
-                root.setCenter (profilePageBox);
-            }
-        });
+                    root.setCenter (profilePageBox);
+                }
+            });
 
-        browseButton.setOnAction(new EventHandler <ActionEvent>() 
-        {
-            @Override
-            public void handle(ActionEvent event) 
+            browseButton.setOnAction(new EventHandler <ActionEvent>() 
             {
-                // UI way of showing the button is selected
-                browseButton.setSelected(true);
+                @Override
+                public void handle(ActionEvent event) 
+                {
+                    // UI way of showing the button is selected
+                    browseButton.setSelected(true);
 
-                colorBackground(browseButton, browseBox);
-                discolorBackground(homeButton, homeBox);
-                discolorBackground(profileButton, profileBox);
-                discolorBackground(upvotedButton, upvotedBox);
-                discolorBackground(bookmarksButton, bookmarksBox);
+                    colorBackground(browseButton, browseBox);
+                    discolorBackground(homeButton, homeBox);
+                    discolorBackground(profileButton, profileBox);
+                    discolorBackground(upvotedButton, upvotedBox);
+                    discolorBackground(bookmarksButton, bookmarksBox);
 
-                root.setCenter (browsePageBox);
-            }
-        });
+                    root.setCenter (browsePageBox);
+                }
+            });
 
-        upvotedButton.setOnAction(new EventHandler <ActionEvent>() 
-        {
-            @Override
-            public void handle(ActionEvent event) 
+            upvotedButton.setOnAction(new EventHandler <ActionEvent>() 
             {
-                // UI way of showing the button is selected
-                upvotedButton.setSelected(true);
+                @Override
+                public void handle(ActionEvent event) 
+                {
+                    // UI way of showing the button is selected
+                    upvotedButton.setSelected(true);
 
-                colorBackground(upvotedButton, upvotedBox);
-                discolorBackground(profileButton, profileBox);
-                discolorBackground(browseButton, browseBox);
-                discolorBackground(homeButton, homeBox);
-                discolorBackground(bookmarksButton, bookmarksBox);
+                    colorBackground(upvotedButton, upvotedBox);
+                    discolorBackground(profileButton, profileBox);
+                    discolorBackground(browseButton, browseBox);
+                    discolorBackground(homeButton, homeBox);
+                    discolorBackground(bookmarksButton, bookmarksBox);
 
-            }
-        });
+                    //changing displayed posts
+                    VBox upvotedPostsBox = new VBox();
+                    //postsPane = new ScrollPane();
+                    PostBox currentPost;
 
-        bookmarksButton.setOnAction(new EventHandler <ActionEvent>() 
-        {
-            @Override
-            public void handle(ActionEvent event) 
+                    DatabaseConnection.connect(); 
+                    try (Session session = DatabaseConnection.getSessionFactory().openSession()) 
+                    {
+                        String [] upvotedPostsArray = mainUser.getUpvotedPosts().split(",");
+                        for( int i = upvotedPostsArray.length - 1; i >= 0; i--)
+                        {
+                            int id = Integer.parseInt( upvotedPostsArray[i] );
+                            if(session.get(Post.class, id) != null)
+                            {
+                                Post post = session.get(Post.class, id);
+
+                                currentPost = new PostBox(post, mainUser, session);
+                
+                                currentPost.setPrefSize(500, 500);
+                                currentPost.setAlignment(Pos.CENTER);
+                
+                                upvotedPostsBox.getChildren().add(currentPost);
+
+                            }      
+                        }
+                        postsPane.setContent(upvotedPostsBox);
+                    }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    } finally {
+                        DatabaseConnection.disconnect(); 
+                    }
+                }
+            });
+            
+
+            bookmarksButton.setOnAction(new EventHandler <ActionEvent>() 
             {
-                // UI way of showing the button is selected
-                bookmarksButton.setSelected(true);
+                @Override
+                public void handle(ActionEvent event) 
+                {
+                    // UI way of showing the button is selected
+                    bookmarksButton.setSelected(true);
 
-                colorBackground(bookmarksButton, bookmarksBox);
-                discolorBackground(profileButton, profileBox);
-                discolorBackground(browseButton, browseBox);
-                discolorBackground(homeButton, homeBox);
-                discolorBackground(upvotedButton, upvotedBox);
+                    colorBackground(bookmarksButton, bookmarksBox);
+                    discolorBackground(profileButton, profileBox);
+                    discolorBackground(browseButton, browseBox);
+                    discolorBackground(homeButton, homeBox);
+                    discolorBackground(upvotedButton, upvotedBox);
+
+                    VBox bookmarkedPostsBox = new VBox();
+                    //postsPane = new ScrollPane();
+                    PostBox currentPost;
+
+                    DatabaseConnection.connect(); 
+                    try (Session session = DatabaseConnection.getSessionFactory().openSession()) 
+                    {
+                        String [] bookmarkedPostsArray = mainUser.getBookmarkedPosts().split(",");
+                        for( int i = bookmarkedPostsArray.length - 1; i >= 0; i--)
+                        {
+                            int id = Integer.parseInt( bookmarkedPostsArray[i] );
+                            if(session.get(Post.class, id) != null)
+                            {
+                                Post post = session.get(Post.class, id);
+
+                                currentPost = new PostBox(post, mainUser, session);
+                
+                                currentPost.setPrefSize(500, 500);
+                                currentPost.setAlignment(Pos.CENTER);
+                
+                                bookmarkedPostsBox.getChildren().add(currentPost);
+                            }      
+                        }
+                        postsPane.setContent(bookmarkedPostsBox);
+                    }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    } finally {
+                        DatabaseConnection.disconnect(); 
+                    }
 
 
-            }
-        });
+                }
+            });
 
-        root.setCenter (homePageBox);
+            root.setCenter (homePageBox);
 
-        
-        //stage
-        Scene homeScene = new Scene(root, 700, 700);
+            
+            //stage
+            Scene homeScene = new Scene(root, 700, 700);
 
-        homeStage.setScene(homeScene);
-        homeStage.setMaximized(true);
-        homeStage.setTitle("Bilkent Forum Home Page");
-        homeStage.show();
+            homeStage.setScene(homeScene);
+            homeStage.setMaximized(true);
+            homeStage.setTitle("Bilkent Forum Home Page");
+            homeStage.show();
         }
         catch (Exception e) {
             e.printStackTrace();

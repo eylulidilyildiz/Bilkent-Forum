@@ -23,9 +23,9 @@ import javafx.geometry.*;
 
 public class PostBox extends VBox 
 {
-    Post currentPost;
-    User mainUser;
-    Session session;
+    private Post currentPost;
+    private User mainUser;
+    private Session session;
 
     public PostBox(Post post, User user, Session session)
     {
