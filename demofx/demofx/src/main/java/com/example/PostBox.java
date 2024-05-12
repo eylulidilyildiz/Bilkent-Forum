@@ -2,64 +2,45 @@ package com.example;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Separator;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.input.KeyCombination;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.RowConstraints;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Box;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
-import javafx.stage.Stage;
 import javafx.geometry.*;
 
 public class PostBox extends VBox 
 {
-    public PostBox(Post post)
+    Post currentPost;
+    User mainUser;
+    Session session;
+
+    public PostBox(Post post, User user, Session session)
     {
-        VBox postsBox = new VBox();
-        postsBox.setSpacing(30);
-        postsBox.setAlignment(Pos.CENTER);
-        
-        DatabaseConnection.connect(); 
-        try (Session session = DatabaseConnection.getSessionFactory().openSession()) 
-        {
-            
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            DatabaseConnection.disconnect(); 
-        }
+        super();
+        this.currentPost = post;
+        this.mainUser = user;
+        this.session = session;
+
+        setSpacing(30);
+        setAlignment(Pos.CENTER);
+
+        int ownerId = post.getOwnerID();
+
+        String username = session.get(User.class, ownerId).getUsername();
+        createPost(post, username);
     }
 
     //BUTTONS
@@ -156,7 +137,7 @@ public class PostBox extends VBox
     }
 
     /* HELPER METHODS */
-    public void createPost(VBox box, Post post, String username)
+    public void createPost(Post post, String username)
     {
         String description = post.getContent();
         String date = post.getDate();
@@ -363,82 +344,11 @@ public class PostBox extends VBox
         upvoteDownvoteBox.getChildren().addAll(upvoteButton, upvotesLabel, downvoteButton, downvotesLabel, bookmarkButton);
 
         
-        box.setSpacing(10);
-        box.getChildren().addAll(usernameAndDateBox, postContent, upvoteDownvoteBox);
-
-
+        this.setSpacing(10);
+        this.getChildren().addAll(usernameAndDateBox, postContent, upvoteDownvoteBox);
     }
 
-    private void enteringExitingButton (ToggleButton button, HBox box)
-    {
-        // when mouse enters the button
-        button.setOnMouseEntered (new EventHandler <MouseEvent>() 
-        {
 
-            @Override
-            public void handle (MouseEvent arg0) 
-            {
-                button.setBackground (new Background (new BackgroundFill (Color.rgb (220, 220, 220), null, null)));
-            }
-            
-        });
-
-        // when mouse enters the box
-        box.setOnMouseEntered (new EventHandler <MouseEvent>() 
-        {
-
-            @Override
-            public void handle (MouseEvent arg0) 
-            {
-                box.setBackground (new Background (new BackgroundFill (Color.rgb (220, 220, 220), null, null)));
-            }
-            
-        });
-
-        // when mouse exists the button
-        button.setOnMouseExited (new EventHandler <MouseEvent>() 
-        {
-
-            @Override
-            public void handle (MouseEvent arg0) 
-            {
-                if (!button.isSelected())
-                {
-                    button.setBackground (new Background (new BackgroundFill (null, null, null)));
-
-                }
-            }
-            
-        });
-
-        // when mouse exists the box
-        box.setOnMouseExited (new EventHandler <MouseEvent>() 
-        {
-
-            @Override
-            public void handle (MouseEvent arg0) 
-            {
-                if (!button.isSelected())
-                {
-                    box.setBackground (new Background (new BackgroundFill (null, null, null)));
-
-                }
-            }
-            
-        });
-    }
-
-    public void colorBackground(ToggleButton button, HBox box)
-    {
-        box.setBackground (new Background (new BackgroundFill (Color.rgb (220, 220, 220), null, null)));
-        button.setBackground (new Background (new BackgroundFill (Color.rgb (220, 220, 220), null, null)));
-    }
-
-    public void discolorBackground(ToggleButton button, HBox box)
-    {
-        box.setBackground (new Background (new BackgroundFill (null, null, null)));
-        button.setBackground (new Background (new BackgroundFill (null, null, null)));
-    }
 
     public boolean isPostUpvoted(int postID)
     {
