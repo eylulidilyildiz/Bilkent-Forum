@@ -390,6 +390,9 @@ public class HomePage extends Application
         // Profile page
         ProfileBox profilePageBox = new ProfileBox (this.mainUser, root);
 
+        // Browse Page
+        BrowseBox browsePageBox = new BrowseBox ();
+
         /* WHEN BUTTONS ARE CLICKED */ 
         homeButton.setOnAction(new EventHandler <ActionEvent>() 
         {
@@ -440,6 +443,8 @@ public class HomePage extends Application
                 discolorBackground(profileButton, profileBox);
                 discolorBackground(upvotedButton, upvotedBox);
                 discolorBackground(bookmarksButton, bookmarksBox);
+
+                root.setCenter (browsePageBox);
             }
         });
 
