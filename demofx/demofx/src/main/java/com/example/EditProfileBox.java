@@ -2,6 +2,9 @@ package com.example;
 
 
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 import javafx.event.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -37,6 +40,17 @@ public class EditProfileBox extends VBox
     private VBox nameDepartmentSemesterBox;
     private VBox mailPasswordBox;
     private Button saveButton;
+    private HBox searchAddPostBox;
+    private TextField nameTextField;
+    private TextField surnameTextField;
+    private TextField departmentTextField;
+
+    private TextField usernameTextField;
+    private TextField mailTextField;
+    private  TextField passwordTextField;
+    private TextField passAgainTextField;
+
+    private Integer newSemester;
 
     // Constructor
     public EditProfileBox (User user)
@@ -55,12 +69,14 @@ public class EditProfileBox extends VBox
         saveButton.setPrefHeight (BUTTON_HEIGHT);
         saveButton.setPrefWidth (BUTTON_WIDTH);
         saveButton.setFont (Font.font ("Tahoma", FontWeight.BOLD, FontPosture.REGULAR, 22));
+        saveButtonIsClicked();
 
+    
         HBox editProfileBox = new HBox();
-        //editProfileBox.setStyle("-fx-border-color: gray; -fx-border-width: 1px 1px 1px 1px;");
+        editProfileBox.setStyle("-fx-border-color: gray; -fx-border-width: 1px 1px 1px 1px;");
 
         editProfileBox.getChildren().addAll (this.nameDepartmentSemesterBox, this.mailPasswordBox);
-        editProfileBox.setSpacing (400);
+        editProfileBox.setSpacing (500);
         editProfileBox.setAlignment (Pos.CENTER);
 
         Label editProfileLabel = new Label ("Edit Profile");
@@ -91,7 +107,7 @@ public class EditProfileBox extends VBox
         Label nameLabel = new Label ("Name:");
         nameLabel.setFont (Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
 
-        TextField nameTextField = new TextField ();
+        nameTextField = new TextField ();
         nameTextField.setPrefHeight (FIELD_HEIGHT);
         nameTextField.setPrefWidth (FIELD_WIDTH);
         nameTextField.setText (mainUser.getName());
@@ -101,7 +117,7 @@ public class EditProfileBox extends VBox
         Label surnameLabel = new Label ("Surname:");
         surnameLabel.setFont (Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
 
-        TextField surnameTextField = new TextField ();
+        this.surnameTextField = new TextField ();
         surnameTextField.setPrefHeight (FIELD_HEIGHT);
         surnameTextField.setPrefWidth (FIELD_WIDTH);
         surnameTextField.setText (mainUser.getSurname());
@@ -112,7 +128,7 @@ public class EditProfileBox extends VBox
         Label departmentLabel = new Label ("Department:");
         departmentLabel.setFont (Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
 
-        TextField departmentTextField = new TextField();
+        this.departmentTextField = new TextField();
         departmentTextField.setPrefHeight (FIELD_HEIGHT);
         departmentTextField.setPrefWidth (FIELD_WIDTH);
         departmentTextField.setText (mainUser.getDepartment());
@@ -124,6 +140,7 @@ public class EditProfileBox extends VBox
 
         @SuppressWarnings("rawtypes")
         ChoiceBox semesterBox = new ChoiceBox <Integer>();
+
         semesterBox.getItems().add (1);
         semesterBox.getItems().add (2);
         semesterBox.getItems().add (3);
@@ -133,12 +150,10 @@ public class EditProfileBox extends VBox
 
         semesterBox.setOnAction (new EventHandler<Event>() 
         {
-
             @Override
             public void handle (Event event) 
             {
-                
-                Integer newSemester = (Integer) semesterBox.getValue();
+                newSemester = (Integer) semesterBox.getValue();
             }
             
         });
@@ -150,6 +165,9 @@ public class EditProfileBox extends VBox
     }
 
     private void createMailPasswordBox ()
+    /**
+     * 
+     */
     {
         this.mailPasswordBox = new VBox();
         this.mailPasswordBox.setSpacing (15);
@@ -159,7 +177,7 @@ public class EditProfileBox extends VBox
         Label usernameLabel = new Label ("Username:");
         usernameLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
 
-        TextField usernameTextField = new TextField ();
+        this.usernameTextField = new TextField ();
         usernameTextField.setPrefHeight (FIELD_HEIGHT);
         usernameTextField.setPrefWidth (FIELD_WIDTH);
         usernameTextField.setText (mainUser.getUsername());
@@ -170,7 +188,7 @@ public class EditProfileBox extends VBox
         Label mailLabel = new Label ("Email:");
         mailLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
 
-        TextField mailTextField = new TextField();
+        this.mailTextField = new TextField();
         mailTextField.setPrefHeight (FIELD_HEIGHT);
         mailTextField.setPrefWidth (FIELD_WIDTH);
         mailTextField.setText (mainUser.getEmail());
@@ -180,7 +198,7 @@ public class EditProfileBox extends VBox
         Label passwordLabel = new Label ("Password:");
         passwordLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
 
-        TextField passwordTextField = new TextField();
+        this.passwordTextField = new TextField();
         passwordTextField.setPrefHeight (FIELD_HEIGHT);
         passwordTextField.setPrefWidth (FIELD_WIDTH);
         passwordTextField.setText (mainUser.getPassword());
@@ -190,7 +208,7 @@ public class EditProfileBox extends VBox
         Label passAgainLabel = new Label ("Password (Again):");
         passAgainLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
 
-        TextField passAgainTextField = new TextField();
+        this.passAgainTextField = new TextField();
         passAgainTextField.setPrefHeight (FIELD_HEIGHT);
         passAgainTextField.setPrefWidth (FIELD_WIDTH);
         passAgainTextField.setText (mainUser.getPassword());
@@ -211,7 +229,20 @@ public class EditProfileBox extends VBox
             @Override
             public void handle (ActionEvent arg0) 
             {
-                
+                DatabaseConnection.connect(); 
+
+                try(Session session = DatabaseConnection.getSessionFactory().openSession()) {
+                    Transaction tx = session.beginTransaction();
+                    
+                    // if()
+                    session.merge("User", mainUser);
+                    tx.commit();
+  
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    DatabaseConnection.disconnect();
+                }
             }
             
         });
@@ -219,6 +250,7 @@ public class EditProfileBox extends VBox
 
     private void createSearchAndAddPost ()
     {
+        this.searchAddPostBox = new HBox();
 
         // SEARCH BAR
         GridPane searchPane = new GridPane();
@@ -242,7 +274,31 @@ public class EditProfileBox extends VBox
         searchPane.add (searchLabel, 1, 1);
 
 
-        this.getChildren().add (searchPane);
+        // ADD POST BUTTON
+        GridPane postButtonPane = new GridPane();
+        postButtonPane.setAlignment (Pos.TOP_RIGHT);
+        postButtonPane.setHgap (10);
+        postButtonPane.setVgap (10);
+        postButtonPane.setPadding(new Insets(70));
+
+        ToggleButton addPostButton = new ToggleButton ();
+        addPostButton.setBackground (new Background(new BackgroundFill(null, CornerRadii.EMPTY, Insets.EMPTY)));
+        addPostButton.setPrefHeight (60);
+        addPostButton.setPrefWidth (60);
+
+        ImageView plusIcon = new ImageView (getClass().getResource("images/plusIcon.png").toString());
+        plusIcon.setFitHeight (60);
+        plusIcon.setFitWidth (60);
+
+        addPostButton.setGraphic (plusIcon);
+
+        postButtonPane.add (addPostButton, 0, 1);
+
+        // combining the searchPane and the addPostButton 
+        searchAddPostBox.setSpacing (550);
+        searchAddPostBox.getChildren().addAll (searchPane, postButtonPane);
+
+        this.getChildren().add (searchAddPostBox);
         
     }
 
