@@ -56,9 +56,10 @@ public class AddPostBox extends VBox
         addPostBox.setSpacing (500);
 
         this.createDescriptionAndPostTypeBox();
+        
         //TODO
         addPostBox.getChildren().addAll ();
-        this.getChildren().add (descriptionAndPostTypeBox);
+        
     }
 
 
@@ -100,6 +101,9 @@ public class AddPostBox extends VBox
         typeBox.setSpacing (20);
 
         this.descriptionAndPostTypeBox.getChildren().addAll (descriptionLabel, descriptionArea, typeLabel, typeBox);
+        this.getChildren().add (descriptionAndPostTypeBox);
+
+        this.bookIsClicked (bookQuestionGroup, this);
 
     }
 
@@ -161,7 +165,7 @@ public class AddPostBox extends VBox
         courseField.setPrefWidth (FIELD_WIDTH);
 
         // usage
-        Label usageLabel = new Label ("Course");
+        Label usageLabel = new Label ("Usage");
         usageLabel.setFont (Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
                     
         @SuppressWarnings("rawtypes")
@@ -169,6 +173,9 @@ public class AddPostBox extends VBox
         usageBox.getItems().add ("New");
         usageBox.getItems().add ("Under-used");
         usageBox.getItems().add ("Over-used");
+
+        usageBox.setPrefHeight (FIELD_HEIGHT);
+        usageBox.setPrefWidth (FIELD_WIDTH);
 
         // when a choice is made
         usageBox.setOnAction (new EventHandler<Event>() 
@@ -196,10 +203,16 @@ public class AddPostBox extends VBox
 
         HBox priceBox = new HBox();
         priceBox.getChildren().addAll (freeButton, priceButton, priceField);
+        priceBox.setSpacing (20);
 
-        courseUsageAndPriceBox.getChildren().addAll (courseLabel, courseField, usageLabel, usageBox, priceBox);
+        courseUsageAndPriceBox.getChildren().addAll (courseLabel, courseField, usageLabel, usageBox, priceLabel, priceBox);
+        courseUsageAndPriceBox.setSpacing (20);
 
         bookDetailsBox.getChildren().addAll (infoFieldsBox, courseUsageAndPriceBox);
+        bookDetailsBox.setSpacing (400);
+        bookDetailsBox.setAlignment (Pos.CENTER_LEFT);
+
+
         box.getChildren().add (bookDetailsBox);
         
     }
