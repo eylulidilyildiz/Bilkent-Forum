@@ -16,6 +16,6 @@ public class BookmarkedPostsBox extends VBox
         bookmarkedPostsBox.setSpacing (500);
 
         bookmarkedPostsBox.getChildren().addAll();
-        this.getChildren().add();
+        //this.getChildren().add();
     }    
 }

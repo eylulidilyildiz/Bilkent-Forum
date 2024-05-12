@@ -16,6 +16,6 @@ public class UpvotedPostsBox extends VBox
         upvotedPostsBox.setSpacing (500);
 
         upvotedPostsBox.getChildren().addAll();
-        this.getChildren().add();
+        //this.getChildren().add();
     }    
 }
