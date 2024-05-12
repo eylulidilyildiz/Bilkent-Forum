@@ -12,9 +12,10 @@ public class UpvotedPostsBox extends VBox
         super();
         mainUser = user;
 
-        HBox bookmarkedPostsBox = new HBox();
-        bookmarkedPostsBox.setSpacing (500);
+        HBox upvotedPostsBox = new HBox();
+        upvotedPostsBox.setSpacing (500);
 
-        bookmarkedPostsBox.getChildren().addAll();
+        upvotedPostsBox.getChildren().addAll();
         this.getChildren().add();
     }    
+}
