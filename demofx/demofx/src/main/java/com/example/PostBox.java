@@ -146,10 +146,11 @@ public class PostBox extends VBox
 
         public CommentsButton(int postID)
         {
-            super("Comments");
+            super("Open Comments");
+            setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 14));
             this.commentedPostID = postID;
             setPrefHeight (30);
-            setPrefWidth (85);
+            setPrefWidth (150);
             setSelected(false);
         }
 
@@ -166,14 +167,19 @@ public class PostBox extends VBox
 
         public CommentBox(int postID)
         {
-            setSpacing(20);
-            setAlignment(Pos.CENTER);
+            setSpacing(15);
+            setAlignment(Pos.CENTER_LEFT);
+            Label commentsLabel = new Label("Comments");
+            commentsLabel.setFont(Font.font("Tahoma", FontWeight.BOLD, FontPosture.REGULAR, 18));
+            getChildren().add(commentsLabel);
 
             VBox currentComment;
+       
             DatabaseConnection.connect(); 
             try (Session session = DatabaseConnection.getSessionFactory().openSession()) 
             {
                 int i = 1;
+                int numberOfCommentsUnderThisPost = 0;
                 while(session.get(Comment.class, i) != null)
                 {
                     if(session.get(Comment.class, i).getCommentedPostID() == postID)
@@ -185,19 +191,41 @@ public class PostBox extends VBox
                         String content = comment.getContent();
 
                         Label commentOwnerLabel = new Label(username);
+                        commentOwnerLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 16));
                         commentOwnerLabel.setAlignment(Pos.BASELINE_LEFT);
 
                         TextArea commentArea = new TextArea(content);
+                        commentArea.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 16));
                         commentArea.setEditable(false);
 
                         currentComment.getChildren().addAll(commentOwnerLabel, commentArea); 
                         currentComment.setPrefSize(500, 200);
-                        currentComment.setAlignment(Pos.CENTER);
+                        currentComment.setAlignment(Pos.CENTER_LEFT);
         
                         this.getChildren().add(currentComment);
+                        numberOfCommentsUnderThisPost ++;
                     }      
                     i++;
                 }
+
+                if(numberOfCommentsUnderThisPost == 0)
+                {
+                    Label noCommentsLabel = new Label("There are no comments under this post.");
+                    noCommentsLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 16));
+                    
+                    this.getChildren().add(noCommentsLabel);
+                }
+
+                HBox addCommentBox = new HBox();
+                TextArea addCommentArea = new TextArea("Write a comment!");
+                addCommentArea.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 16));
+                addCommentArea.setMinWidth(600);
+                Button addCommentButton = new Button("Add Comment");
+                addCommentButton.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 16));
+
+                addCommentBox.getChildren().addAll(addCommentArea, addCommentButton);
+                this.getChildren().add(addCommentBox);
+
             }
         }
 
@@ -431,10 +459,12 @@ public class PostBox extends VBox
                 {
                     isCommentsDisplayed = true;
                     commentsButton.setSelected(true);
+                    commentsButton.setText("Close Comments");
                     commentButtonSelected(postID);
                 }
                 else{
                     commentsButton.setSelected(false);
+                    commentsButton.setText("Open Comments");
                     isCommentsDisplayed = false;
                     commentButtonNotSelected();
                 }
