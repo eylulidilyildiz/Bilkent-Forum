@@ -37,7 +37,6 @@ public class EditProfileBox extends VBox
     private VBox nameDepartmentSemesterBox;
     private VBox mailPasswordBox;
     private Button saveButton;
-    private HBox searchAddPostBox;
 
     // Constructor
     public EditProfileBox (User user)
@@ -58,10 +57,10 @@ public class EditProfileBox extends VBox
         saveButton.setFont (Font.font ("Tahoma", FontWeight.BOLD, FontPosture.REGULAR, 22));
 
         HBox editProfileBox = new HBox();
-        editProfileBox.setStyle("-fx-border-color: gray; -fx-border-width: 1px 1px 1px 1px;");
+        //editProfileBox.setStyle("-fx-border-color: gray; -fx-border-width: 1px 1px 1px 1px;");
 
         editProfileBox.getChildren().addAll (this.nameDepartmentSemesterBox, this.mailPasswordBox);
-        editProfileBox.setSpacing (500);
+        editProfileBox.setSpacing (400);
         editProfileBox.setAlignment (Pos.CENTER);
 
         Label editProfileLabel = new Label ("Edit Profile");
@@ -220,7 +219,6 @@ public class EditProfileBox extends VBox
 
     private void createSearchAndAddPost ()
     {
-        this.searchAddPostBox = new HBox();
 
         // SEARCH BAR
         GridPane searchPane = new GridPane();
@@ -244,31 +242,7 @@ public class EditProfileBox extends VBox
         searchPane.add (searchLabel, 1, 1);
 
 
-        // ADD POST BUTTON
-        GridPane postButtonPane = new GridPane();
-        postButtonPane.setAlignment (Pos.TOP_RIGHT);
-        postButtonPane.setHgap (10);
-        postButtonPane.setVgap (10);
-        postButtonPane.setPadding(new Insets(70));
-
-        ToggleButton addPostButton = new ToggleButton ();
-        addPostButton.setBackground (new Background(new BackgroundFill(null, CornerRadii.EMPTY, Insets.EMPTY)));
-        addPostButton.setPrefHeight (60);
-        addPostButton.setPrefWidth (60);
-
-        ImageView plusIcon = new ImageView (getClass().getResource("images/plusIcon.png").toString());
-        plusIcon.setFitHeight (60);
-        plusIcon.setFitWidth (60);
-
-        addPostButton.setGraphic (plusIcon);
-
-        postButtonPane.add (addPostButton, 0, 1);
-
-        // combining the searchPane and the addPostButton 
-        searchAddPostBox.setSpacing (550);
-        searchAddPostBox.getChildren().addAll (searchPane, postButtonPane);
-
-        this.getChildren().add (searchAddPostBox);
+        this.getChildren().add (searchPane);
         
     }
 

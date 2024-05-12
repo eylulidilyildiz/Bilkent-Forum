@@ -94,8 +94,6 @@ public class AddPostBox extends VBox
         bookRadioButton.setToggleGroup (bookQuestionGroup);
         questionRadioButton.setToggleGroup (bookQuestionGroup);
 
-        bookIsClicked (bookQuestionGroup, this);
-
         // Hbox for types
         HBox typeBox = new HBox();
         typeBox.getChildren().addAll (bookRadioButton, questionRadioButton);
