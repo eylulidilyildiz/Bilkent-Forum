@@ -364,7 +364,7 @@ public class PostBox extends VBox
                 public void handle(ActionEvent event) 
                 {
                     // UI way of showing the button is selected
-                    commentsButton.setSelected(true);
+                    /*commentsButton.setSelected(true);
 
                     colorBackground(homeButton, homeBox);
                     discolorBackground(profileButton, profileBox);
@@ -373,7 +373,7 @@ public class PostBox extends VBox
                     discolorBackground(bookmarksButton, bookmarksBox);
 
                     postsPane.setContent(allPostsBox);
-                    root.setCenter (homePageBox);
+                    root.setCenter (homePageBox);*/
                 }
             });
 

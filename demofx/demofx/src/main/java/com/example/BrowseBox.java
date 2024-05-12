@@ -34,7 +34,6 @@ public class BrowseBox extends VBox
     private HBox searchBox;
     private ScrollPane postsAndFilters;
     private User mainUser;
-    private ScrollPane scrollPane;
 
     @SuppressWarnings("rawtypes")
     private ChoiceBox priceBox;
@@ -207,13 +206,14 @@ public class BrowseBox extends VBox
                         currentPost.setPrefSize(500, 500);
                         currentPost.setAlignment(Pos.CENTER);
                         
-                        postsAndFilters.setContent(currentPost);
+                        filtrationBox.getChildren().add(currentPost);
                         
                         postsDisplayed++;
                     }
                 }      
                 i--;
             }
+        postsAndFilters.setContent(filtrationBox);
         }
         catch (Exception e) {
             e.printStackTrace();
