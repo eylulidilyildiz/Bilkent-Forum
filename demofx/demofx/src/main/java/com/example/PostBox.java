@@ -5,6 +5,7 @@ import org.hibernate.Transaction;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -26,6 +27,7 @@ public class PostBox extends VBox
     private Post currentPost;
     private User mainUser;
     private Session session;
+    private boolean isCommentsDisplayed;
 
     public PostBox(Post post, User user, Session session)
     {
@@ -33,6 +35,7 @@ public class PostBox extends VBox
         this.currentPost = post;
         this.mainUser = user;
         this.session = session;
+        isCommentsDisplayed = false;
 
         setSpacing(30);
         setAlignment(Pos.CENTER);
@@ -136,23 +139,97 @@ public class PostBox extends VBox
         }
     }
 
-    class CommentsButton extends Button{
+    class CommentsButton extends ToggleButton{
         private int commentID;
         private int ownerID;
         private int commentedPostID;
-        final int ICON_HEIGHT = 30;
-        final int ICON_WIDTH = 35;
 
         public CommentsButton(int postID)
         {
-            super();
+            super("Open Comments");
+            setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 14));
             this.commentedPostID = postID;
-
-            setBackground (new Background(new BackgroundFill(null, CornerRadii.EMPTY, Insets.EMPTY)));
-            setPrefHeight (ICON_HEIGHT);
-            setPrefWidth (ICON_WIDTH);
-
+            setPrefHeight (30);
+            setPrefWidth (150);
+            setSelected(false);
         }
+
+        public int getPostID()
+        {
+            return this.commentedPostID;
+        }
+    }
+
+    
+    class CommentBox extends VBox
+    {
+        private int postID;
+
+        public CommentBox(int postID)
+        {
+            setSpacing(15);
+            setAlignment(Pos.CENTER_LEFT);
+            Label commentsLabel = new Label("Comments");
+            commentsLabel.setFont(Font.font("Tahoma", FontWeight.BOLD, FontPosture.REGULAR, 18));
+            getChildren().add(commentsLabel);
+
+            VBox currentComment;
+       
+            DatabaseConnection.connect(); 
+            try (Session session = DatabaseConnection.getSessionFactory().openSession()) 
+            {
+                int i = 1;
+                int numberOfCommentsUnderThisPost = 0;
+                while(session.get(Comment.class, i) != null)
+                {
+                    if(session.get(Comment.class, i).getCommentedPostID() == postID)
+                    {
+                        currentComment = new VBox();
+                        Comment comment = session.get(Comment.class, i);
+                        int ownerID = comment.getOwnerID();
+                        String username = session.get(User.class, ownerID).getUsername();
+                        String content = comment.getContent();
+
+                        Label commentOwnerLabel = new Label(username);
+                        commentOwnerLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 16));
+                        commentOwnerLabel.setAlignment(Pos.BASELINE_LEFT);
+
+                        TextArea commentArea = new TextArea(content);
+                        commentArea.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 16));
+                        commentArea.setEditable(false);
+
+                        currentComment.getChildren().addAll(commentOwnerLabel, commentArea); 
+                        currentComment.setPrefSize(500, 200);
+                        currentComment.setAlignment(Pos.CENTER_LEFT);
+        
+                        this.getChildren().add(currentComment);
+                        numberOfCommentsUnderThisPost ++;
+                    }      
+                    i++;
+                }
+
+                if(numberOfCommentsUnderThisPost == 0)
+                {
+                    Label noCommentsLabel = new Label("There are no comments under this post.");
+                    noCommentsLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 16));
+                    
+                    this.getChildren().add(noCommentsLabel);
+                }
+
+                HBox addCommentBox = new HBox();
+                TextArea addCommentArea = new TextArea("Write a comment!");
+                addCommentArea.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 16));
+                addCommentArea.setMinWidth(600);
+                Button addCommentButton = new Button("Add Comment");
+                addCommentButton.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 16));
+
+                addCommentBox.getChildren().addAll(addCommentArea, addCommentButton);
+                this.getChildren().add(addCommentBox);
+
+            }
+        }
+
+        
     }
 
     /* HELPER METHODS */
@@ -357,35 +434,54 @@ public class PostBox extends VBox
             } 
         });
 
-        CommentsButton commentsButton = new CommentsButton(postID);
-        commentsButton.setOnAction(new EventHandler <ActionEvent>() 
-            {
-                @Override
-                public void handle(ActionEvent event) 
-                {
-                    // UI way of showing the button is selected
-                    /*commentsButton.setSelected(true);
-
-                    colorBackground(homeButton, homeBox);
-                    discolorBackground(profileButton, profileBox);
-                    discolorBackground(browseButton, browseBox);
-                    discolorBackground(upvotedButton, upvotedBox);
-                    discolorBackground(bookmarksButton, bookmarksBox);
-
-                    postsPane.setContent(allPostsBox);
-                    root.setCenter (homePageBox);*/
-                }
-            });
-
+        CommentsButton commentsButton = new CommentsButton(postID);  
+        ToggleGroup commentToggleGroup = new ToggleGroup();
+        commentsButton.setToggleGroup(commentToggleGroup);
+        commentsButton.setSelected(false);
 
         HBox upvoteDownvoteBox = new HBox();
         upvoteDownvoteBox.setAlignment(Pos.BASELINE_LEFT);
         upvoteDownvoteBox.setSpacing(10);
-        upvoteDownvoteBox.getChildren().addAll(upvoteButton, upvotesLabel, downvoteButton, downvotesLabel, bookmarkButton);
+        upvoteDownvoteBox.getChildren().addAll(upvoteButton, upvotesLabel, downvoteButton, downvotesLabel, bookmarkButton, commentsButton);
 
         
         this.setSpacing(10);
         this.getChildren().addAll(usernameAndDateBox, postContent, upvoteDownvoteBox);
+
+        commentsButton.setOnAction(new EventHandler <ActionEvent>() 
+        {
+            @Override
+            public void handle(ActionEvent event) 
+            {
+                int postID = commentsButton.getPostID();
+
+                if(!isCommentsDisplayed)
+                {
+                    isCommentsDisplayed = true;
+                    commentsButton.setSelected(true);
+                    commentsButton.setText("Close Comments");
+                    commentButtonSelected(postID);
+                }
+                else{
+                    commentsButton.setSelected(false);
+                    commentsButton.setText("Open Comments");
+                    isCommentsDisplayed = false;
+                    commentButtonNotSelected();
+                }
+            }
+        });
+    }
+
+    public void commentButtonSelected(int postID)
+    {
+        CommentBox comments = new CommentBox(postID);
+        this.getChildren().add(comments);
+    }
+
+    public void commentButtonNotSelected()
+    {
+        int index = this.getChildren().size() - 1;
+        this.getChildren().remove(index);
     }
 
 
