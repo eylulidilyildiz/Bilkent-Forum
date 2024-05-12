@@ -220,8 +220,10 @@ public class AddPostBox extends VBox
 
         // radio buttons for price 
         RadioButton freeButton = new RadioButton ("Free");
+        freeButton.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 20));
 
         RadioButton priceButton = new RadioButton ("Enter Price:");
+        priceButton.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 20));
         TextField priceField = new TextField();
         priceField.setPrefHeight (10);
         priceField.setPrefWidth (40);
