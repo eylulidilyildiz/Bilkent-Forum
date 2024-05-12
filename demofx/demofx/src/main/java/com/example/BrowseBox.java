@@ -35,6 +35,12 @@ public class BrowseBox extends VBox
     private ScrollPane postsAndFilters;
     private User mainUser;
 
+    private int range;
+
+    private boolean isNew;
+    private boolean isUnderused;
+    private boolean isOverused;
+
     @SuppressWarnings("rawtypes")
     private ChoiceBox priceBox;
 
@@ -53,6 +59,10 @@ public class BrowseBox extends VBox
         this.mainUser = user;
         this.createSearchBox();
         this.createFiltrationBox();
+
+        this.isNew = false;
+        this.isUnderused = false;
+        this.isOverused = false;
 
         searchAndFilterBox = new VBox();
         searchAndFilterBox.setSpacing (30);
@@ -85,23 +95,67 @@ public class BrowseBox extends VBox
         Label priceLabel = new Label ("Price");
         priceLabel.setFont (Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
  
- 
         priceBox = new ChoiceBox <>();
- 
+        priceBox.getItems().addAll("0-50", "50-100", "100+");
+
         // usage 
         Label usageLabel = new Label ("Usage");
         usageLabel.setFont (Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
- 
          
         newBox = new CheckBox ("New");
         underUsedBox = new CheckBox ("Under-used");
         overUsedBox = new CheckBox ("Over-used");
-         
+
         TilePane usagePane = new TilePane();
         usagePane.getChildren().addAll (newBox, underUsedBox, overUsedBox);
-
+    
         filtrationBox.getChildren().addAll (postTypeLabel, postTypeBox);
-       
+
+        priceBox.setOnAction(new EventHandler <Event>()
+        {
+            @Override
+            public void handle (Event arg0) 
+            {
+                String priceInput = (String) priceBox.getValue();
+
+                if (priceInput.equals("0-50")){
+                    range = 1;
+                }
+                else if (priceInput.equals("50-100")){
+                    range = 2;
+                }
+                else if (priceInput.equals("100+")){
+                    range = 3;                
+                }
+                else{
+                    range = 0;
+                }
+            }
+        });
+
+        newBox.setOnAction(event -> {
+            if (newBox.isSelected()) {
+                isNew = true;
+            } else {
+                isNew = true;
+            }
+        });
+
+        underUsedBox.setOnAction(event -> {
+            if (underUsedBox.isSelected()) {
+                isUnderused = true;
+            } else {
+                isUnderused = true;
+            }
+        });
+
+        overUsedBox.setOnAction(event -> {
+            if (overUsedBox.isSelected()) {
+                isOverused = true;
+            } else {
+                isOverused = true;
+            }
+        });
 
         postTypeBox.setOnAction (new EventHandler <Event>() 
         {
@@ -118,17 +172,14 @@ public class BrowseBox extends VBox
                     bookBox.setSpacing (15);
                     bookBox.getChildren().addAll (priceLabel, priceBox, usageLabel, usagePane);
 
-
                     filtrationBox.getChildren().addAll (bookBox);
-                    
-
                 }
                 else
                 {
                     filtrationBox.getChildren().remove (bookBox);
                 }
             }
-            
+        
         });
 
 
@@ -206,14 +257,54 @@ public class BrowseBox extends VBox
                         currentPost.setPrefSize(500, 500);
                         currentPost.setAlignment(Pos.CENTER);
                         
-                        filtrationBox.getChildren().add(currentPost);
+                        postsAndFilters.setContent(currentPost);
                         
                         postsDisplayed++;
                     }
                 }      
                 i--;
             }
-        postsAndFilters.setContent(filtrationBox);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            postsAndFilters.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+            DatabaseConnection.disconnect(); 
+        }
+    }
+
+    public void filter()
+    {
+        PostBox currentPost;
+
+        DatabaseConnection.connect(); 
+        try (Session session = DatabaseConnection.getSessionFactory().openSession()) 
+        {
+            int i = DatabaseConnection.getMaxPostID();
+            int postsDisplayed = 0;
+            int totalPostCount = DatabaseConnection.countPosts();
+            while(i > 0 && postsDisplayed < totalPostCount)
+            {
+                if(session.get(Post.class, i) != null)
+                {
+                    Post post = session.get(Post.class, i);
+                    
+                    
+
+                    if(isNew && post.getUsageAmount())
+                    {
+                        currentPost = new PostBox(post, mainUser, session);
+        
+                        currentPost.setPrefSize(500, 500);
+                        currentPost.setAlignment(Pos.CENTER);
+                        
+                        postsAndFilters.setContent(currentPost);
+                        
+                        postsDisplayed++;
+                    }
+                }      
+                i--;
+            }
         }
         catch (Exception e) {
             e.printStackTrace();
