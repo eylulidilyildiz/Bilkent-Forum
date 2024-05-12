@@ -136,6 +136,25 @@ public class PostBox extends VBox
         }
     }
 
+    class CommentsButton extends Button{
+        private int commentID;
+        private int ownerID;
+        private int commentedPostID;
+        final int ICON_HEIGHT = 30;
+        final int ICON_WIDTH = 35;
+
+        public CommentsButton(int postID)
+        {
+            super();
+            this.commentedPostID = postID;
+
+            setBackground (new Background(new BackgroundFill(null, CornerRadii.EMPTY, Insets.EMPTY)));
+            setPrefHeight (ICON_HEIGHT);
+            setPrefWidth (ICON_WIDTH);
+
+        }
+    }
+
     /* HELPER METHODS */
     public void createPost(Post post, String username)
     {
@@ -337,6 +356,27 @@ public class PostBox extends VBox
                 }
             } 
         });
+
+        CommentsButton commentsButton = new CommentsButton(postID);
+        commentsButton.setOnAction(new EventHandler <ActionEvent>() 
+            {
+                @Override
+                public void handle(ActionEvent event) 
+                {
+                    // UI way of showing the button is selected
+                    commentsButton.setSelected(true);
+
+                    colorBackground(homeButton, homeBox);
+                    discolorBackground(profileButton, profileBox);
+                    discolorBackground(browseButton, browseBox);
+                    discolorBackground(upvotedButton, upvotedBox);
+                    discolorBackground(bookmarksButton, bookmarksBox);
+
+                    postsPane.setContent(allPostsBox);
+                    root.setCenter (homePageBox);
+                }
+            });
+
 
         HBox upvoteDownvoteBox = new HBox();
         upvoteDownvoteBox.setAlignment(Pos.BASELINE_LEFT);
