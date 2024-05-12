@@ -196,7 +196,7 @@ public class ProfileBox extends VBox
             @Override
             public void handle(ActionEvent arg0) 
             {
-                EditProfileBox editProfileBox = new EditProfileBox (mainUser);
+                EditProfileBox editProfileBox = new EditProfileBox (mainUser, root);
                 root.setCenter (editProfileBox);
             }
             

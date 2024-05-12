@@ -8,6 +8,8 @@ import org.hibernate.Transaction;
 import javafx.event.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -16,6 +18,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -37,6 +40,8 @@ public class EditProfileBox extends VBox
 
     // Instance Variables
     private User mainUser;
+    private BorderPane root;
+
     private VBox nameDepartmentSemesterBox;
     private VBox mailPasswordBox;
     private Button saveButton;
@@ -44,7 +49,6 @@ public class EditProfileBox extends VBox
     private TextField nameTextField;
     private TextField surnameTextField;
     private TextField departmentTextField;
-
     private TextField usernameTextField;
     private TextField mailTextField;
     private  TextField passwordTextField;
@@ -53,10 +57,11 @@ public class EditProfileBox extends VBox
     private Integer newSemester;
 
     // Constructor
-    public EditProfileBox (User user)
+    public EditProfileBox (User user, BorderPane root)
     {
         super();
         this.mainUser = user;
+        this.root = root;
         setPadding(new Insets(30));
         setMinHeight(500);
 
@@ -69,7 +74,6 @@ public class EditProfileBox extends VBox
         saveButton.setPrefHeight (BUTTON_HEIGHT);
         saveButton.setPrefWidth (BUTTON_WIDTH);
         saveButton.setFont (Font.font ("Tahoma", FontWeight.BOLD, FontPosture.REGULAR, 22));
-        saveButtonIsClicked();
 
     
         HBox editProfileBox = new HBox();
@@ -87,10 +91,11 @@ public class EditProfileBox extends VBox
         combineButton.setSpacing (30);
         combineButton.setAlignment (Pos.CENTER);
 
+        saveButtonIsClicked();
+
         combineButton.getChildren().addAll (editProfileLabel, editProfileBox, saveButton);
-
-
         this.getChildren().add (combineButton);
+
 
     }
 
@@ -107,7 +112,7 @@ public class EditProfileBox extends VBox
         Label nameLabel = new Label ("Name:");
         nameLabel.setFont (Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
 
-        nameTextField = new TextField ();
+        this.nameTextField = new TextField ();
         nameTextField.setPrefHeight (FIELD_HEIGHT);
         nameTextField.setPrefWidth (FIELD_WIDTH);
         nameTextField.setText (mainUser.getName());
@@ -147,6 +152,7 @@ public class EditProfileBox extends VBox
         semesterBox.getItems().add (4);
 
         semesterBox.setValue (mainUser.getSemester());
+        newSemester = mainUser.getSemester();
 
         semesterBox.setOnAction (new EventHandler<Event>() 
         {
@@ -234,7 +240,51 @@ public class EditProfileBox extends VBox
                 try(Session session = DatabaseConnection.getSessionFactory().openSession()) {
                     Transaction tx = session.beginTransaction();
                     
-                    // if()
+                    //name
+                    if( !nameTextField.getText().equals( mainUser.getName() ) ) 
+                    {
+                        mainUser.setName(nameTextField.getText());
+                    }
+                    //surname
+                    if( !surnameTextField.getText().equals( mainUser.getSurname() ) )
+                    {
+                        mainUser.setSurname(surnameTextField.getText());
+                    }
+                    //department
+                    if( !departmentTextField.getText().equals( mainUser.getDepartment() ) ) 
+                    {
+                        mainUser.setDepartment(departmentTextField.getText());
+                    }
+                    //semester
+                    if(newSemester != mainUser.getSemester())
+                    {
+                        mainUser.setSemester(newSemester);
+                    }
+                    //username
+                    if( !usernameTextField.getText().equals( mainUser.getUsername() ) )
+                    {
+                        mainUser.setUsername(usernameTextField.getText());
+                    }
+                    //mail address
+                    if( !mailTextField.getText().equals( mainUser.getEmail() ) ) 
+                    {
+                        mainUser.setEmail(mailTextField.getText());
+                    }
+                    //password
+                    if( !passwordTextField.getText().equals( mainUser.getPassword() ) ) 
+                    {
+                        if( passwordTextField.getText().equals( passAgainTextField.getText() ) )
+                        {
+                            mainUser.setPassword( passwordTextField.getText()) ;
+                        }
+                        else{
+                            Alert invalidPasswordAlert = new Alert(AlertType.ERROR);
+                            invalidPasswordAlert.setHeaderText("Passwords you entered are not the same!");
+                            invalidPasswordAlert.setContentText("You must enter the new password in the same way twice. Please try again.");
+                            invalidPasswordAlert.showAndWait();
+                        }
+                    }
+ 
                     session.merge("User", mainUser);
                     tx.commit();
   
@@ -242,9 +292,10 @@ public class EditProfileBox extends VBox
                     e.printStackTrace();
                 } finally {
                     DatabaseConnection.disconnect();
+                    ProfileBox modifiedProfileBox = new ProfileBox(mainUser, root);
+                    root.setCenter (modifiedProfileBox);
                 }
-            }
-            
+            }     
         });
     }
 
