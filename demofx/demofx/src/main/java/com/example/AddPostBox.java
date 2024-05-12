@@ -5,6 +5,7 @@ package com.example;
 
 import javafx.beans.value.ObservableValue;
 import javafx.collections.MapChangeListener;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -86,14 +87,42 @@ public class AddPostBox extends VBox
 
         // radio buttons: book or q&a
         RadioButton bookRadioButton = new RadioButton ("Book");
+        bookRadioButton.setFont(Font.font ("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 20));
 
         RadioButton questionRadioButton = new RadioButton ("Q&A");
+        questionRadioButton.setFont(Font.font ("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 20));
 
         // creating button group 
         ToggleGroup bookQuestionGroup = new ToggleGroup();
 
         bookRadioButton.setToggleGroup (bookQuestionGroup);
         questionRadioButton.setToggleGroup (bookQuestionGroup);
+
+        bookRadioButton.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent arg0) {
+                if(bookRadioButton.isSelected())
+                {
+                    bookIsClicked();
+                }
+            }
+            
+        });
+
+        questionRadioButton.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent arg0) {
+                if(questionRadioButton.isSelected())
+                {
+                    getChildren().remove(bookDetailsBox);
+                }
+            }
+            
+        });
+
+
 
         // Hbox for types
         HBox typeBox = new HBox();
@@ -102,16 +131,11 @@ public class AddPostBox extends VBox
 
         this.descriptionAndPostTypeBox.getChildren().addAll (descriptionLabel, descriptionArea, typeLabel, typeBox);
         this.getChildren().add (descriptionAndPostTypeBox);
-
-        this.bookIsClicked (bookQuestionGroup, this);
-
     }
 
     @SuppressWarnings("unchecked")
-    private void bookIsClicked (ToggleGroup buttonGroup, VBox box) 
+    private void bookIsClicked () 
     {
-        
-
         bookDetailsBox = new HBox();
 
         // title
@@ -155,6 +179,7 @@ public class AddPostBox extends VBox
 
         // course, usage, budget
         courseUsageAndPriceBox = new VBox();
+        courseUsageAndPriceBox.setPadding (new Insets(50));
 
         // course
         Label courseLabel = new Label ("Course");
@@ -212,8 +237,7 @@ public class AddPostBox extends VBox
         bookDetailsBox.setSpacing (400);
         bookDetailsBox.setAlignment (Pos.CENTER_LEFT);
 
-
-        box.getChildren().add (bookDetailsBox);
+        this.getChildren().add (bookDetailsBox);
         
     }
 
