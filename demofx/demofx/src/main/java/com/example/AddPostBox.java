@@ -135,7 +135,7 @@ public class AddPostBox extends VBox
                     }
                     
                     PostManager postManager = new PostManager();
-                    postManager.createPost( postID, content, date, ownerID, initialUpvotes, initialDownvotes, commentIDs, isSalesPost,
+                    postManager.createPost( postID, content, ownerID, initialUpvotes, initialDownvotes, commentIDs, isSalesPost,
                                             bookTitle, authorName, courseName, price, usageAmount, publisherName, bookEdition );
                 } 
                 catch (Exception e) {
