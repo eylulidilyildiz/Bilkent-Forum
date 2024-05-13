@@ -31,6 +31,7 @@ public class BrowseBox extends VBox
     private VBox filtrationBox;
     private VBox bookBox;
     private VBox searchAndFilterBox;
+    private VBox postsBox;
     private HBox searchBox;
     private ScrollPane postsAndFilters;
     private User mainUser;
@@ -59,6 +60,7 @@ public class BrowseBox extends VBox
         this.mainUser = user;
         this.createSearchBox();
         this.createFiltrationBox();
+        this.postsBox = new VBox();
 
         this.isNew = false;
         this.isUnderused = false;
@@ -228,6 +230,9 @@ public class BrowseBox extends VBox
     {
         PostBox currentPost;
 
+        // Clear previous search results    
+        postsBox.getChildren().clear();
+        
         DatabaseConnection.connect(); 
         try (Session session = DatabaseConnection.getSessionFactory().openSession()) 
         {
@@ -246,37 +251,39 @@ public class BrowseBox extends VBox
 
                     String bookProperties = post.getAuthorName() + " " + 
                     post.getBookEdition() + " " + post.getBookTitle() + " "
-                    + post.getPublisherName();
+                    + post.getPublisherName() +  " " + post.getCourseName();
 
                     bookProperties = bookProperties.toLowerCase();
 
                     if((content.contains(input) || bookProperties.contains(input)) &&
                     ((isNew && post.getUsageAmount() == 1) ||
                     (isUnderused && post.getUsageAmount() == 2) ||
-                    (isNew && post.getUsageAmount() == 3)))
+                    (isOverused && post.getUsageAmount() == 3)))
                     {
-                        currentPost = new PostBox(post, mainUser, session);
-        
-                        currentPost.setPrefSize(500, 500);
-                        currentPost.setAlignment(Pos.CENTER);
+                        if ((range == 1 && post.getPrice() < 50) || 
+                        (range == 2 && (post.getPrice() < 100 && post.getPrice() >= 50)) || 
+                        (range == 3 && post.getPrice() >= 100)) {
                         
-                        filtrationBox.getChildren().add(currentPost);
-                        
-                        postsDisplayed++;
+                            currentPost = new PostBox(post, mainUser, session);
+                            currentPost.setPrefSize(500, 500);
+                            currentPost.setAlignment(Pos.CENTER);
+                            
+                            postsBox.getChildren().add(currentPost);
+                            postsDisplayed++;
+                        }
                     }
                 }      
                 i--;
             }
-            postsAndFilters.setContent(filtrationBox);
+            //postsAndFilters.setContent(postsBox);
+            searchAndFilterBox.getChildren().add(postsBox);
         }
         catch (Exception e) {
             e.printStackTrace();
         } finally {
             postsAndFilters.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+            postsAndFilters.setContent(postsBox);
             DatabaseConnection.disconnect(); 
-            filtrationBox.getChildren().removeAll();
         }
     }
-
-    
 }
