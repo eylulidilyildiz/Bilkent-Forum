@@ -207,6 +207,7 @@ public class BrowseBox extends VBox
         searchPane.setPadding(new Insets(70));
 
         TextField searchBar = new TextField();
+        searchBar.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
         searchBar.setPrefHeight (40);
         searchBar.setPrefWidth (400);
         searchPane.add (searchBar, 2, 1);
