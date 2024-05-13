@@ -137,7 +137,7 @@ public class BrowseBox extends VBox
             if (newBox.isSelected()) {
                 isNew = true;
             } else {
-                isNew = true;
+                isNew = false;
             }
         });
 
@@ -145,7 +145,7 @@ public class BrowseBox extends VBox
             if (underUsedBox.isSelected()) {
                 isUnderused = true;
             } else {
-                isUnderused = true;
+                isUnderused = false;
             }
         });
 
@@ -153,7 +153,7 @@ public class BrowseBox extends VBox
             if (overUsedBox.isSelected()) {
                 isOverused = true;
             } else {
-                isOverused = true;
+                isOverused = false;
             }
         });
 
@@ -250,67 +250,33 @@ public class BrowseBox extends VBox
 
                     bookProperties = bookProperties.toLowerCase();
 
-                    if(content.contains(input) || bookProperties.contains(input))
+                    if((content.contains(input) || bookProperties.contains(input)) &&
+                    ((isNew && post.getUsageAmount() == 1) ||
+                    (isUnderused && post.getUsageAmount() == 2) ||
+                    (isNew && post.getUsageAmount() == 3)))
                     {
                         currentPost = new PostBox(post, mainUser, session);
         
                         currentPost.setPrefSize(500, 500);
                         currentPost.setAlignment(Pos.CENTER);
                         
-                        postsAndFilters.setContent(currentPost);
+                        filtrationBox.getChildren().add(currentPost);
                         
                         postsDisplayed++;
                     }
                 }      
                 i--;
             }
+            postsAndFilters.setContent(filtrationBox);
         }
         catch (Exception e) {
             e.printStackTrace();
         } finally {
             postsAndFilters.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
             DatabaseConnection.disconnect(); 
+            filtrationBox.getChildren().removeAll();
         }
     }
 
-    public void filter()
-    {
-        PostBox currentPost;
-
-        DatabaseConnection.connect(); 
-        try (Session session = DatabaseConnection.getSessionFactory().openSession()) 
-        {
-            int i = DatabaseConnection.getMaxPostID();
-            int postsDisplayed = 0;
-            int totalPostCount = DatabaseConnection.countPosts();
-            while(i > 0 && postsDisplayed < totalPostCount)
-            {
-                if(session.get(Post.class, i) != null)
-                {
-                    Post post = session.get(Post.class, i);
-                    
-                    
-
-                    if(isNew && post.getUsageAmount())
-                    {
-                        currentPost = new PostBox(post, mainUser, session);
-        
-                        currentPost.setPrefSize(500, 500);
-                        currentPost.setAlignment(Pos.CENTER);
-                        
-                        postsAndFilters.setContent(currentPost);
-                        
-                        postsDisplayed++;
-                    }
-                }      
-                i--;
-            }
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            postsAndFilters.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
-            DatabaseConnection.disconnect(); 
-        }
-    }
+    
 }
