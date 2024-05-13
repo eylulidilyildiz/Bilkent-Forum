@@ -3,6 +3,9 @@ package com.example;
 
 
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 import javafx.beans.value.ObservableValue;
 import javafx.collections.MapChangeListener;
 import javafx.event.ActionEvent;
@@ -48,7 +51,18 @@ public class AddPostBox extends VBox
     private VBox courseUsageAndPriceBox;
     private Button createPostButton;
 
-    private boolean isBookSelected = false;
+    private TextArea descriptionArea;
+    private TextField titleField;
+    private TextField authorField;
+    private TextField publisherField;
+    private TextField editionField;
+    private TextField courseField;
+    private ChoiceBox <String> usageBox;
+    private TextField priceField;
+
+    private boolean isBookSelected;
+    private String usage;
+    private boolean isBookFree;
 
     public AddPostBox(User user)
     {
@@ -60,6 +74,78 @@ public class AddPostBox extends VBox
         createPostButton = new Button("Create Post");
         createPostButton.setAlignment(Pos.BASELINE_RIGHT);
         createPostButton.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 20));
+
+        createPostButton.setOnAction(new EventHandler<ActionEvent>()
+        {
+            @Override
+            public void handle(ActionEvent arg0) 
+            {                       
+                DatabaseConnection.connect(); 
+                try (Session session = DatabaseConnection.getSessionFactory().openSession()) 
+                {
+                    Transaction tx = session.beginTransaction();
+
+                    int postID = DatabaseConnection.getMaxPostID() + 1;
+                    int ownerID = mainUser.getId();
+                    String content = descriptionArea.getText();
+                    //TODO
+                    // HOW DO I GET THE DATE?
+                    String date = "";
+                    int initialUpvotes = 0;
+                    int initialDownvotes = 0;
+                    String commentIDs = null; //no comments initially
+
+                    boolean isSalesPost = false;
+                    String bookTitle = null;
+                    String authorName = null;
+                    String courseName = null;
+                    Double price = null;
+                    Integer usageAmount = null;
+                    String publisherName = null;
+                    String bookEdition = null;
+
+                    if(isBookSelected)
+                    {
+                        isSalesPost = true;
+                        bookTitle = titleField.getText();
+                        authorName = authorField.getText();
+                        courseName = courseField.getText();
+                        publisherName = publisherField.getText();
+                        bookEdition = editionField.getText();
+                        if(usage.equals("New"))
+                        {
+                            usageAmount = 1;
+                        }
+                        else if(usage.equals("Under-used"))
+                        {
+                            usageAmount = 2;
+                        }
+                        else{
+                            usageAmount = 3;
+                        }
+
+                        if(isBookFree)
+                        {
+                            price = 0.0;
+                        }
+                        else{
+                            price = Double.parseDouble(priceField.getText());
+                        }
+
+                    }
+                    
+                    PostManager postManager = new PostManager();
+                    postManager.createPost( postID, content, date, ownerID, initialUpvotes, initialDownvotes, commentIDs, isSalesPost,
+                                            bookTitle, authorName, courseName, price, usageAmount, publisherName, bookEdition );
+                } 
+                catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    DatabaseConnection.disconnect(); 
+                }
+            }
+
+        });
 
         HBox addPostBox = new HBox();
         addPostBox.setSpacing (500);
@@ -82,7 +168,7 @@ public class AddPostBox extends VBox
         Label descriptionLabel = new Label ("Description");
         descriptionLabel.setFont (Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
 
-        TextArea descriptionArea = new TextArea();
+        this.descriptionArea = new TextArea();
         descriptionArea.setPrefHeight (AREA_HEIGHT);
         descriptionArea.setPrefWidth (AREA_WIDTH);
         descriptionArea.setText (mainUser.getName());
@@ -106,6 +192,7 @@ public class AddPostBox extends VBox
         bookRadioButton.setToggleGroup (bookQuestionGroup);
         questionRadioButton.setToggleGroup (bookQuestionGroup);
         questionRadioButton.setSelected(true);
+        this.isBookSelected = false;
 
         bookRadioButton.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -159,7 +246,7 @@ public class AddPostBox extends VBox
         Label titleLabel = new Label ("Title");
         titleLabel.setFont (Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
 
-        TextField titleField = new TextField();
+        this.titleField = new TextField();
         titleField.setPrefHeight (FIELD_HEIGHT);
         titleField.setPrefWidth (FIELD_WIDTH);
 
@@ -167,7 +254,7 @@ public class AddPostBox extends VBox
         Label authorLabel = new Label ("Author");
         authorLabel.setFont (Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
 
-        TextField authorField = new TextField();
+        this.authorField = new TextField();
         authorField.setPrefHeight (FIELD_HEIGHT);
         authorField.setPrefWidth (FIELD_WIDTH);
 
@@ -175,7 +262,7 @@ public class AddPostBox extends VBox
         Label publisherLabel = new Label ("Publisher");
         publisherLabel.setFont (Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
 
-        TextField publisherField = new TextField();
+        this.publisherField = new TextField();
         publisherField.setPrefHeight (FIELD_HEIGHT);
         publisherField.setPrefWidth (FIELD_WIDTH);
 
@@ -183,7 +270,7 @@ public class AddPostBox extends VBox
         Label editionLabel = new Label ("Edition");
         editionLabel.setFont (Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
 
-        TextField editionField = new TextField();
+        this.editionField = new TextField();
         editionField.setPrefHeight (FIELD_HEIGHT);
         editionField.setPrefWidth (FIELD_WIDTH);
 
@@ -202,7 +289,7 @@ public class AddPostBox extends VBox
         Label courseLabel = new Label ("Course");
         courseLabel.setFont (Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
 
-        TextField courseField = new TextField();
+        this.courseField = new TextField();
         courseField.setPrefHeight (FIELD_HEIGHT);
         courseField.setPrefWidth (FIELD_WIDTH);
 
@@ -210,8 +297,8 @@ public class AddPostBox extends VBox
         Label usageLabel = new Label ("Usage");
         usageLabel.setFont (Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
                     
-        @SuppressWarnings("rawtypes")
-        ChoiceBox usageBox = new ChoiceBox <String>();
+
+        this.usageBox = new ChoiceBox <String>();
         usageBox.getItems().add ("New");
         usageBox.getItems().add ("Under-used");
         usageBox.getItems().add ("Over-used");
@@ -220,13 +307,12 @@ public class AddPostBox extends VBox
         usageBox.setPrefWidth (FIELD_WIDTH);
 
         // when a choice is made
-        usageBox.setOnAction (new EventHandler<Event>() 
+        usageBox.setOnAction (new EventHandler<ActionEvent>() 
         {
-
             @Override
-            public void handle(Event event) 
+            public void handle(ActionEvent event) 
             {
-                String usage = (String) usageBox.getValue();
+                usage = (String) usageBox.getValue();
             }
                         
         });
@@ -241,7 +327,7 @@ public class AddPostBox extends VBox
 
         RadioButton priceButton = new RadioButton ("Enter Price:");
         priceButton.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 20));
-        TextField priceField = new TextField();
+        this.priceField = new TextField();
         priceField.setPrefHeight (10);
         priceField.setPrefWidth (40);
 
