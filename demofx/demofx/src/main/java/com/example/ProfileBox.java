@@ -35,14 +35,16 @@ public class ProfileBox extends VBox
     private ImageView profileIcon;
     private HBox searchAddPostBox;
     private BorderPane root;
+    private boolean isFriend;
     
     // Constructor
     @SuppressWarnings("exports")
-    public ProfileBox (User user, BorderPane root)
+    public ProfileBox (User user, BorderPane root, boolean isFriend)
     {
         super();
         this.mainUser = user;
         this.root = root;
+        this.isFriend = isFriend;
 
         this.createSearchAndAddPost();
         this.createInfoPane();
@@ -103,35 +105,36 @@ public class ProfileBox extends VBox
         // adding the components together
         informationTextBox.getChildren().addAll (nameLabel, universityLabel, departmentLabel, semesterLabel, emailLabel);
 
-        editProfileButton = new Button ("Edit Profile");
-        editProfileButton.setFont(Font.font("Tahoma", FontWeight.BOLD, FontPosture.REGULAR, 22));
-        editProfileButton.setPrefHeight (60);
-        editProfileButton.setPrefWidth (200);
-
-        this.editProfileIsClicked(editProfileButton);
-        
-        VBox textAndProfileBox = new VBox();
-        textAndProfileBox.setPadding (new Insets(10));
-        textAndProfileBox.setAlignment (Pos.CENTER_RIGHT);
-
-        textAndProfileBox.getChildren().addAll (informationTextBox, editProfileButton);
-        
-
         // ImageView for PROFILE
         profileIcon = new ImageView (getClass().getResource("images/profileIcon.png").toString());
         profileIcon.setFitHeight (400);
         profileIcon.setFitWidth (400);
 
+        VBox textAndProfileBox = new VBox();
+        textAndProfileBox.setPadding (new Insets(10));
+        textAndProfileBox.setAlignment (Pos.CENTER_RIGHT);
 
-        
+        if (!isFriend)
+        {
+            editProfileButton = new Button ("Edit Profile");
+            editProfileButton.setFont(Font.font("Tahoma", FontWeight.BOLD, FontPosture.REGULAR, 22));
+            editProfileButton.setPrefHeight (60);
+            editProfileButton.setPrefWidth (200);
+
+            this.editProfileIsClicked(editProfileButton);
+
+            textAndProfileBox.getChildren().addAll (informationTextBox, editProfileButton);
+        }
+        else
+        {
+            textAndProfileBox.getChildren().addAll (informationTextBox);
+        }
+
         // adding the info pane to the profile box
         this.informationBox.getChildren().addAll (profileIcon, textAndProfileBox);
         this.informationBox.setSpacing (200);
-        
 
         this.getChildren().add (this.informationBox);
-
-
     }
 
     private void createSearchAndAddPost ()

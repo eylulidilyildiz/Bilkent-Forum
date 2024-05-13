@@ -292,7 +292,7 @@ public class EditProfileBox extends VBox
                     e.printStackTrace();
                 } finally {
                     DatabaseConnection.disconnect();
-                    ProfileBox modifiedProfileBox = new ProfileBox(mainUser, root);
+                    ProfileBox modifiedProfileBox = new ProfileBox(mainUser, root, false);
                     root.setCenter (modifiedProfileBox);
                 }
             }     

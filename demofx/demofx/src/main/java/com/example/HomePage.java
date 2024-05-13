@@ -43,12 +43,15 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.geometry.*;
 
+@SuppressWarnings("unused")
 public class HomePage extends Application 
 {
     // Main User for the application
     private User mainUser;
     private VBox allPostsBox;
     private ScrollPane postsPane;
+    private ScrollPane friendListPane;
+
 
     public HomePage(User user)
     {
@@ -210,8 +213,6 @@ public class HomePage extends Application
         upvotedButton.setToggleGroup(menuPaneGroup);
         bookmarksButton.setToggleGroup(menuPaneGroup);
 
-
-
         // LOGOUT
         Button logoutButton = new Button("LOGOUT");
         //logoutButton.setBackground(new Background(new BackgroundFill(Color.PINK, null, null)));
@@ -223,19 +224,25 @@ public class HomePage extends Application
         logoutButton.setPrefWidth(WIDTH_MENU_PANE);
         
         // when button is clicked it logs out, closes the home page
-        logoutButton.setOnAction (new EventHandler<ActionEvent>() 
-        {
-            @Override
-            public void handle (ActionEvent arg0) 
-            {
-                homeStage.close();
-                
-                // OR maybe open the login page ???
-            }
-            
+        logoutButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override 
+            public void handle(ActionEvent event) 
+            { 
+                DatabaseConnection.connect(); 
+                try (Session session = DatabaseConnection.getSessionFactory().openSession()) 
+                {
+                    homeStage.close();
+                    Application login = new Login();
+                    Stage loginStage = new Stage();
+                    login.start(loginStage);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    DatabaseConnection.disconnect(); 
+                }
+            } 
         });
-
-
 
         //root and scene
         BorderPane root = new BorderPane();
@@ -271,8 +278,8 @@ public class HomePage extends Application
         
         GridPane friendsPane = new GridPane();
         friendsPane.setPrefWidth(WIDTH_MENU_PANE);
-        friendsPane.setHgap(20);
-        friendsPane.setVgap(100);
+        //friendsPane.setHgap(20);
+        //friendsPane.setVgap(100);
 
         friendsPane.setBackground(new Background(new BackgroundFill(Color.rgb (236, 231, 230), CornerRadii.EMPTY, Insets.EMPTY)));
         friendsPane.setStyle("-fx-border-color: gray; -fx-border-width: 1px 1px 1px 1px;");
@@ -389,7 +396,9 @@ public class HomePage extends Application
             homePageBox.getChildren().addAll (searchAddPostBox, postsPane);
 
             // Profile page
-            ProfileBox profilePageBox = new ProfileBox (this.mainUser, root);
+            ProfileBox profilePageBox = new ProfileBox (this.mainUser, root, false);
+
+            
 
             // Browse Page
             BrowseBox browsePageBox = new BrowseBox (mainUser);
@@ -569,12 +578,91 @@ public class HomePage extends Application
         }
 
 
+        VBox allFriendsBox = new VBox();
+        ToggleGroup usersGroup = new ToggleGroup();
+        ToggleButton friendButton = new ToggleButton();
+
+        allFriendsBox.setSpacing(5);
+        allFriendsBox.setAlignment(Pos.CENTER);
+        allFriendsBox.setBackground (new Background(new BackgroundFill(Color.rgb (236, 231, 230), CornerRadii.EMPTY, Insets.EMPTY)));
+
+        FriendsBox friendBox;
+
+        DatabaseConnection.connect(); 
+        try (Session session = DatabaseConnection.getSessionFactory().openSession()) 
+        {
+            int i = DatabaseConnection.getMaxUserID();
+            int friendsDisplayed = 0;
+            int totalfriendsCount = DatabaseConnection.countPosts();
+            while(i > 0 && friendsDisplayed < totalfriendsCount)
+            {
+                if(session.get(User.class, i) != null)
+                {
+                    User friend = session.get(User.class, i);
+                    friendBox = new FriendsBox(mainUser, friend, session);
+
+                    HBox friendLine = friendBox.getFriendBox();
+
+                    friendButton = friendBox.getFriendButton();
+                    allFriendsBox.getChildren().add(friendLine);
+                    friendsDisplayed++;
+                    usersGroup.getToggles().add(friendButton);
+                    friendButton.setToggleGroup(usersGroup);
+                    enteringExitingButton(friendButton, friendBox);
+
+                    friendButton.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override 
+                        public void handle(ActionEvent event) 
+                        { 
+                            DatabaseConnection.connect(); 
+                            try (Session session = DatabaseConnection.getSessionFactory().openSession()) 
+                            {
+                                // Friends page
+                                ProfileBox friendPageBox = new ProfileBox (friend, root, true);
+                                root.setCenter (friendPageBox);
+
+                                profileButton.setSelected(true);
+
+                                colorBackground(profileButton, profileBox);
+                                discolorBackground(homeButton, homeBox);
+                                discolorBackground(browseButton, browseBox);
+                                discolorBackground(upvotedButton, upvotedBox);
+                                discolorBackground(bookmarksButton, bookmarksBox);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            } finally {
+                                DatabaseConnection.disconnect(); 
+                            }
+                        } 
+                    });
+                }      
+                i--;
+            }
+
+            Label usersLabel = new Label(" Users ");
+            usersLabel.setFont(Font.font("Tahoma", FontWeight.BOLD, FontPosture.REGULAR, 27));
+            usersLabel.setTextFill (Color.rgb (101, 14, 63));
+            usersLabel.setPrefWidth(248);
+            usersLabel.setAlignment(Pos.TOP_LEFT);
+            friendsPane.add(usersLabel, 0, 1);
+            
+            ScrollPane allUsersPane = new ScrollPane();
+            
+            allFriendsBox.setAlignment(Pos.CENTER_LEFT);
+            allUsersPane.setContent(allFriendsBox);
+            allUsersPane.setFitToWidth (true);
+            allUsersPane.setFitToHeight (true);
+            allUsersPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+            friendsPane.add(allUsersPane, 0, 2);
+            friendsPane.setVgap(20);
+            menuPane.setHgap(20);
+        }
     }
     
 
     /* HELPER METHODS */
 
-    private void enteringExitingButton (ToggleButton button, HBox box)
+    public void enteringExitingButton (ToggleButton button, HBox box)
     {
         // when mouse enters the button
         button.setOnMouseEntered (new EventHandler <MouseEvent>() 
