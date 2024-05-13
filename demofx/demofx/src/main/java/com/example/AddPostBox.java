@@ -42,16 +42,24 @@ public class AddPostBox extends VBox
     private HBox searchBox;
     private VBox postInfoBox;
     private VBox descriptionAndPostTypeBox;
+    private HBox typeBox;
     private HBox bookDetailsBox;
     private VBox infoFieldsBox;
     private VBox courseUsageAndPriceBox;
     private Button createPostButton;
+
+    private boolean isBookSelected = false;
 
     public AddPostBox(User user)
     {
         super();
         mainUser = user;
         this.createSearchBox();
+        this.setSpacing(20);
+        
+        createPostButton = new Button("Create Post");
+        createPostButton.setAlignment(Pos.BASELINE_RIGHT);
+        createPostButton.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 20));
 
         HBox addPostBox = new HBox();
         addPostBox.setSpacing (500);
@@ -97,6 +105,7 @@ public class AddPostBox extends VBox
 
         bookRadioButton.setToggleGroup (bookQuestionGroup);
         questionRadioButton.setToggleGroup (bookQuestionGroup);
+        questionRadioButton.setSelected(true);
 
         bookRadioButton.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -105,6 +114,7 @@ public class AddPostBox extends VBox
                 if(bookRadioButton.isSelected())
                 {
                     bookIsClicked();
+                    isBookSelected = true;
                 }
             }
             
@@ -116,7 +126,14 @@ public class AddPostBox extends VBox
             public void handle(ActionEvent arg0) {
                 if(questionRadioButton.isSelected())
                 {
-                    getChildren().remove(bookDetailsBox);
+                    if(isBookSelected)
+                    {
+                        getChildren().remove(bookDetailsBox);
+                        isBookSelected = false;
+                    }
+                    int lastIndex = getChildren().size() - 1;
+                    typeBox.getChildren().add(createPostButton);
+
                 }
             }
             
@@ -125,12 +142,12 @@ public class AddPostBox extends VBox
 
 
         // Hbox for types
-        HBox typeBox = new HBox();
-        typeBox.getChildren().addAll (bookRadioButton, questionRadioButton);
+        typeBox = new HBox();
+        typeBox.getChildren().addAll (bookRadioButton, questionRadioButton, createPostButton);
         typeBox.setSpacing (20);
 
         this.descriptionAndPostTypeBox.getChildren().addAll (descriptionLabel, descriptionArea, typeLabel, typeBox);
-        this.getChildren().add (descriptionAndPostTypeBox);
+        this.getChildren().add(descriptionAndPostTypeBox);
     }
 
     @SuppressWarnings("unchecked")
@@ -232,13 +249,14 @@ public class AddPostBox extends VBox
         priceBox.getChildren().addAll (freeButton, priceButton, priceField);
         priceBox.setSpacing (20);
 
-        courseUsageAndPriceBox.getChildren().addAll (courseLabel, courseField, usageLabel, usageBox, priceLabel, priceBox);
+        courseUsageAndPriceBox.getChildren().addAll (courseLabel, courseField, usageLabel, usageBox, priceLabel, priceBox, createPostButton);
         courseUsageAndPriceBox.setSpacing (20);
 
         bookDetailsBox.getChildren().addAll (infoFieldsBox, courseUsageAndPriceBox);
         bookDetailsBox.setSpacing (400);
         bookDetailsBox.setAlignment (Pos.CENTER_LEFT);
 
+        this.getChildren().remove(createPostButton);
         this.getChildren().add (bookDetailsBox);
         
     }
