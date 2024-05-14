@@ -655,7 +655,7 @@ public class HomePage extends Application
             allUsersPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
             friendsPane.add(allUsersPane, 0, 2);
             friendsPane.setVgap(20);
-            menuPane.setHgap(20);
+            friendsPane.setHgap(20);
         }
     }
     
