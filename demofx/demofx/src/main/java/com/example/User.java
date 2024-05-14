@@ -92,10 +92,16 @@ public class User
 	}
 
 	public void addUpvotedPosts(String postID){
-		if (this.upvotedPosts != null) {
-			this.upvotedPosts += "," + postID; 
-		} else {
-			this.upvotedPosts = postID; 
+		if (this.upvotedPosts != null) 
+		{
+			if( !this.upvotedPosts.equals("") )
+			{
+				this.upvotedPosts += ","; 
+			}
+			this.upvotedPosts += postID; 
+		}
+		else{
+			this.upvotedPosts = postID;
 		}
 	}
 
@@ -140,7 +146,7 @@ public class User
 	}
 
 	public void addBookmarkedPost(String postID){
-		if (this.bookmarkedPosts != null) {
+		if (this.bookmarkedPosts != null || !this.bookmarkedPosts.equals("")) {
 			this.bookmarkedPosts += "," + postID; 
 		} else {
 			this.bookmarkedPosts = postID; 
