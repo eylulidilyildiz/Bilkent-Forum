@@ -5,27 +5,19 @@
 <hibernate-configuration>
     <session-factory>
  
-        <!-- Set URL -->
         <property name = "hibernate.connection.url">jdbc:mysql://database-bf.c16eyimu6m6g.eu-north-1.rds.amazonaws.com:3306/bilkentForum</property>
  
-        <!-- Set User Name -->
         <property name = "hibernate.connection.username">admin</property>
  
-        <!-- Set Password -->
         <property name = "hibernate.connection.password">admin321</property>
  
-        <!-- Set Driver Name -->
         <property name = "hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
  
         <property name = "hibernate.show_sql">true</property>
        
-        <!-- Optional: Auto-generate schema -->
-        <!-- <property name = "hibernate.hbm2ddl.auto">create</property> -->
         <mapping class="com.example.User"/>
         <mapping class="com.example.Post"/>
         <mapping class="com.example.Comment"/>
-
-        <!-- <mapping class="com.example.Post"/> -->
- 
+        
     </session-factory>
 </hibernate-configuration>
