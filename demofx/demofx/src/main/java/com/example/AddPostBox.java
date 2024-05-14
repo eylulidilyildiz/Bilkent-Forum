@@ -6,6 +6,8 @@ package com.example;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.MapChangeListener;
 import javafx.event.ActionEvent;
@@ -90,6 +92,9 @@ public class AddPostBox extends VBox
                     String content = descriptionArea.getText();
                     //TODO
                     // HOW DO I GET THE DATE?
+                    /*LocalDateTime currentDateTime = LocalDateTime.now();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                    String date = currentDateTime.format(formatter);*/
                     String date = "";
                     int initialUpvotes = 0;
                     int initialDownvotes = 0;
@@ -135,7 +140,7 @@ public class AddPostBox extends VBox
                     }
                     
                     PostManager postManager = new PostManager();
-                    postManager.createPost( postID, content, ownerID, initialUpvotes, initialDownvotes, commentIDs, isSalesPost,
+                    postManager.createPost( postID, content, /*date,*/ ownerID, initialUpvotes, initialDownvotes, commentIDs, isSalesPost,
                                             bookTitle, authorName, courseName, price, usageAmount, publisherName, bookEdition );
                 } 
                 catch (Exception e) {
