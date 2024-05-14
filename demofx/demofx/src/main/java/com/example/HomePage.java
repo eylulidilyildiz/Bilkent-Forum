@@ -363,6 +363,10 @@ public class HomePage extends Application
         
         // search bar for the users
         HBox searchBox = new HBox();
+        searchBox.setSpacing (10);
+        searchBox.setAlignment (Pos.CENTER);
+        searchBox.setPadding (new Insets (10));
+
         TextField searchField = new TextField();
 
         
@@ -518,6 +522,9 @@ public class HomePage extends Application
 
                     postsPane.setContent(allPostsBox);
                     root.setCenter (homePageBox);
+
+                    allUsersPane.setContent (allFriendsBox);
+                    root.setRight (friendsPane);
                 }
             });
 
@@ -756,6 +763,10 @@ public class HomePage extends Application
     {
 
         VBox searchedUsers = new VBox();
+        searchedUsers.setSpacing(5);
+        searchedUsers.setAlignment(Pos.CENTER);
+        searchedUsers.setBackground (new Background(new BackgroundFill(Color.rgb (236, 231, 230), CornerRadii.EMPTY, Insets.EMPTY)));
+        searchedUsers.setAlignment(Pos.CENTER_LEFT);
 
         DatabaseConnection.connect(); 
         try (Session session = DatabaseConnection.getSessionFactory().openSession()) 
@@ -798,10 +809,14 @@ public class HomePage extends Application
             if (usersDisplayed == 0)
             {
                 Label noSuchUserLabel = new Label ("There aren't any matching users.");
-                noSuchUserLabel.setFont (Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 20));
+                noSuchUserLabel.setFont (Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 15));
                 searchedUsers.getChildren().add (noSuchUserLabel);
             }
 
+            Label goingBackLabel = new Label ("Click home to go back.");
+            goingBackLabel.setFont (Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 15));
+
+            searchedUsers.getChildren().add (goingBackLabel);
             usersPane.setContent (searchedUsers);
         }
         catch (Exception e) 
