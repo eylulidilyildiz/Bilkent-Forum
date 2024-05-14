@@ -108,6 +108,8 @@ public class AddPostBox extends VBox
                     String publisherName = null;
                     String bookEdition = null;
 
+                    PostManager postManager = new PostManager();
+
                     if(isBookSelected)
                     {
                         isSalesPost = true;
@@ -136,11 +138,15 @@ public class AddPostBox extends VBox
                             price = Double.parseDouble(priceField.getText());
                         }
 
+                        postManager.createPost( postID, content, date, ownerID, initialUpvotes, initialDownvotes, commentIDs, isSalesPost,
+                                            bookTitle, authorName, courseName, price, usageAmount, publisherName, bookEdition );
+                    }
+                    else
+                    {
+                        postManager.createPost( postID, content, date, ownerID, initialUpvotes, initialDownvotes, commentIDs);
                     }
                     
-                    PostManager postManager = new PostManager();
-                    postManager.createPost( postID, content, date, ownerID, initialUpvotes, initialDownvotes, commentIDs, isSalesPost,
-                                            bookTitle, authorName, courseName, price, usageAmount, publisherName, bookEdition );
+                    
                 } 
                 catch (Exception e) {
                     e.printStackTrace();

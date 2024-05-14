@@ -13,7 +13,7 @@ public class PostManager
         Post newPost = new Post();
         newPost.setId(id);
         newPost.setContent(content);
-        //newPost.setDate(date);
+        newPost.setDate(date);
         newPost.setOwnerID(ownerID);
         newPost.setUpvotes(upvotes);
         newPost.setDownvotes(downvotes);
@@ -41,6 +41,34 @@ public class PostManager
             session.close();
         }
     }
+
+    public void createPost(int id, String content, String date, int ownerID, int upvotes, int downvotes,
+    String commentIDs) 
+    {
+        Post newPost = new Post();
+        newPost.setId(id);
+        newPost.setContent(content);
+        newPost.setDate(date);
+        newPost.setOwnerID(ownerID);
+        newPost.setUpvotes(upvotes);
+        newPost.setDownvotes(downvotes);
+        newPost.setCommentIDs(commentIDs);
+
+        Session session = DatabaseConnection.getSessionFactory().openSession();
+        Transaction tx = null;
+
+        try {
+            tx = session.beginTransaction();
+            session.persist(newPost);
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
+
 
     public void deletePost(int postId) 
     {
