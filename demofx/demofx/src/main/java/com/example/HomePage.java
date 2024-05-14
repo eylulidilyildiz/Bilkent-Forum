@@ -797,7 +797,10 @@ public class HomePage extends Application
                     {
                         FriendsBox searched = new FriendsBox (mainUser, user);
 
-                        searchedUsers.getChildren().add (searched);
+                        HBox searchedLine = new HBox();
+                        searchedLine = searched.getFriendBox();
+
+                        searchedUsers.getChildren().add (searchedLine);
                         usersDisplayed++;
                     }
                 }
