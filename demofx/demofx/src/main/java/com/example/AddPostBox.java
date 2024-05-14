@@ -1,17 +1,10 @@
 package com.example;
 
-
-
-
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.MapChangeListener;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -21,47 +14,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-
-import org.hibernate.Session;
-
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
-import javafx.stage.Stage;
-import javafx.geometry.*;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 
 public class AddPostBox extends VBox 
 {
@@ -73,8 +33,6 @@ public class AddPostBox extends VBox
 
     // Instance Variables
     private User mainUser;
-    private HBox searchBox;
-    private VBox postInfoBox;
     private VBox descriptionAndPostTypeBox;
     private HBox typeBox;
     private HBox bookDetailsBox;
@@ -118,6 +76,7 @@ public class AddPostBox extends VBox
                 DatabaseConnection.connect(); 
                 try (Session session = DatabaseConnection.getSessionFactory().openSession()) 
                 {
+                    @SuppressWarnings("unused")
                     Transaction tx = session.beginTransaction();
 
                     int postID = DatabaseConnection.getMaxPostID() + 1;
@@ -200,7 +159,6 @@ public class AddPostBox extends VBox
 
         this.createDescriptionAndPostTypeBox();
         
-        //TODO
         addPostBox.getChildren().addAll ();
         
     }
@@ -266,7 +224,6 @@ public class AddPostBox extends VBox
                         getChildren().remove(bookDetailsBox);
                         isBookSelected = false;
                     }
-                    int lastIndex = getChildren().size() - 1;
                     typeBox.getChildren().add(createPostButton);
 
                 }
@@ -295,7 +252,6 @@ public class AddPostBox extends VBox
         this.isPostCreated = isPostCreated;
     }
 
-    @SuppressWarnings("unchecked")
     private void bookIsClicked () 
     {
         bookDetailsBox = new HBox();

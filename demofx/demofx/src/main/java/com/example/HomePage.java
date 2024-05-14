@@ -1,30 +1,18 @@
 package com.example;
 
-
 import org.hibernate.Session;
-import org.hibernate.Transaction;
-
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Separator;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -33,28 +21,21 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.RowConstraints;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Box;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.geometry.*;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ChangeListener;
 
-@SuppressWarnings("unused")
+
 public class HomePage extends Application 
 {
     // Main User for the application
     private User mainUser;
     private VBox allPostsBox;
     private ScrollPane postsPane;
-    private ScrollPane friendListPane;
 
     // home
     private ToggleButton homeButton;
@@ -90,13 +71,12 @@ public class HomePage extends Application
     
 
    @Override
-    public void start (Stage homeStage) throws Exception {
+    public void start (@SuppressWarnings("exports") Stage homeStage) throws Exception {
 
         // CONSTANTS
         final int WIDTH_MENU_PANE = 250;
         final int ICON_WIDTH = 20;
         final int ICON_HEIGHT = 20;
-        BooleanProperty isPostCreatedProperty = new SimpleBooleanProperty(false);
 
         //MENU ON THE LEFT
 
@@ -487,10 +467,6 @@ public class HomePage extends Application
                 if(session.get(Post.class, i) != null)
                 {
                     Post post = session.get(Post.class, i);
-                    int ownerID = post.getOwnerID();
-                    String username = session.get(User.class, ownerID).getUsername();
-    
-
                     currentPost = new PostBox(post, mainUser, session);
     
                     currentPost.setPrefSize(500, 500);
@@ -707,6 +683,7 @@ public class HomePage extends Application
     
     /* HELPER METHODS */
 
+    @SuppressWarnings("exports")
     public void enteringExitingButton (ToggleButton button, HBox box)
     {
         // when mouse enters the button
@@ -766,12 +743,14 @@ public class HomePage extends Application
         });
     }
 
+    @SuppressWarnings("exports")
     public void colorBackground(ToggleButton button, HBox box)
     {
         box.setBackground (new Background (new BackgroundFill (Color.rgb (220, 220, 220), null, null)));
         button.setBackground (new Background (new BackgroundFill (Color.rgb (220, 220, 220), null, null)));
     }
 
+    @SuppressWarnings("exports")
     public void discolorBackground(ToggleButton button, HBox box)
     {
         box.setBackground (new Background (new BackgroundFill (null, null, null)));

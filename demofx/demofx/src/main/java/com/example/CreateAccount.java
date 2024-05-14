@@ -6,7 +6,6 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -15,7 +14,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -38,7 +36,7 @@ public class CreateAccount extends Application
     }
 
     @Override
-    public void start (Stage createAccountStage) throws Exception 
+    public void start (@SuppressWarnings("exports") Stage createAccountStage) throws Exception 
     {
         //Components of the scene
         Label forumLabel = new Label(" BILKENT FORUM ");

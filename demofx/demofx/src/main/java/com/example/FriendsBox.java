@@ -1,22 +1,11 @@
 package com.example;
 
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
@@ -25,8 +14,6 @@ import javafx.geometry.*;
 
 public class FriendsBox extends HBox 
 {
-    private User friend;
-    private User mainUser;
     private String friendName;
     private String friendSurname;
     private HBox friendBox;
@@ -35,8 +22,6 @@ public class FriendsBox extends HBox
     public FriendsBox(User mainUser, User friend)
     {
         super();
-        this.mainUser = mainUser;
-        this.friend = friend;
         this.friendName = friend.getName();
         this.friendSurname = friend.getSurname();
 
@@ -53,18 +38,19 @@ public class FriendsBox extends HBox
         ImageView friendIcon = new ImageView (getClass().getResource("images/profileIcon.png").toString());
         friendIcon.setFitHeight (40);
         friendIcon.setFitWidth (40);
-        //friendIcon.setBackground (new Background(new BackgroundFill(Color.rgb (236, 231, 230), CornerRadii.EMPTY, Insets.EMPTY)));
 
         friendBox = new HBox();
         friendBox.getChildren().addAll (friendIcon, friendButton);
         friendBox.setAlignment (Pos.CENTER_LEFT);
     }
 
+    @SuppressWarnings("exports")
     public HBox getFriendBox()
     {
         return friendBox;
     }
 
+    @SuppressWarnings("exports")
     public ToggleButton getFriendButton()
     {
         return friendButton;

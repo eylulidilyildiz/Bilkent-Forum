@@ -4,7 +4,6 @@ package com.example;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
 import javafx.event.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -57,7 +56,7 @@ public class EditProfileBox extends VBox
     private Integer newSemester;
 
     // Constructor
-    public EditProfileBox (User user, BorderPane root)
+    public EditProfileBox (User user, @SuppressWarnings("exports") BorderPane root)
     {
         super();
         this.mainUser = user;

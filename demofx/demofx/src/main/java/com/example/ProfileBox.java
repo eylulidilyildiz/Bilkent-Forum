@@ -6,15 +6,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -29,17 +22,14 @@ public class ProfileBox extends VBox
 
     // Instance Variables 
     private User mainUser;
-    private ScrollPane postsBox;
     private Button editProfileButton;
     private HBox informationBox;
     private ImageView profileIcon;
-    private HBox searchAddPostBox;
     private BorderPane root;
     private boolean isFriend;
     
     // Constructor
-    @SuppressWarnings("exports")
-    public ProfileBox (User user, BorderPane root, boolean isFriend)
+    public ProfileBox (User user, @SuppressWarnings("exports") BorderPane root, boolean isFriend)
     {
         super();
         this.mainUser = user;

@@ -4,9 +4,6 @@ package com.example;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.query.Query;
-import java.util.List;
-
 
 public class DatabaseConnection {
     private static SessionFactory sessionFactory;
@@ -34,6 +31,7 @@ public class DatabaseConnection {
     }
 
     // Get the Hibernate session factory
+    @SuppressWarnings("exports")
     public static SessionFactory getSessionFactory() {
         return sessionFactory;
     }

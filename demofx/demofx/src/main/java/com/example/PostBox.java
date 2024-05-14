@@ -5,7 +5,6 @@ import org.hibernate.Transaction;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -24,17 +23,13 @@ import javafx.geometry.*;
 
 public class PostBox extends VBox 
 {
-    private Post currentPost;
     private User mainUser;
-    private Session session;
     private boolean isCommentsDisplayed;
 
-    public PostBox(Post post, User user, Session session)
+    public PostBox(Post post, User user, @SuppressWarnings("exports") Session session)
     {
         super();
-        this.currentPost = post;
         this.mainUser = user;
-        this.session = session;
         isCommentsDisplayed = false;
 
         setSpacing(30);
@@ -247,6 +242,7 @@ public class PostBox extends VBox
                         DatabaseConnection.connect(); 
                         try (Session session = DatabaseConnection.getSessionFactory().openSession()) 
                         {
+                            @SuppressWarnings("unused")
                             Transaction tx = session.beginTransaction();
 
                             int commentID = DatabaseConnection.getMaxCommentID() + 1;
