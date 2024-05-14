@@ -593,10 +593,10 @@ public class HomePage extends Application
         {
             int i = DatabaseConnection.getMaxUserID();
             int friendsDisplayed = 0;
-            int totalfriendsCount = DatabaseConnection.countPosts();
+            int totalfriendsCount = DatabaseConnection.countUsers() - 1;
             while(i > 0 && friendsDisplayed < totalfriendsCount)
             {
-                if(session.get(User.class, i) != null)
+                if(session.get( User.class, i) != null && ( i != mainUser.getId() ) )
                 {
                     User friend = session.get(User.class, i);
                     friendBox = new FriendsBox(mainUser, friend, session);
@@ -652,7 +652,7 @@ public class HomePage extends Application
             allUsersPane.setContent(allFriendsBox);
             allUsersPane.setFitToWidth (true);
             allUsersPane.setFitToHeight (true);
-            allUsersPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+            allUsersPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
             friendsPane.add(allUsersPane, 0, 2);
             friendsPane.setVgap(20);
             menuPane.setHgap(20);
