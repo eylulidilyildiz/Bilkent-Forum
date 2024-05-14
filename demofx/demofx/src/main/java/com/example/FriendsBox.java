@@ -27,18 +27,16 @@ public class FriendsBox extends HBox
 {
     private User friend;
     private User mainUser;
-    private Session session;
     private String friendName;
     private String friendSurname;
     private HBox friendBox;
     private ToggleButton friendButton;
 
-    public FriendsBox(User mainUser, User friend, Session session)
+    public FriendsBox(User mainUser, User friend)
     {
         super();
         this.mainUser = mainUser;
         this.friend = friend;
-        this.session = session;
         this.friendName = friend.getName();
         this.friendSurname = friend.getSurname();
 
