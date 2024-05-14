@@ -599,7 +599,7 @@ public class HomePage extends Application
                 if(session.get( User.class, i) != null && ( i != mainUser.getId() ) )
                 {
                     User friend = session.get(User.class, i);
-                    friendBox = new FriendsBox(mainUser, friend, session);
+                    friendBox = new FriendsBox(mainUser, friend);
 
                     HBox friendLine = friendBox.getFriendBox();
 
