@@ -2,6 +2,7 @@ package com.example;
 
 import org.hibernate.Session;
 
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -38,6 +39,8 @@ public class BrowseBox extends VBox
 
     private int range;
 
+    private boolean isSearchingForBook;
+
     private boolean isNew;
     private boolean isUnderused;
     private boolean isOverused;
@@ -65,6 +68,7 @@ public class BrowseBox extends VBox
         this.isNew = false;
         this.isUnderused = false;
         this.isOverused = false;
+        this.isSearchingForBook = false;
 
         searchAndFilterBox = new VBox();
         searchAndFilterBox.setSpacing (30);
@@ -78,12 +82,9 @@ public class BrowseBox extends VBox
         filtrationBox = new VBox();
         filtrationBox.setSpacing (15);
         filtrationBox.setAlignment (Pos.CENTER_LEFT);
-        filtrationBox.setPadding (new Insets (70));
+        filtrationBox.setPadding (new Insets (20));
+        filtrationBox.setMaxWidth(300);
         
-
-        // course
-
-
         // post type
         Label postTypeLabel = new Label ("Post Type");
         postTypeLabel.setFont (Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
@@ -135,27 +136,48 @@ public class BrowseBox extends VBox
             }
         });
 
-        newBox.setOnAction(event -> {
-            if (newBox.isSelected()) {
-                isNew = true;
-            } else {
-                isNew = false;
+        newBox.setOnAction(new EventHandler <ActionEvent>() {
+
+            @Override
+            public void handle (ActionEvent arg0) 
+            {
+                if (newBox.isSelected()) {
+                    isNew = true;
+                    isUnderused = false;
+                    isOverused = false;
+                } else {
+                    isNew = false;
+                }
             }
         });
 
-        underUsedBox.setOnAction(event -> {
-            if (underUsedBox.isSelected()) {
-                isUnderused = true;
-            } else {
-                isUnderused = false;
+        underUsedBox.setOnAction(new EventHandler <ActionEvent>() {
+
+            @Override
+            public void handle (ActionEvent arg0) 
+            {
+                if (underUsedBox.isSelected()) {
+                    isUnderused = true;
+                    isNew = false;
+                    isOverused = false;
+                } else {
+                    isUnderused = false;
+                }
             }
         });
 
-        overUsedBox.setOnAction(event -> {
-            if (overUsedBox.isSelected()) {
-                isOverused = true;
-            } else {
-                isOverused = false;
+        overUsedBox.setOnAction(new EventHandler <ActionEvent>() {
+
+            @Override
+            public void handle (ActionEvent arg0) 
+            {
+                if (overUsedBox.isSelected()) {
+                    isOverused = true;
+                    isNew = false;
+                    isUnderused = false;
+                } else {
+                    isOverused = false;
+                }
             }
         });
 
@@ -169,6 +191,7 @@ public class BrowseBox extends VBox
 
                 if (postType.equals ("Book"))
                 {
+                    isSearchingForBook = true;
                     bookBox = new VBox();
                     bookBox.setAlignment (Pos.CENTER_LEFT);
                     bookBox.setSpacing (15);
@@ -178,6 +201,7 @@ public class BrowseBox extends VBox
                 }
                 else
                 {
+                    isSearchingForBook = false;
                     filtrationBox.getChildren().remove (bookBox);
                 }
             }
@@ -189,7 +213,7 @@ public class BrowseBox extends VBox
         postsAndFilters.setContent (filtrationBox);
         postsAndFilters.setFitToHeight (true);
         postsAndFilters.setFitToWidth (true);
-        postsAndFilters.setStyle ("-fx-border-color: #F0F0F0; -fx-border-width: 1px 1px 1px 1px;");
+        postsAndFilters.setStyle ("-fx-border-color: black; -fx-border-width: 1px 1px 1px 1px;");
 
         VBox.setVgrow (postsAndFilters, Priority.ALWAYS);
         
@@ -232,7 +256,7 @@ public class BrowseBox extends VBox
         PostBox currentPost;
 
         // Clear previous search results    
-        postsBox.getChildren().clear();
+        postsBox = new VBox();
         
         DatabaseConnection.connect(); 
         try (Session session = DatabaseConnection.getSessionFactory().openSession()) 
@@ -250,40 +274,58 @@ public class BrowseBox extends VBox
                     content = content.toLowerCase();
                     input = input.toLowerCase();
 
-                    String bookProperties = post.getAuthorName() + " " + 
-                    post.getBookEdition() + " " + post.getBookTitle() + " "
-                    + post.getPublisherName() +  " " + post.getCourseName();
-
-                    bookProperties = bookProperties.toLowerCase();
-
-                    if((content.contains(input) || bookProperties.contains(input)) &&
-                    ((isNew && post.getUsageAmount() == 1) ||
-                    (isUnderused && post.getUsageAmount() == 2) ||
-                    (isOverused && post.getUsageAmount() == 3)))
+                    if(!isSearchingForBook) //Q&A Post
                     {
-                        if ((range == 1 && post.getPrice() < 50) || 
-                        (range == 2 && (post.getPrice() < 100 && post.getPrice() >= 50)) || 
-                        (range == 3 && post.getPrice() >= 100)) {
-                        
+                        if(!post.getIsSalePost() && content.contains(input))
+                        {
                             currentPost = new PostBox(post, mainUser, session);
                             currentPost.setPrefSize(500, 500);
                             currentPost.setAlignment(Pos.CENTER);
                             
-                            postsBox.getChildren().add(currentPost);
-                            postsDisplayed++;
+                            postsBox.getChildren().add(currentPost); 
                         }
                     }
+                    else{
+                        if(post.getIsSalePost())
+                        {
+                            String bookProperties = post.getAuthorName() + " " + 
+                            post.getBookEdition() + " " + post.getBookTitle() + " "
+                            + post.getPublisherName() +  " " + post.getCourseName();
+        
+                            bookProperties = bookProperties.toLowerCase();
+        
+                            if((content.contains(input) || bookProperties.contains(input)) &&
+                            ((isNew && post.getUsageAmount() == 1) ||
+                            (isUnderused && post.getUsageAmount() == 2) ||
+                            (isOverused && post.getUsageAmount() == 3)))
+                            {
+                                if ((range == 1 && post.getPrice() < 50) || 
+                                (range == 2 && (post.getPrice() < 100 && post.getPrice() >= 50)) || 
+                                (range == 3 && post.getPrice() >= 100)) {
+                                
+                                    currentPost = new PostBox(post, mainUser, session);
+                                    currentPost.setPrefSize(500, 500);
+                                    currentPost.setAlignment(Pos.CENTER);
+                                    
+                                    postsBox.getChildren().add(currentPost);
+                                }
+                            }
+                        }      
+                    }
+                    postsDisplayed++;
                 }      
                 i--;
             }
-            //postsAndFilters.setContent(postsBox);
-            searchAndFilterBox.getChildren().add(postsBox);
+            VBox filtrationAndPostsBox = new VBox();
+            filtrationAndPostsBox.getChildren().addAll(filtrationBox, postsBox);
+
+            postsAndFilters.setContent(filtrationAndPostsBox);
         }
         catch (Exception e) {
             e.printStackTrace();
         } finally {
             postsAndFilters.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
-            postsAndFilters.setContent(postsBox);
+            //postsAndFilters.setContent(postsBox);
             DatabaseConnection.disconnect(); 
         }
     }
