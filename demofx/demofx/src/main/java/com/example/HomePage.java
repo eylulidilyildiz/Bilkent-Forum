@@ -56,6 +56,27 @@ public class HomePage extends Application
     private ScrollPane postsPane;
     private ScrollPane friendListPane;
 
+    // home
+    private ToggleButton homeButton;
+
+    // The whole home section with the image
+    private HBox homeBox;
+
+    // profile
+    private ToggleButton profileButton;
+    private HBox profileBox;
+
+    // browse
+    private ToggleButton browseButton;
+    private HBox browseBox;
+
+    // upvoted
+    private ToggleButton upvotedButton;
+    private HBox upvotedBox;
+
+    // bookmarks
+    private ToggleButton bookmarksButton;
+    private HBox bookmarksBox;
 
     public HomePage(User user)
     {
@@ -96,7 +117,7 @@ public class HomePage extends Application
         discoverButton.setTextFill (Color.rgb (101, 14, 63));
 
         // home
-        ToggleButton homeButton = new ToggleButton ("Home");
+        this.homeButton = new ToggleButton ("Home");
         homeButton.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
         homeButton.setBackground (new Background(new BackgroundFill(Color.rgb (236, 231, 230), CornerRadii.EMPTY, Insets.EMPTY)));
         homeButton.setPrefWidth (WIDTH_MENU_PANE);
@@ -111,7 +132,7 @@ public class HomePage extends Application
         
 
         // The whole home section with the image
-        HBox homeBox = new HBox ();
+        this.homeBox = new HBox ();
         homeBox.getChildren().addAll (homeIcon, homeButton);
         homeBox.setAlignment (Pos.CENTER); // Aligning the image and button
         colorBackground(homeButton, homeBox);
@@ -121,7 +142,7 @@ public class HomePage extends Application
         
 
         // profile
-        ToggleButton profileButton = new ToggleButton ("Profile");
+        this.profileButton = new ToggleButton ("Profile");
         profileButton.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
         profileButton.setBackground (new Background(new BackgroundFill(Color.rgb (236, 231, 230), CornerRadii.EMPTY, Insets.EMPTY)));
         profileButton.setPrefWidth (WIDTH_MENU_PANE);
@@ -132,7 +153,7 @@ public class HomePage extends Application
         profileIcon.setFitHeight (ICON_HEIGHT);
         profileIcon.setFitWidth (ICON_WIDTH);
 
-        HBox profileBox = new HBox();
+        this.profileBox = new HBox();
         profileBox.getChildren().addAll (profileIcon, profileButton);
         profileBox.setAlignment (Pos.CENTER);
 
@@ -141,7 +162,7 @@ public class HomePage extends Application
     
 
         // browse
-        ToggleButton browseButton = new ToggleButton ("Browse");
+        this.browseButton = new ToggleButton ("Browse");
         browseButton.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
         browseButton.setBackground (new Background(new BackgroundFill(Color.rgb (236, 231, 230), CornerRadii.EMPTY, Insets.EMPTY)));
         browseButton.setPrefWidth (WIDTH_MENU_PANE);
@@ -152,7 +173,7 @@ public class HomePage extends Application
         browseIcon.setFitHeight (ICON_HEIGHT);
         browseIcon.setFitWidth (ICON_WIDTH);
 
-        HBox browseBox = new HBox();
+        this.browseBox = new HBox();
         browseBox.getChildren().addAll (browseIcon, browseButton);
         browseBox.setAlignment (Pos.CENTER);
 
@@ -169,7 +190,7 @@ public class HomePage extends Application
         libraryButton.setTextFill (Color.rgb (101, 14, 63));
 
         // upvoted
-        ToggleButton upvotedButton = new ToggleButton ("Upvoted Posts");
+        this.upvotedButton = new ToggleButton ("Upvoted Posts");
         upvotedButton.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
         upvotedButton.setBackground (new Background(new BackgroundFill(Color.rgb (236, 231, 230), CornerRadii.EMPTY, Insets.EMPTY)));
         upvotedButton.setPrefWidth (WIDTH_MENU_PANE);
@@ -180,7 +201,7 @@ public class HomePage extends Application
         upvotedIcon.setFitHeight (ICON_HEIGHT);
         upvotedIcon.setFitWidth (ICON_WIDTH);
 
-        HBox upvotedBox = new HBox();
+        this.upvotedBox = new HBox();
         upvotedBox.getChildren().addAll (upvotedIcon, upvotedButton);
         upvotedBox.setAlignment (Pos.CENTER);
 
@@ -189,7 +210,7 @@ public class HomePage extends Application
 
 
         // bookmarks
-        ToggleButton bookmarksButton = new ToggleButton ("Bookmarks");
+        this.bookmarksButton = new ToggleButton ("Bookmarks");
         bookmarksButton.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
         bookmarksButton.setBackground (new Background(new BackgroundFill(Color.rgb (236, 231, 230), CornerRadii.EMPTY, Insets.EMPTY)));
         bookmarksButton.setPrefWidth (WIDTH_MENU_PANE);
@@ -200,7 +221,7 @@ public class HomePage extends Application
         bookmarksIcon.setFitHeight (ICON_HEIGHT);
         bookmarksIcon.setFitWidth (ICON_WIDTH);
 
-        HBox bookmarksBox = new HBox();
+        this.bookmarksBox = new HBox();
         bookmarksBox.getChildren().addAll (bookmarksIcon, bookmarksButton);
         bookmarksBox.setAlignment (Pos.CENTER);
 
@@ -396,7 +417,7 @@ public class HomePage extends Application
             @Override
             public void handle (ActionEvent event) 
             {
-                searchAndShowUser (searchField.getText(), allUsersPane);
+                searchAndShowUser (searchField.getText(), allUsersPane, root);
                 
             }
             
@@ -759,7 +780,7 @@ public class HomePage extends Application
 
 
     @SuppressWarnings("exports")
-    public void searchAndShowUser (String inputUser, ScrollPane usersPane)
+    public void searchAndShowUser (String inputUser, ScrollPane usersPane, BorderPane root)
     {
 
         VBox searchedUsers = new VBox();
@@ -802,6 +823,32 @@ public class HomePage extends Application
 
                         searchedUsers.getChildren().add (searchedLine);
                         usersDisplayed++;
+
+                        enteringExitingButton (searched.getFriendButton(), searchedLine);
+
+                        searched.getFriendButton().setOnAction (new EventHandler<ActionEvent>() 
+                        {
+
+                            @Override
+                            public void handle (ActionEvent event) 
+                            {
+                                // Friends page
+                                ProfileBox friendPageBox = new ProfileBox (user, root, true);
+                                root.setCenter (friendPageBox);
+
+                                profileButton.setSelected (true);
+
+                                colorBackground (profileButton, profileBox);
+                                discolorBackground (homeButton, homeBox);
+                                discolorBackground (browseButton, browseBox);
+                                discolorBackground (upvotedButton, upvotedBox);
+                                discolorBackground (bookmarksButton, bookmarksBox);
+                                discolorBackground (searched.getFriendButton(), searched.getFriendBox());
+                                searched.getFriendButton().setSelected (false);
+
+                            }
+                            
+                        });;
                     }
                 }
                 i--;

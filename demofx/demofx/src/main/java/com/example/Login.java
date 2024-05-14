@@ -11,10 +11,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -36,8 +34,9 @@ public class Login extends Application{
     }
 
 
+    @SuppressWarnings("exports")
     @Override
-    public void start(Stage loginStage) throws Exception {
+    public void start (Stage loginStage) throws Exception {
 
         //Components of the scene
         Label forumLabel = new Label(" BILKENT FORUM ");
