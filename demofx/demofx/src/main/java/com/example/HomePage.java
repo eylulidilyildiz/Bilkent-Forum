@@ -372,7 +372,7 @@ public class HomePage extends Application
 
 
         // SEARCH BAR
-        GridPane searchPane = new GridPane();
+        /*GridPane searchPane = new GridPane();
         searchPane.setAlignment (Pos.TOP_LEFT);
         searchPane.setHgap (10);
         searchPane.setVgap (10);
@@ -390,7 +390,7 @@ public class HomePage extends Application
 
         Label searchLabel = new Label ("Search:");
         searchLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
-        searchPane.add (searchLabel, 1, 1);
+        searchPane.add (searchLabel, 1, 1);*/
 
 
         // ADD POST BUTTON
@@ -428,7 +428,7 @@ public class HomePage extends Application
         // combining the searchPane and the addPostButton 
         HBox searchAddPostBox = new HBox();
         searchAddPostBox.setSpacing (550);
-        searchAddPostBox.getChildren().addAll (searchPane, postButtonPane);
+        searchAddPostBox.getChildren().addAll (postButtonPane);
         
        
         //POSTS

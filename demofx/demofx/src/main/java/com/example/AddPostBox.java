@@ -101,7 +101,7 @@ public class AddPostBox extends VBox
     {
         super();
         mainUser = user;
-        this.createSearchBox();
+        //this.createSearchBox();
         this.setSpacing(20);
         this.isBookFree = true;
         
@@ -435,7 +435,7 @@ public class AddPostBox extends VBox
         
     }
 
-     private void createSearchBox ()
+    /*private void createSearchBox ()
     {
         this.searchBox = new HBox();
 
@@ -459,7 +459,7 @@ public class AddPostBox extends VBox
         searchBox.getChildren().add(searchPane);
         this.getChildren().add (searchBox);
         
-    }
+    }*/
 
 
   

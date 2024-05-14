@@ -88,7 +88,7 @@ public class Login extends Application{
                     emailDoesNotExistAlert.setContentText("There is no account for this email. Please register.");
                     emailDoesNotExistAlert.showAndWait();
                 }
-                else{
+               else{
                     DatabaseConnection.connect(); 
                     try (Session session = DatabaseConnection.getSessionFactory().openSession()) 
                     {
