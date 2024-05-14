@@ -6,6 +6,8 @@ package com.example;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.MapChangeListener;
 import javafx.event.ActionEvent;
@@ -90,6 +92,9 @@ public class AddPostBox extends VBox
                     String content = descriptionArea.getText();
                     //TODO
                     // HOW DO I GET THE DATE?
+                    /*LocalDateTime currentDateTime = LocalDateTime.now();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                    String date = currentDateTime.format(formatter);*/
                     String date = "";
                     int initialUpvotes = 0;
                     int initialDownvotes = 0;
@@ -135,7 +140,7 @@ public class AddPostBox extends VBox
                     }
                     
                     PostManager postManager = new PostManager();
-                    postManager.createPost( postID, content, ownerID, initialUpvotes, initialDownvotes, commentIDs, isSalesPost,
+                    postManager.createPost( postID, content, /*date,*/ ownerID, initialUpvotes, initialDownvotes, commentIDs, isSalesPost,
                                             bookTitle, authorName, courseName, price, usageAmount, publisherName, bookEdition );
                 } 
                 catch (Exception e) {
@@ -321,19 +326,46 @@ public class AddPostBox extends VBox
         Label priceLabel = new Label ("Price");
         priceLabel.setFont (Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
 
+        ToggleGroup priceGroup = new ToggleGroup();
         // radio buttons for price 
         RadioButton freeButton = new RadioButton ("Free");
         freeButton.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 20));
-
+        
         RadioButton priceButton = new RadioButton ("Enter Price:");
         priceButton.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 20));
         this.priceField = new TextField();
         priceField.setPrefHeight (10);
         priceField.setPrefWidth (40);
+        priceField.setEditable(false);
+
+        priceGroup.getToggles().addAll(freeButton, priceButton);
+        freeButton.setToggleGroup(priceGroup);
+        priceButton.setToggleGroup(priceGroup);
 
         HBox priceBox = new HBox();
         priceBox.getChildren().addAll (freeButton, priceButton, priceField);
         priceBox.setSpacing (20);
+
+        freeButton.setOnAction (new EventHandler<ActionEvent>() 
+        {
+            @Override
+            public void handle(ActionEvent event) 
+            {
+                priceField.setEditable(false);
+                priceField.setText(null);
+            }
+                        
+        });
+
+        priceButton.setOnAction (new EventHandler<ActionEvent>() 
+        {
+            @Override
+            public void handle(ActionEvent event) 
+            {
+                priceField.setEditable(true);
+            }
+                        
+        });
 
         courseUsageAndPriceBox.getChildren().addAll (courseLabel, courseField, usageLabel, usageBox, priceLabel, priceBox, createPostButton);
         courseUsageAndPriceBox.setSpacing (20);
