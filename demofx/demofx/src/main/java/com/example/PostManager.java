@@ -5,7 +5,7 @@ import org.hibernate.Transaction;
 
 public class PostManager 
 {
-    public void createPost(int id, String content, /*String date,*/ int ownerID, int upvotes, int downvotes,
+    public void createPost(int id, String content, String date, int ownerID, int upvotes, int downvotes,
     String commentIDs, boolean isSalePost, String bookTitle, String authorName,
     String courseName, double price, int usageAmount, String publisherName,
     String bookEdition) 

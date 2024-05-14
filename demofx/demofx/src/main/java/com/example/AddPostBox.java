@@ -92,10 +92,9 @@ public class AddPostBox extends VBox
                     String content = descriptionArea.getText();
                     //TODO
                     // HOW DO I GET THE DATE?
-                    /*LocalDateTime currentDateTime = LocalDateTime.now();
+                    LocalDateTime currentDateTime = LocalDateTime.now();
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-                    String date = currentDateTime.format(formatter);*/
-                    String date = "";
+                    String date = currentDateTime.format(formatter);
                     int initialUpvotes = 0;
                     int initialDownvotes = 0;
                     String commentIDs = null; //no comments initially
@@ -140,7 +139,7 @@ public class AddPostBox extends VBox
                     }
                     
                     PostManager postManager = new PostManager();
-                    postManager.createPost( postID, content, /*date,*/ ownerID, initialUpvotes, initialDownvotes, commentIDs, isSalesPost,
+                    postManager.createPost( postID, content, date, ownerID, initialUpvotes, initialDownvotes, commentIDs, isSalesPost,
                                             bookTitle, authorName, courseName, price, usageAmount, publisherName, bookEdition );
                 } 
                 catch (Exception e) {
