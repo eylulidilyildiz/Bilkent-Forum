@@ -103,6 +103,7 @@ public class AddPostBox extends VBox
         mainUser = user;
         this.createSearchBox();
         this.setSpacing(20);
+        this.isBookFree = true;
         
         createPostButton = new Button("Create Post");
         createPostButton.setAlignment(Pos.BASELINE_RIGHT);
@@ -122,8 +123,7 @@ public class AddPostBox extends VBox
                     int postID = DatabaseConnection.getMaxPostID() + 1;
                     int ownerID = mainUser.getId();
                     String content = descriptionArea.getText();
-                    //TODO
-                    // HOW DO I GET THE DATE?
+
                     LocalDateTime currentDateTime = LocalDateTime.now();
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
                     String date = currentDateTime.format(formatter);
@@ -219,7 +219,7 @@ public class AddPostBox extends VBox
         this.descriptionArea = new TextArea();
         descriptionArea.setPrefHeight (AREA_HEIGHT);
         descriptionArea.setPrefWidth (AREA_WIDTH);
-        descriptionArea.setText (mainUser.getName());
+        descriptionArea.setText ("Write your description here");
         descriptionArea.setFont (Font.font ("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 20));
 
 
@@ -394,6 +394,7 @@ public class AddPostBox extends VBox
         priceGroup.getToggles().addAll(freeButton, priceButton);
         freeButton.setToggleGroup(priceGroup);
         priceButton.setToggleGroup(priceGroup);
+        freeButton.setSelected(true);
 
         HBox priceBox = new HBox();
         priceBox.getChildren().addAll (freeButton, priceButton, priceField);
@@ -406,6 +407,7 @@ public class AddPostBox extends VBox
             {
                 priceField.setEditable(false);
                 priceField.setText(null);
+                isBookFree = true;
             }
                         
         });
@@ -415,6 +417,7 @@ public class AddPostBox extends VBox
             @Override
             public void handle(ActionEvent event) 
             {
+                isBookFree = false;
                 priceField.setEditable(true);
             }
                         
