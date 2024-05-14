@@ -37,7 +37,7 @@ public class BrowseBox extends VBox
     private ScrollPane postsAndFilters;
     private User mainUser;
 
-    private int range;
+    private int priceRange;
 
     private boolean isSearchingForBook;
 
@@ -69,6 +69,8 @@ public class BrowseBox extends VBox
         this.isUnderused = false;
         this.isOverused = false;
         this.isSearchingForBook = false;
+        this.priceRange = 0;
+
 
         searchAndFilterBox = new VBox();
         searchAndFilterBox.setSpacing (30);
@@ -122,16 +124,16 @@ public class BrowseBox extends VBox
                 String priceInput = (String) priceBox.getValue();
 
                 if (priceInput.equals("0-50")){
-                    range = 1;
+                    priceRange = 1;
                 }
                 else if (priceInput.equals("50-100")){
-                    range = 2;
+                    priceRange = 2;
                 }
                 else if (priceInput.equals("100+")){
-                    range = 3;                
+                    priceRange = 3;                
                 }
                 else{
-                    range = 0;
+                    priceRange = 0;
                 }
             }
         });
@@ -262,9 +264,10 @@ public class BrowseBox extends VBox
         try (Session session = DatabaseConnection.getSessionFactory().openSession()) 
         {
             int i = DatabaseConnection.getMaxPostID();
+            int postsSearched = 0;
             int postsDisplayed = 0;
             int totalPostCount = DatabaseConnection.countPosts();
-            while(i > 0 && postsDisplayed < totalPostCount)
+            while(i > 0 && postsSearched < totalPostCount)
             {
                 if(session.get(Post.class, i) != null)
                 {
@@ -274,15 +277,13 @@ public class BrowseBox extends VBox
                     content = content.toLowerCase();
                     input = input.toLowerCase();
 
+                    boolean shouldPostBeDisplayed = false;
+
                     if(!isSearchingForBook) //Q&A Post
                     {
                         if(!post.getIsSalePost() && content.contains(input))
                         {
-                            currentPost = new PostBox(post, mainUser, session);
-                            currentPost.setPrefSize(500, 500);
-                            currentPost.setAlignment(Pos.CENTER);
-                            
-                            postsBox.getChildren().add(currentPost); 
+                            shouldPostBeDisplayed = true;
                         }
                     }
                     else{
@@ -294,30 +295,58 @@ public class BrowseBox extends VBox
         
                             bookProperties = bookProperties.toLowerCase();
         
-                            if((content.contains(input) || bookProperties.contains(input)) &&
-                            ((isNew && post.getUsageAmount() == 1) ||
-                            (isUnderused && post.getUsageAmount() == 2) ||
-                            (isOverused && post.getUsageAmount() == 3)))
+                            if((content.contains(input) || bookProperties.contains(input)))
                             {
-                                if ((range == 1 && post.getPrice() < 50) || 
-                                (range == 2 && (post.getPrice() < 100 && post.getPrice() >= 50)) || 
-                                (range == 3 && post.getPrice() >= 100)) {
-                                
-                                    currentPost = new PostBox(post, mainUser, session);
-                                    currentPost.setPrefSize(500, 500);
-                                    currentPost.setAlignment(Pos.CENTER);
-                                    
-                                    postsBox.getChildren().add(currentPost);
+                                if(priceRange != 0  && (isNew || isOverused || isUnderused)) 
+                                {
+                                    if(isPostInPriceRange(post) && isPostInExpectedUsage(post)) //both price range and usage is selected
+                                    {
+                                        shouldPostBeDisplayed = true;
+                                    }
+                                }
+                                else if(priceRange != 0) //usage amount is not selected
+                                {
+                                    if(isPostInPriceRange(post))
+                                    {
+                                        shouldPostBeDisplayed = true;
+                                    }
+                                }
+                                else if(isNew || isUnderused || isOverused) //price range is not selected
+                                {
+                                    if(isPostInExpectedUsage(post))
+                                    {
+                                        shouldPostBeDisplayed = true;
+                                    }
                                 }
                             }
                         }      
                     }
-                    postsDisplayed++;
+
+                    if(shouldPostBeDisplayed)
+                    {
+                        currentPost = new PostBox(post, mainUser, session);
+                        currentPost.setPrefSize(500, 500);
+                        currentPost.setAlignment(Pos.CENTER);
+                        currentPost.setPadding(new Insets(30));
+                        
+                        postsBox.getChildren().add(currentPost);
+                        postsDisplayed ++;
+                    }
+                    postsSearched++;
                 }      
                 i--;
             }
+
             VBox filtrationAndPostsBox = new VBox();
+            filtrationAndPostsBox.setPadding(new Insets(30));
             filtrationAndPostsBox.getChildren().addAll(filtrationBox, postsBox);
+
+            if(postsDisplayed == 0)
+            {
+                Label noMatchingPostsLabel = new Label("There aren't any matching posts.");
+                noMatchingPostsLabel.setFont (Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 20));
+                filtrationAndPostsBox.getChildren().add(noMatchingPostsLabel);
+            }
 
             postsAndFilters.setContent(filtrationAndPostsBox);
         }
@@ -328,5 +357,21 @@ public class BrowseBox extends VBox
             //postsAndFilters.setContent(postsBox);
             DatabaseConnection.disconnect(); 
         }
+
+    }
+
+    //helper methods
+    private boolean isPostInPriceRange(Post post)
+    {
+        return (priceRange == 1 && post.getPrice() < 50) || 
+        (priceRange == 2 && (post.getPrice() < 100 && post.getPrice() >= 50)) || 
+        (priceRange == 3 && post.getPrice() >= 100);
+    }
+
+    private boolean isPostInExpectedUsage(Post post)
+    {
+        return ((isNew && post.getUsageAmount() == 1) ||
+        (isUnderused && post.getUsageAmount() == 2) ||
+        (isOverused && post.getUsageAmount() == 3));
     }
 }
