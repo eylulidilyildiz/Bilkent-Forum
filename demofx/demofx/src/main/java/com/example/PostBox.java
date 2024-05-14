@@ -188,6 +188,8 @@ public class PostBox extends VBox
     class CommentBox extends VBox
     {
         private int postID;
+        private Label noCommentsLabel;
+        private HBox addCommentBox;
 
         public CommentBox(int postID)
         {
@@ -200,7 +202,7 @@ public class PostBox extends VBox
             commentsLabel.setFont(Font.font("Tahoma", FontWeight.BOLD, FontPosture.REGULAR, 18));
             getChildren().add(commentsLabel);
 
-            VBox currentComment;
+            VBox currentComment = new VBox();
        
             DatabaseConnection.connect(); 
             try (Session session = DatabaseConnection.getSessionFactory().openSession()) 
@@ -211,25 +213,7 @@ public class PostBox extends VBox
                 {
                     if(session.get(Comment.class, i).getCommentedPostID() == postID)
                     {
-                        currentComment = new VBox();
-                        Comment comment = session.get(Comment.class, i);
-                        int ownerID = comment.getOwnerID();
-                        String username = session.get(User.class, ownerID).getUsername();
-                        String content = comment.getContent();
-
-                        Label commentOwnerLabel = new Label(username);
-                        commentOwnerLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 16));
-                        commentOwnerLabel.setAlignment(Pos.BASELINE_LEFT);
-
-                        TextArea commentArea = new TextArea(content);
-                        commentArea.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 16));
-                        commentArea.setEditable(false);
-
-                        currentComment.getChildren().addAll(commentOwnerLabel, commentArea); 
-                        currentComment.setPrefSize(500, 200);
-                        currentComment.setAlignment(Pos.CENTER_LEFT);
-        
-                        this.getChildren().add(currentComment);
+                        addCommentToInterface(currentComment, session, i);
                         numberOfCommentsUnderThisPost ++;
                     }      
                     i++;
@@ -237,13 +221,13 @@ public class PostBox extends VBox
 
                 if(numberOfCommentsUnderThisPost == 0)
                 {
-                    Label noCommentsLabel = new Label("There are no comments under this post.");
+                    noCommentsLabel = new Label("There are no comments under this post.");
                     noCommentsLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 16));
                     
                     this.getChildren().add(noCommentsLabel);
                 }
 
-                HBox addCommentBox = new HBox();
+                this.addCommentBox = new HBox();
                 addCommentBox.setSpacing(20);
 
                 TextArea addCommentArea = new TextArea("Write a comment!");
@@ -272,7 +256,15 @@ public class PostBox extends VBox
 
                             CommentManager commentManager = new CommentManager();
                             commentManager.createComment(commentID, content, ownerID, postID);
+ 
+                            getChildren().remove(noCommentsLabel);
+                            getChildren().remove(addCommentBox);
 
+                            VBox currentComment = new VBox();
+                            addCommentToInterface(currentComment, session, commentID);
+                            addCommentButton.getCommentArea().setText("Write a comment!");
+                            getChildren().add(addCommentBox);
+                            
                         } 
                         catch (Exception e) {
                             e.printStackTrace();
@@ -289,6 +281,28 @@ public class PostBox extends VBox
             }
         }
 
+        public void addCommentToInterface(VBox currentComment, Session session, int commentID)
+        {
+            currentComment = new VBox();
+            Comment comment = session.get(Comment.class, commentID);
+            int ownerID = comment.getOwnerID();
+            String username = session.get(User.class, ownerID).getUsername();
+            String content = comment.getContent();
+    
+            Label commentOwnerLabel = new Label(username);
+            commentOwnerLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 16));
+            commentOwnerLabel.setAlignment(Pos.BASELINE_LEFT);
+    
+            TextArea commentArea = new TextArea(content);
+            commentArea.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 16));
+            commentArea.setEditable(false);
+    
+            currentComment.getChildren().addAll(commentOwnerLabel, commentArea); 
+            currentComment.setPrefSize(500, 200);
+            currentComment.setAlignment(Pos.CENTER_LEFT);
+    
+            this.getChildren().add(currentComment);
+        }
         
     }
 
