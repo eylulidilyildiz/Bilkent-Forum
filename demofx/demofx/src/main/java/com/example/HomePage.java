@@ -349,48 +349,60 @@ public class HomePage extends Application
                 i--;
             }
 
-            Label usersLabel = new Label(" Users ");
-            usersLabel.setFont(Font.font("Tahoma", FontWeight.BOLD, FontPosture.REGULAR, 27));
-            usersLabel.setTextFill (Color.rgb (101, 14, 63));
-            usersLabel.setPrefWidth(248);
-            usersLabel.setAlignment(Pos.TOP_LEFT);
-            friendsPane.add(usersLabel, 0, 1);
-            
-            ScrollPane allUsersPane = new ScrollPane();
-            
-            allFriendsBox.setAlignment(Pos.CENTER_LEFT);
-            allUsersPane.setContent(allFriendsBox);
-            allUsersPane.setFitToWidth (true);
-            allUsersPane.setFitToHeight (true);
-            allUsersPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-            friendsPane.add(allUsersPane, 0, 2);
-            friendsPane.setVgap(20);
-            friendsPane.setHgap(20);
         }
 
-        root.setRight(friendsPane);
+        HBox searchAndUsersLabel = new HBox();
 
 
-        // SEARCH BAR
-        /*GridPane searchPane = new GridPane();
-        searchPane.setAlignment (Pos.TOP_LEFT);
-        searchPane.setHgap (10);
-        searchPane.setVgap (10);
-        searchPane.setPadding(new Insets(70));
-
-        TextField searchBar = new TextField();
-        searchBar.setPrefHeight (40);
-        searchBar.setPrefWidth (400);
-        searchPane.add (searchBar, 2, 1);
+        Label usersLabel = new Label(" Users ");
+        usersLabel.setFont(Font.font("Tahoma", FontWeight.BOLD, FontPosture.REGULAR, 27));
+        usersLabel.setTextFill (Color.rgb (101, 14, 63));
+        usersLabel.setPrefWidth(248);
+        usersLabel.setAlignment(Pos.TOP_LEFT);
         
-        ImageView searchIcon = new ImageView (getClass().getResource("images/browseIcon.png").toString());
-        searchIcon.setFitHeight (ICON_HEIGHT);
-        searchIcon.setFitWidth (ICON_WIDTH);
-        searchPane.add (searchIcon, 0, 1); // image
+        
+        // search bar for the users
+        HBox searchBox = new HBox();
+        TextField searchField = new TextField();
 
-        Label searchLabel = new Label ("Search:");
-        searchLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 22));
-        searchPane.add (searchLabel, 1, 1);*/
+        
+        
+        ImageView searchFieldIcon = new ImageView (getClass().getResource("images/browseIcon.png").toString());
+        searchFieldIcon.setFitHeight (ICON_HEIGHT);
+        searchFieldIcon.setFitWidth (ICON_WIDTH);
+        
+        searchBox.getChildren().addAll (searchFieldIcon, searchField);
+        
+        searchAndUsersLabel.getChildren().addAll (usersLabel, searchBox);
+        
+        friendsPane.add (searchAndUsersLabel, 0, 1);
+        
+        ScrollPane allUsersPane = new ScrollPane();
+        
+        allFriendsBox.setAlignment(Pos.CENTER_LEFT);
+        allUsersPane.setContent(allFriendsBox);
+        allUsersPane.setFitToWidth (true);
+        allUsersPane.setFitToHeight (true);
+        allUsersPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        
+        // when a user is searched
+        searchField.setOnAction (new EventHandler <ActionEvent>() 
+        {
+            
+            @Override
+            public void handle (ActionEvent event) 
+            {
+                searchAndShowUser (searchField.getText(), allUsersPane);
+                
+            }
+            
+        });
+
+        friendsPane.add (allUsersPane, 0, 2);
+        friendsPane.setVgap(20);
+        friendsPane.setHgap(20);
+
+        root.setRight(friendsPane);
 
 
         // ADD POST BUTTON
@@ -736,6 +748,72 @@ public class HomePage extends Application
     {
         box.setBackground (new Background (new BackgroundFill (null, null, null)));
         button.setBackground (new Background (new BackgroundFill (null, null, null)));
+    }
+
+
+    @SuppressWarnings("exports")
+    public void searchAndShowUser (String inputUser, ScrollPane usersPane)
+    {
+
+        VBox searchedUsers = new VBox();
+
+        DatabaseConnection.connect(); 
+        try (Session session = DatabaseConnection.getSessionFactory().openSession()) 
+        {
+            int i = DatabaseConnection.getMaxUserID();
+            int usersSearched = 0;
+            int usersDisplayed = 0;
+            int totalUserCount = DatabaseConnection.countUsers() - 1;
+
+            while (i > 0 && usersSearched < totalUserCount)
+            {
+                if (session.get (User.class, i) != null && (i != mainUser.getId()))
+                {
+                    User user = session.get (User.class, i);
+                    String nameSurname = user.getName() + " " + user.getSurname();
+
+                    nameSurname = nameSurname.toLowerCase();
+                    inputUser = inputUser.toLowerCase();
+
+                    boolean shouldUserBeDisplayed = false;
+
+                    if (nameSurname.contains (inputUser))
+                    {
+                        shouldUserBeDisplayed = true;
+                    }
+                   
+                    if (shouldUserBeDisplayed)
+                    {
+                        FriendsBox searched = new FriendsBox (mainUser, user);
+
+                        searchedUsers.getChildren().add (searched);
+                        usersDisplayed++;
+                    }
+                }
+                i--;
+
+                
+            }
+
+            if (usersDisplayed == 0)
+            {
+                Label noSuchUserLabel = new Label ("There aren't any matching users.");
+                noSuchUserLabel.setFont (Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 20));
+                searchedUsers.getChildren().add (noSuchUserLabel);
+            }
+
+            usersPane.setContent (searchedUsers);
+        }
+        catch (Exception e) 
+        {
+            e.printStackTrace();
+        } 
+        finally 
+        {
+            usersPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+            //postsAndFilters.setContent(postsBox);
+            DatabaseConnection.disconnect(); 
+        }
     }
 }
 
