@@ -5,6 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -42,6 +43,9 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.geometry.*;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
 
 @SuppressWarnings("unused")
 public class HomePage extends Application 
@@ -71,6 +75,7 @@ public class HomePage extends Application
         final int WIDTH_MENU_PANE = 250;
         final int ICON_WIDTH = 20;
         final int ICON_HEIGHT = 20;
+        BooleanProperty isPostCreatedProperty = new SimpleBooleanProperty(false);
 
         //MENU ON THE LEFT
 
@@ -403,6 +408,8 @@ public class HomePage extends Application
             // Browse Page
             BrowseBox browsePageBox = new BrowseBox (mainUser);
 
+
+
             /* WHEN BUTTONS ARE CLICKED */ 
             homeButton.setOnAction(new EventHandler <ActionEvent>() 
             {
@@ -659,7 +666,6 @@ public class HomePage extends Application
         }
     }
     
-
     /* HELPER METHODS */
 
     public void enteringExitingButton (ToggleButton button, HBox box)

@@ -33,6 +33,35 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
+import javafx.stage.Stage;
+
+import org.hibernate.Session;
+
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+import javafx.stage.Stage;
+import javafx.geometry.*;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 
 public class AddPostBox extends VBox 
 {
@@ -66,6 +95,8 @@ public class AddPostBox extends VBox
     private String usage;
     private boolean isBookFree;
 
+    private boolean isPostCreated;
+
     public AddPostBox(User user)
     {
         super();
@@ -76,6 +107,7 @@ public class AddPostBox extends VBox
         createPostButton = new Button("Create Post");
         createPostButton.setAlignment(Pos.BASELINE_RIGHT);
         createPostButton.setFont(Font.font("Tahoma", FontWeight.NORMAL, FontPosture.REGULAR, 20));
+        
 
         createPostButton.setOnAction(new EventHandler<ActionEvent>()
         {
@@ -145,8 +177,14 @@ public class AddPostBox extends VBox
                     {
                         postManager.createPost( postID, content, date, ownerID, initialUpvotes, initialDownvotes, commentIDs);
                     }
+
                     
-                    
+
+                    Application home = new HomePage(user);
+                    Stage homeStage = new Stage();
+                    home.start(homeStage);
+                    Stage stage = (Stage) createPostButton.getScene().getWindow();
+                    stage.close();
                 } 
                 catch (Exception e) {
                     e.printStackTrace();
@@ -245,6 +283,16 @@ public class AddPostBox extends VBox
 
         this.descriptionAndPostTypeBox.getChildren().addAll (descriptionLabel, descriptionArea, typeLabel, typeBox);
         this.getChildren().add(descriptionAndPostTypeBox);
+    }
+
+    public boolean isPostCreated()
+    {
+        return isPostCreated;
+    }
+
+    public void setPostCreaeted(boolean isPostCreated)
+    {
+        this.isPostCreated = isPostCreated;
     }
 
     @SuppressWarnings("unchecked")
